@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #fefefe;
+  border-right: 1px solid #e2e8f0;
+  /* padding: 1rem; */
+  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.9);
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  padding: 0.8rem 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 15px;
+}
+
+.sidebar li:hover {
+  background-color: #e8f0ff;
+  border-left: 3px solid blue;
+}

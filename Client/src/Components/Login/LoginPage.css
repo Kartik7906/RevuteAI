@@ -1,0 +1,181 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+  }
+
+  /*  */
+
+  .main-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  /* Left Section: centered content vertically & horizontally */
+  .left-section {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    overflow: hidden;
+  }
+  
+  /* The login box in the left section */
+  .login-box {
+    width: 320px;
+    padding: 20px;
+    background-color: transparent;
+    text-align: center;
+  }
+  
+  /* Greeting text inside .login-box */
+  .login-box p.greeting-words {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: blueviolet;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    text-align: left;
+  }
+  
+  /* Inputs */
+  .email,
+  .password {
+    width: 100%;
+    max-width: 300px; /* keep same width as the button below */
+    border: none;
+    border-bottom: 1px solid black;
+    margin-top: 15px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  
+  /* Remove focus outlines */
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+    outline: none;
+  }
+  
+  /* Submit button */
+  .submit {
+    width: 100%;
+    max-width: 300px;
+    border: none;
+    height: 40px;
+    border-radius: 20px;
+    color: white;
+    background-color: black;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  
+  /* Links and text in the form */
+  .forget,
+  .welcome {
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    color: white;
+    letter-spacing: 2px;
+  }
+
+  .new_account{
+    font-size: 13px;
+    color: black;
+    margin-top: 0px;
+    text-decoration: none;
+  }
+  
+  .forget {
+    text-align: right;
+    cursor: pointer;
+    margin-right: -160px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: black;
+  }
+  
+  .sign_up {
+    font-weight: 800;
+    cursor: pointer;
+  }
+  
+  .sign_up:hover {
+    font-weight: 600;
+    color: red;
+  }
+  
+  .forget:hover {
+    color: black;
+    font-weight: 500;
+  }
+  
+  .new_account:hover {
+    color: black;
+  }
+  
+  /* Right Section */
+  .right-section {
+    width: 50%;
+    /* background-color: #6c48c5; */
+    background-color: #247BA0;
+    overflow: hidden;
+  }
+  
+  /* Hide right section on small screens (similar to d-none d-md-block) */
+  @media (max-width: 768px) {
+      .right-section {
+        display: none !important;
+      }
+      .left-section {
+        width: 100% !important;
+      }
+    }
+    
+  
+  /* The middle part in the right section */
+  
+  .right-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -50px;
+  }
+  .right-section-middlepart {
+    /* background-color: #6c48c5; */
+    /* background-color: black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 25px;
+    width: 320px;
+  }
+  
+  /* Title spacing */
+  .title {
+    letter-spacing: 2px;
+    font-family: "Times New Roman", Times, serif;
+    color: white;
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: 1.5;
+  }
+  
+  .welcome-statement {
+    font-size: 30px;
+    font-weight: 500;
+    color: white;
+    font-family: "Times New Roman", Times, serif;
+  }
+  
