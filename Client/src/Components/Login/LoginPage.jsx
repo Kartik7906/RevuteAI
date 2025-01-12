@@ -22,6 +22,7 @@ const LoginPage = () => {
       } else {
         console.log('Login response:', data);
         localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.username);
         navigate('/landingpage');
       }
     } catch (error) {

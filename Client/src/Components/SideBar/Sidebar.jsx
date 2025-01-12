@@ -17,10 +17,10 @@ const Sidebar = ({ setSection }) => {
   return (
     <div className="sidebar">
       <ul>
-        <li onClick={() => setSection('dashboard')}><MdOutlineDashboard size={20}/> Dashboard</li>
+        <li onClick={() => setSection('dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
         <li onClick={() => setSection('announcements')}><GrAnnounce size={20}/> Announcements</li>
-        <li onClick={() => setSection('task1')}> <MdOutlineTaskAlt size={20}/> Task1</li>
-        <li onClick={() => setSection('task2')}> <MdOutlineTaskAlt size={20}/> Task2</li>
+        <li onClick={() => setSection('task1')}> <MdOutlineTaskAlt size={20}/> Introduction</li>
+        <li onClick={() => setSection('task2')}> <MdOutlineTaskAlt size={20}/> Bot</li>
         
         <li onClick={handleReportBtn}>
           <TbReportSearch size={20} /> Report
