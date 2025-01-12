@@ -11,6 +11,7 @@
   border-right: 1px solid #e2e8f0;
   /* padding: 1rem; */
   box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.9);
+  /* background-color: yellowgreen; */
 }
 
 .sidebar ul {
@@ -28,6 +29,7 @@
   align-items: center;
   gap: 10px;
   padding-left: 15px;
+  /* background-color: red; */
 }
 
 .sidebar li:hover {

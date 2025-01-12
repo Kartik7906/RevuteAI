@@ -1,12 +1,20 @@
-import React from 'react'
+import React from 'react';
 
-const Task2 = () => {
+const App = () => {
+  const handleOpenInNewTab = () => {
+    window.open('https://azure-4sk4.onrender.com', '_blank');
+  };
+
   return (
-    <div>
-      <h2>Task 2</h2>
-      <p>Details for Task 2 go here.</p>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <button
+        onClick={handleOpenInNewTab}
+        style={{ padding: '10px 20px', fontSize: '16px' }}
+      >
+        Start Test
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default Task2
+export default App;

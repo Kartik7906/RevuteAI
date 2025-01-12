@@ -1,0 +1,118 @@
+.report-page {
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Make room if Navbar is fixed-top */
+  .top-nav-actions {
+    margin-top: 70px; 
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px 20px;
+  }
+  
+  .action-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .action-button:hover {
+    background-color: #555;
+  }
+  
+  .report-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Welcome Section */
+  .welcome-section {
+    margin-bottom: 20px;
+  }
+  
+  .welcome {
+    margin: 10px 0;
+    font-size: 1.3rem;
+  }
+  
+  .report-info {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .report-section {
+    margin-bottom: 40px;
+  }
+  
+  .section-header {
+    margin: 20px 0 10px;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+  }
+  
+  /* Analysis rows/columns */
+  .analysis-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0;
+    align-items: flex-start;
+  }
+  
+  .analysis-col {
+    flex: 1;
+    min-width: 250px;
+    margin: 10px;
+  }
+  
+  .highlight-bg {
+    background-color: #efefef;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  
+  .chart-col {
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .analysis-hint {
+    font-size: 0.9rem;
+    margin: 6px 0;
+  }
+  
+  .transcribed-text {
+    margin: 8px 0 20px;
+    white-space: pre-wrap; 
+  }
+  
+  .tone-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .recommendations-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .recommendations {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  
+  .time-section {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #777;
+  }
+  

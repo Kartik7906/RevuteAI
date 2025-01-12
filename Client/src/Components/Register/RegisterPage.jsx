@@ -7,7 +7,6 @@ import { register } from '../../Services/apiConnection';
 const RegisterPage = () => {
   const navigate = useNavigate();
   
-  // State to manage form input values
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -54,13 +53,9 @@ const RegisterPage = () => {
         username: formData.username,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
-        role, // the chosen role
+        role, 
       });
 
-      // If your backend returns status 201 upon success, you can check it here:
-      // but since we are handling it in the .then(response => ...) in apiConnection, 
-      // it might not be available directly as response.status.
-      // We'll rely on no error thrown => success.
       alert("User registered successfully!");
       navigate('/login');
     } catch (err) {
