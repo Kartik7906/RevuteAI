@@ -1,0 +1,124 @@
+
+.task1-wrapper {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    max-height: 85vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;  
+    scrollbar-width: none;     
+}
+
+.task1-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge */
+}
+
+
+  
+  /* 3) Basic box styling */
+  .box {
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  /* Common heading style */
+  .self {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Intro or description text */
+  .intro_text {
+    max-width: 500px;
+    text-align: left;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  /* Buttons */
+  .record,
+  .record_start {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #007bff; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .record:hover,
+  .record_start:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Steps and progress bar container */
+  .steps-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .steps {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ccc;
+    color: #fff;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .circle.active {
+    background: #007bff;
+  }
+  
+  .progress-bar {
+    position: absolute;
+    left: 15px;
+    right: 50px;
+    height: 4px;
+    background: #ccc;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -1;
+  }
+  
+  .indicator {
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: #007bff;
+  }
+  
+  /* Video display area */
+  .video {
+    width: 320px;
+    height: 240px;
+    background-color: #000; /* Just a placeholder background */
+  }
+  
+  /* Timer style */
+  .timer {
+    font-size: 1.25rem;
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* Footer or end section placeholder */
+  .end {
+    min-height: 100px;
+    /* If you want space at the bottom, keep as is */
+  }
+  
