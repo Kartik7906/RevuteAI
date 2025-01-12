@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import './RegisterPage.css';
+import React, { useState } from "react";
+import "./RegisterPage.css";
 import { FaBrain } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
-import { register } from '../../Services/apiConnection';
+import { useNavigate } from "react-router-dom";
+import { register } from "../../Services/apiConnection";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
   });
-  
+
   const [error, setError] = useState(false);
 
   // This will control whether to show the "choose role" popup
   const [showRolePopup, setShowRolePopup] = useState(false);
 
   // This will store the selected role
-  const [role, setRole] = useState('user'); // default role can be "user"
+  const [role, setRole] = useState("user"); // default role can be "user"
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -53,11 +53,11 @@ const RegisterPage = () => {
         username: formData.username,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
-        role, 
+        role,
       });
 
       alert("User registered successfully!");
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
       console.error("Error during registration:", err);
       alert("Registration failed, please try again.");
@@ -66,7 +66,7 @@ const RegisterPage = () => {
 
   // Handle navigation to login page
   const handleSignIn = () => {
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -121,7 +121,8 @@ const RegisterPage = () => {
           />
 
           <p className="terms-text">
-            By submitting, I accept the <span className="terms">terms and conditions</span>
+            By submitting, I accept the{" "}
+            <span className="terms">terms and conditions</span>
           </p>
 
           <button type="submit" className="submit-btn">
@@ -130,14 +131,23 @@ const RegisterPage = () => {
         </form>
 
         <p className="existing-text">
-          Existing User? <span className="login-link" onClick={handleSignIn}>Sign In</span>
+          Existing User! Login to Account -{" "}
+          <span className="login-link" onClick={handleSignIn}>
+            Sign In
+          </span>
         </p>
       </div>
 
       {/* STEP 2: Popup to choose the role */}
       {showRolePopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
+        <div
+          className="popup-overlay-modal"
+          onClick={() => setShowRolePopup(false)} // (1) Close on overlay click
+        >
+          <div
+            className="popup-content-modal"
+            onClick={(e) => e.stopPropagation()} // (2) Prevent close if clicked inside
+          >
             <h2>Choose Your Role</h2>
             <form onSubmit={handleRoleSubmit}>
               <label>
@@ -145,7 +155,7 @@ const RegisterPage = () => {
                   type="radio"
                   name="role"
                   value="user"
-                  checked={role === 'user'}
+                  checked={role === "user"}
                   onChange={(e) => setRole(e.target.value)}
                 />
                 <span>User</span>
@@ -155,7 +165,7 @@ const RegisterPage = () => {
                   type="radio"
                   name="role"
                   value="admin"
-                  checked={role === 'admin'}
+                  checked={role === "admin"}
                   onChange={(e) => setRole(e.target.value)}
                 />
                 <span>Admin</span>
@@ -165,13 +175,15 @@ const RegisterPage = () => {
                   type="radio"
                   name="role"
                   value="superadmin"
-                  checked={role === 'superadmin'}
+                  checked={role === "superadmin"}
                   onChange={(e) => setRole(e.target.value)}
                 />
                 <span>Super Admin</span>
               </label>
 
-              <button type="submit" className="submit-btn">Confirm</button>
+              <button type="submit" className="submit-btn-modal">
+                Confirm
+              </button>
             </form>
           </div>
         </div>

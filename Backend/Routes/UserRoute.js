@@ -67,7 +67,6 @@ router.post('/login', async (req, res) => {
     },
   };
 
-  // You can store role as part of the token payload if desired
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
   res.status(200).json({
