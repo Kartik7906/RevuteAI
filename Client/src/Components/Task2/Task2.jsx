@@ -1,4 +1,5 @@
 import React from 'react';
+import './Task2.css'
 
 const App = () => {
   const handleOpenInNewTab = () => {
@@ -6,13 +7,18 @@ const App = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <button
+    <div className='task2-container'>
+    <div>
+    <div className='txt-msg'>
+    Welcome! Ready to begin? Click 'Start Test' to proceed.
+    </div>
+    <button
         onClick={handleOpenInNewTab}
-        style={{ padding: '10px 20px', fontSize: '16px' }}
+        className='starttest-btn'
       >
         Start Test
       </button>
+    </div>
     </div>
   );
 };

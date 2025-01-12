@@ -1,0 +1,46 @@
+/* Main container covers full viewport height,
+   centers content horizontally and vertically */
+   .task2-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    background: #f2f2f2; /* Subtle background color for professionalism */
+  }
+  
+  /* Inner content box with white background, padding, and slight shadow */
+  .task2-content {
+    background: #fff;
+    padding: 2rem 3rem;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Large, bold text message, full width, centered */
+  .txt-msg {
+    font-size: 1.6rem;   /* Adjust size as desired */
+    font-weight: 600;
+    color: #333;         /* Dark text for contrast */
+    margin-bottom: 2rem;
+  }
+  
+  /* Stylish button for "Start Test" */
+  .starttest-btn {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  .starttest-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
