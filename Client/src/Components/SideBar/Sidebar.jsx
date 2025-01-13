@@ -13,13 +13,17 @@ const Sidebar = ({ setSection }) => {
     setSection('report')
     navigate('/report')
   }
+  const handleIntro_navigation = () =>{
+    setSection('task1')
+    navigate('/task1')
+  }
   
   return (
     <div className="sidebar">
       <ul>
         <li onClick={() => setSection('dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
         <li onClick={() => setSection('announcements')}><GrAnnounce size={20}/> Announcements</li>
-        <li onClick={() => setSection('task1')}> <MdOutlineTaskAlt size={20}/> Introduction</li>
+        <li onClick={handleIntro_navigation}> <MdOutlineTaskAlt size={20}/> Introduction</li>
         <li onClick={() => setSection('task2')}> <MdOutlineTaskAlt size={20}/> Bot</li>
         
         <li onClick={handleReportBtn}>

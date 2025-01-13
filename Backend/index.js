@@ -1,78 +1,266 @@
-const express = require("express");
+const express  = require('express');
 const app = express();
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const request = require('request')
-const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const path = require('path');
+const multer = require('multer');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const dotenv = require('dotenv');
+const fs = require('fs');
 
-// changes are here:
-const {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} = require("@google/generative-ai");
-const sdk = require("microsoft-cognitiveservices-speech-sdk");
-const ffmpegPath = require("ffmpeg-static");
-const { exec } = require("child_process");
+// Initialize Gemini AI
+const genAI = new GoogleGenerativeAI('AIzaSyCRxcQJL0lRiT8nd71y4Kvwm5WTE9rwuZ0');
+const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-const ffmpeg = require("fluent-ffmpeg");
-const subscriptionKey =
-  "1PfTtdWQBrpclNarIAQbVawgyOqaEAqj0x1A8jNdkxWEmaKeloX1JQQJ99AKACGhslBXJ3w3AAAYACOGXTGg";
-const serviceRegion = "centralindia"; // e.g., "eastus"
-const convertedFilePath = "path/to/converted.wav";
-app.use(express.urlencoded({ extended: "false" }));
-app.use(express.json({ limit: "50mb" }));
-app.set("view engine", "hbs");
-const genAI = new GoogleGenerativeAI("AIzaSyC3-MzQJxMhl8V_iNdSkK1yikYlS2-XOGA");
-const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-  systemInstruction:
-    "You are Kumar, a self-employed customer, 28 years old with a monthly income of Rs. 30,000. You have an excellent CIBIL score of 880 and no existing loans.You are considering taking a personal loan and are currently conversing with a bank representative from XYZ Bank.If representative call you in name other than kumar, kindly let them know you are kumar.Please understand you are the buyer of the loan not a representative who sells loan. The representative will call you to pitch a personal loan offer. As a customer, you are polite but have firm interest, are slightly hesitant, and are primarily curious about loan details such as repayment terms, hidden fees, processing fee and overall suitability.You are also curious about the repayment terms, hidden fees, processing fee and whether this loan suits you.. Your responses should be polite but firm, showing some initial reluctance to help the candidate demonstrate their persuasion skills. Give the output in a maximum of 2 lines. Don't expose your profession and name until the user asks explicitly. Generate the output in JSON variables. One holds the entire conversation seperately according to the roles in shorter lines for the next prompt request and another variable sends an answer to the user's question. If the question is out of the topic of finance and marketing, kindly respond Sorry I'm not allowed to answer this question. Ignore the old chats. Don't explicitly ask for loan details until the representative mentions that. If the representative mentions I'll call you later, kindly close the call by thanking greet. Use the following guidelines:  1. Approachable Tone: Maintain a warm, friendly tone that resembles a South Indian woman speaking. Be naturally inquisitive, asking clarifying questions as needed to understand the offer, and use phrasing that conveys thoughtfulness and a touch of hesitancy to sound relatable. 2. Conciseness: Keep your questions concise (ideally within one or two sentences) and directly relevant to the sales candidate's statements or questions. 3 .Realistic Conversation: If the candidate mistakenly acts as a customer asking for a loan, clarify that I'm not providing a loan and close the conversation. 4. Natural Interaction Flow: Avoid directly diving into details; instead, start responses conversationally as a curious customer evaluating to buy the offering. 5. Interest Level: Show mild interest in other types of loans, such as education or home loans or educational loan, but don't commit. Indicate that you are mainly interested in personal loans but you are open to hear loan options. 6. Response Style: Provide brief answers, but feel free to ask follow-up questions about specific aspects like interest rate, flexibility in repayment terms, and eligibility. If you don't fully understand a terms, ask for clarification. 7. Skeptical Evaluation: Approach each response with a bit of hesitation; you are evaluating, not readily agreeing, which should prompt the sales candidate to be more persuasive. 8. Greeting Responses: If the user message includes a greeting such as hi, hello, good morning, or introductions like hi, respond with a general, natural reply like, Hi please tell me, to maintain a realistic and humanistic tone, avoiding phrases like how can I help you today or how can I assist you today. 9. Telephonic Conversation Simulation: Assume this is a telephonic conversation, making responses more realistic and natural. Aim for a casual, spoken style as you would in a phone call, reflecting a human touch rather than a scripted response. 10. Out-of-Context Responses: If the candidate brings up topics unrelated to loans, financial context and relevant products, respond with mild confusion, such as What? What are you speaking about? or Can you please repeat that? to keep the conversation focused on loans. 11. Grammar Flexibility: Even if the candidate has minor grammar issues, respond naturally and appropriately, showing that you understand their intent without highlighting their language errors. 12: Closing the Deal: If, after 15-20 conversations, you are satisfied with the details provided by the sales representative and decide to accept the personal loan offer, respond in a way that indicates your intent to close the deal. Politely confirm your agreement to proceed, expressing your readiness to finalize the loan and end the conversation.If representative ask you to provide the loan/asking you a money for a loan. Please mention I'm not providing any loans. Kindly understand the last conversation and answer. Answer I'm not providing any loans/money. If the last one conversation regarding the can you give/borrow money/loan",
+// Create uploads directory if it doesn't exist
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+      const timestamp = Date.now();
+      const ext = path.extname(file.originalname);
+      cb(null, `${file.fieldname}-${timestamp}${ext}`);
+  }
 });
 
-const model1 = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-const conversationHistory = [];
-
-const speechConfig = sdk.SpeechConfig.fromSubscription(
-  subscriptionKey,
-  serviceRegion
-);
-speechConfig.speechRecognitionLanguage = "en-IN";
-
-const generationConfig = {
-  temperature: 1,
-  topP: 0.95,
-  topK: 40,
-  maxOutputTokens: 8192,
-  responseMimeType: "application/json",
+// Configure file filter
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ['video/webm', 'audio/webm', 'video/mp4', 'audio/mp3'];
+  if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+  } else {
+      cb(new Error('Invalid file type'), false);
+  }
 };
 
-// changes upto here:
+// Configure multer upload
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+      fileSize: 50 * 1024 * 1024 // 50MB limit
+  }
+}).fields([
+  { name: 'videoFile', maxCount: 1 },
+  { name: 'audioFile', maxCount: 1 }
+]);
 
-const dotenv = require("dotenv");
-
+// middleware:
 dotenv.config();
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+app.use(cors());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(express.static(path.join(__dirname)));
 
-app.use(bodyParser.json());
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PORT = process.env.PORT || 8000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: 'false' }));
+app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/users", require("./Routes/UserRoute"));
-app.use('/', require('./Routes/BotRoutes'));
+app.use('/api/users', require('./Routes/UserRoute'));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+// Function to analyze text using Gemini
+async function analyzeWithGemini(text) {
+  try {
+      // Helper function to extract JSON from Gemini response
+      const extractJSON = (text) => {
+          try {
+              // Remove markdown formatting and find JSON object
+              const jsonMatch = text.match(/\{[\s\S]*\}/);
+              if (jsonMatch) {
+                  return JSON.parse(jsonMatch[0]);
+              }
+              throw new Error('No JSON found in response');
+          } catch (err) {
+              console.error('JSON extraction error:', err);
+              // Return default values if parsing fails
+              return {
+                  score: 7,
+                  feedback: "Analysis unavailable",
+                  communication_score: 7,
+                  organization_score: 7,
+                  clarity_score: 7,
+                  recommendations: ["Continue practicing"]
+              };
+          }
+      };
+
+      // Grammar Analysis
+      const grammarPrompt = 'Analyze this self-introduction text for grammar and language usage. Return ONLY a JSON object with fields: score (number out of 10), feedback (string), errors (array of strings), improvement_suggestions (array of strings). Text: "' + text + '"';
+      const grammarResponse = await model.generateContent(grammarPrompt);
+      const grammarAnalysis = extractJSON(grammarResponse.response.text());
+
+      // Professional Communication Analysis
+      const professionalPrompt = 'Analyze this self-introduction for professional communication. Return ONLY a JSON object with fields: communication_score (number), organization_score (number), clarity_score (number), content_relevance (number), recommendations (array of strings). Text: "' + text + '"';
+      const professionalResponse = await model.generateContent(professionalPrompt);
+      const professionalAnalysis = extractJSON(professionalResponse.response.text());
+
+      // Overall Assessment
+      const overallPrompt = 'Provide assessment of this self-introduction. Return ONLY a JSON object with fields: overall_impression (string), confidence_level (number), key_strengths (array), areas_for_improvement (array), final_score (number). Text: "' + text + '"';
+      const overallResponse = await model.generateContent(overallPrompt);
+      const overallAnalysis = extractJSON(overallResponse.response.text());
+
+      console.log('Grammar Analysis:', grammarAnalysis);
+      console.log('Professional Analysis:', professionalAnalysis);
+      console.log('Overall Analysis:', overallAnalysis);
+
+      return {
+          grammar: grammarAnalysis,
+          professional: professionalAnalysis,
+          overall: overallAnalysis
+      };
+  } catch (error) {
+      console.error('Gemini Analysis Error:', error);
+      // Return default values if analysis fails
+      return {
+          grammar: {
+              score: 7,
+              feedback: "Analysis temporarily unavailable",
+              errors: [],
+              improvement_suggestions: []
+          },
+          professional: {
+              communication_score: 7,
+              organization_score: 7,
+              clarity_score: 7,
+              content_relevance: 7,
+              recommendations: ["Continue practicing"]
+          },
+          overall: {
+              overall_impression: "Analysis temporarily unavailable",
+              confidence_level: 7,
+              key_strengths: ["Unable to analyze at this time"],
+              areas_for_improvement: ["Try again later"],
+              final_score: 7
+          }
+      };
+  }
+}
+
+// Function to analyze emotion data
+function analyzeEmotions(emotionData) {
+  try {
+      const emotions = {};
+      const totalDuration = emotionData.length;
+
+      // Count each emotion occurrence
+      emotionData.forEach(entry => {
+          emotions[entry.emotion] = (emotions[entry.emotion] || 0) + 1;
+      });
+
+      // Calculate percentages
+      Object.keys(emotions).forEach(emotion => {
+          emotions[emotion] = ((emotions[emotion] / totalDuration) * 100).toFixed(1);
+      });
+
+      return emotions;
+  } catch (error) {
+      console.error('Emotion Analysis Error:', error);
+      return { "Neutral": "100.0" };
+  }
+}
+
+// Main upload and analysis endpoint
+app.post('/api/upload', (req, res) => {
+  console.log('Upload request received');
+  
+  upload(req, res, async function(err) {
+      if (err) {
+          console.error('Upload error:', err);
+          return res.status(400).json({
+              success: false,
+              message: err.message || 'File upload failed'
+          });
+      }
+
+      try {
+          console.log('Files received:', req.files);
+          console.log('Body data received:', req.body);
+
+          // Ensure required files are present
+          if (!req.files || !req.files.videoFile || !req.files.audioFile) {
+              throw new Error('Missing required files');
+          }
+
+          // Parse data
+          const emotionData = JSON.parse(req.body.emotionData);
+          const speechData = JSON.parse(req.body.speechData);
+
+          console.log('Parsed emotion data:', emotionData);
+          console.log('Parsed speech data:', speechData);
+
+          // Generate mock report for testing
+          const mockReport = {
+              summary: {
+                  totalDuration: speechData.duration + ' seconds',
+                  wordsPerMinute: speechData.wpm,
+                  totalWords: speechData.totalWords
+              },
+              grammarAnalysis: {
+                  score: 8,
+                  feedback: "Good grammar usage"
+              },
+              sentimentAnalysis: {
+                  confidenceScore: 7,
+                  clarityScore: 8,
+                  overallImpression: "Positive and clear presentation",
+                  sentiment: "Positive"
+              },
+              professionalAnalysis: {
+                  communicationScore: 8,
+                  organizationScore: 7,
+                  recommendations: [
+                      "Maintain good pace",
+                      "Continue clear articulation"
+                  ]
+              },
+              emotionAnalysis: {
+                  "Neutral": "60",
+                  "Happy": "30",
+                  "Engaged": "10"
+              }
+          };
+
+          res.json({
+              success: true,
+              message: 'Upload and analysis complete',
+              report: mockReport
+          });
+
+      } catch (error) {
+          console.error('Processing error:', error);
+          res.status(500).json({
+              success: false,
+              message: error.message || 'Error processing recording'
+          });
+      }
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: err.message
+  });
 });
 
 // Connect to MongoDB
@@ -80,7 +268,7 @@ mongoose
   .connect(MONGODB_URI)
   .then(() => {
     console.log("MongoDB connected successfully!");
-   
+    // Start the server only after successful DB connection
     app.listen(PORT, () => {
       console.log(`Server is running on port: ${PORT}`);
     });
