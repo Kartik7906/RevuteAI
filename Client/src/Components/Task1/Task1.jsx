@@ -3,6 +3,7 @@ import './Task1.css';
 import { Camera } from '@mediapipe/camera_utils';
 import { FaceMesh } from '@mediapipe/face_mesh';
 import Swal from 'sweetalert2';
+import Navbar from '../Navbar/Navbar'
 
 const Task1 = () => {
   // State Variables
@@ -465,7 +466,7 @@ const Task1 = () => {
 
   // Show results dialog (Optional, based on your original code)
   const showResults = (data) => {
-    const report = data; // Assuming data is the report object
+    const report = data;
 
     const reportHTML = `
       <div class="report-container">
@@ -653,6 +654,8 @@ const Task1 = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="box">
       <div id="asses1" className="asses1" ref={asses1Ref}>
         <div className="intro_text">
@@ -696,6 +699,7 @@ const Task1 = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
