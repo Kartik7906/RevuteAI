@@ -55,10 +55,7 @@ const upload = multer({
 
 // middleware:
 dotenv.config();
-app.use(cors({
-    origin: 'https://revute-ai.vercel.app',
-    credentials: true,
-  }));
+app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname)));
