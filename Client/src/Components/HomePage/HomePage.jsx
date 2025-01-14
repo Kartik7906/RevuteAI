@@ -1,9 +1,14 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const handleloginhere = ()=>{
+    navigate('/login')
+  }
   return (
     <div>
-      This is an HomePage:
+      <button onClick={handleloginhere}>login here</button>
     </div>
   )
 }
