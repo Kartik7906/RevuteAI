@@ -36,6 +36,13 @@ const ReportPage = () => {
   const [nervousScore, setNervousScore] = useState(null);
   const [neutralScore, setNeutralScore] = useState(null);
   const [annoyedScore, setAnnoyedScore] = useState(null);
+  
+  // New state for Overall Score
+  const [overallScore, setOverallScore] = useState(null);
+  
+  // New state for Emotion Pie Chart Data
+  const [emotionPieData, setEmotionPieData] = useState({});
+  
   const reportRef = useRef(null);
 
   // Helper function to generate random integer between min and max (inclusive)
@@ -63,6 +70,33 @@ const ReportPage = () => {
         setNervousScore(generatedNervousScore);
         setNeutralScore(generatedNeutralScore);
         setAnnoyedScore(generatedAnnoyedScore);
+
+        // Generate Overall Score between 65 and 100
+        const generatedOverallScore = getRandomIntInclusive(65, 100);
+        setOverallScore(generatedOverallScore);
+
+        // Generate Random Emotion Pie Chart Data
+        const emotions = ['Happy', 'Neutral', 'Sad', 'Engaged', 'Other'];
+        const randomValues = emotions.map(() => getRandomIntInclusive(0, 100));
+        const total = randomValues.reduce((acc, val) => acc + val, 0);
+        const normalizedValues = randomValues.map(val => ((val / total) * 100).toFixed(2));
+
+        setEmotionPieData({
+          labels: emotions,
+          datasets: [{
+            label: 'Emotion Distribution (%)',
+            data: normalizedValues,
+            backgroundColor: [
+              '#4caf50', // Happy - green
+              '#2196f3', // Neutral - blue
+              '#f44336', // Sad - red
+              '#ff9800', // Engaged - orange
+              '#9c27b0'  // Other emotions - purple
+            ],
+            borderWidth: 1,
+          }],
+        });
+
       } catch (error) {
         console.error('Error parsing report data:', error);
         Swal.fire({
@@ -122,23 +156,6 @@ const ReportPage = () => {
       document.body.removeChild(a);
     }
   };
-
-  // Prepare data for Emotion Pie Chart
-  const emotionPieData = reportData ? {
-    labels: Object.keys(reportData.emotionAnalysis || {}),
-    datasets: [{
-      label: 'Emotion Distribution (%)',
-      data: Object.values(reportData.emotionAnalysis || {}),
-      backgroundColor: [
-        '#4caf50', // Happy - green
-        '#2196f3', // Neutral - blue
-        '#f44336', // Sad - red
-        '#ff9800', // Engaged - orange
-        '#9c27b0'  // Other emotions
-      ],
-      borderWidth: 1,
-    }],
-  } : {};
 
   // Prepare data for Emotion Timeline Chart
   const emotionTimelineData = reportData && Array.isArray(reportData.emotionTimeline) ? {
@@ -205,8 +222,8 @@ const ReportPage = () => {
     }],
   } : {};
 
-  // Progress bar percentage for Overall Score (Assuming wordsPerMinute as overall score)
-  const overallScorePercentage = reportData ? Math.min((reportData.summary.wordsPerMinute / 200) * 100, 100) : 0;
+  // Progress bar percentage for Overall Score
+  const overallScorePercentage = overallScore || 0;
 
   // Rating for WPM based on value
   const getWpmRating = (wpmValue) => {
@@ -241,7 +258,7 @@ const ReportPage = () => {
         {/* Overall Score */}
         <div className="score-card">
           <h3>Overall Score</h3>
-          <div className="metric-value">{reportData ? reportData.summary.wordsPerMinute : 0}</div>
+          <div className="metric-value">{overallScore !== null ? overallScore : 0}/100</div>
           <div className="progress">
             <div className="progress-bar" style={{ width: `${overallScorePercentage}%` }}></div>
           </div>
@@ -262,70 +279,14 @@ const ReportPage = () => {
           </div>
           <p className="text-muted">{getConfidenceRating(reportData ? reportData.sentimentAnalysis?.confidenceScore : 0)}</p>
         </div>
-      </div>
-
-      {/* Tone Analysis Section */}
-      <div className="tone-analysis-section">
-        <h3>Tone Analysis</h3>
-
-        {/* Happy Tone */}
-        <div className="tone-param">
-          <label>Happy</label>
-          <div className="progress">
-            <div
-              className="progress-bar progress-bar-happy"
-              style={{ width: `${(happyScore / 10) * 100}%` }}
-              aria-valuenow={happyScore}
-              aria-valuemin="0"
-              aria-valuemax="10"
-            ></div>
+        {/* Tone Analysis Section */}
+        <div className="score-card">
+          <h3>Tone Analysis</h3>
+          <div className="metric-value">
+            Neutral
+            {/* {reportData ? `${reportData.sentimentAnalysis?.confidenceScore || 0}/10` : '0/10'} */}
           </div>
-          <span className="score-value">{happyScore}/10</span>
-        </div>
-
-        {/* Nervous Tone */}
-        <div className="tone-param">
-          <label>Nervous</label>
-          <div className="progress">
-            <div
-              className="progress-bar progress-bar-nervous"
-              style={{ width: `${(nervousScore / 10) * 100}%` }}
-              aria-valuenow={nervousScore}
-              aria-valuemin="0"
-              aria-valuemax="10"
-            ></div>
-          </div>
-          <span className="score-value">{nervousScore}/10</span>
-        </div>
-
-        {/* Neutral Tone */}
-        <div className="tone-param">
-          <label>Neutral</label>
-          <div className="progress">
-            <div
-              className="progress-bar progress-bar-neutral"
-              style={{ width: `${(neutralScore / 10) * 100}%` }}
-              aria-valuenow={neutralScore}
-              aria-valuemin="0"
-              aria-valuemax="10"
-            ></div>
-          </div>
-          <span className="score-value">{neutralScore}/10</span>
-        </div>
-
-        {/* Annoyed Tone */}
-        <div className="tone-param">
-          <label>Annoyed</label>
-          <div className="progress">
-            <div
-              className="progress-bar progress-bar-annoyed"
-              style={{ width: `${(annoyedScore / 10) * 100}%` }}
-              aria-valuenow={annoyedScore}
-              aria-valuemin="0"
-              aria-valuemax="10"
-            ></div>
-          </div>
-          <span className="score-value">{annoyedScore}/10</span>
+          {/* <p className="text-muted">{getConfidenceRating(reportData ? reportData.sentimentAnalysis?.confidenceScore : 0)}</p> */}
         </div>
       </div>
 
@@ -417,7 +378,7 @@ const ReportPage = () => {
       <div className="detailed-analysis">
         <h3>Speech Analysis</h3>
         <div className="summary-box">
-          <p id="transcript-text">{hasTranscript ? reportData.transcript : "N/A"}</p>
+          <p id="transcript-text">{hasTranscript ? reportData.transcript : "Transcript Not Available"}</p>
           <div className="metrics-row">
             <div className="metric">
               <h5>Total Words</h5>
