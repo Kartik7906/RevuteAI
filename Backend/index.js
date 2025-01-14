@@ -54,7 +54,7 @@ const upload = multer({
 ]);
 
 
-const allowedOrigins = ['https://your-frontend-domain.vercel.app'];
+const allowedOrigins = ['https://revute-ai-xs8f.vercel.app'];
 // middleware:
 dotenv.config();
 app.use(cors({
