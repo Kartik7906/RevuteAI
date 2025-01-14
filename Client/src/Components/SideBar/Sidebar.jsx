@@ -9,10 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ setSection }) => {
   const navigate = useNavigate();
-  const handleReportBtn = () =>{
-    setSection('report')
-    navigate('/report')
-  }
   const handleIntro_navigation = () =>{
     setSection('task1')
     navigate('/task1')
@@ -26,7 +22,7 @@ const Sidebar = ({ setSection }) => {
         <li onClick={handleIntro_navigation}> <MdOutlineTaskAlt size={20}/> Self intro pitch</li>
         <li onClick={() => setSection('task2')}> <MdOutlineTaskAlt size={20}/> Bot_ mock pitch</li>
         
-        <li onClick={handleReportBtn}>
+        <li onClick={() => setSection('reportlist')}>
           <TbReportSearch size={20} /> Report
         </li>
       </ul>

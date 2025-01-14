@@ -7,6 +7,7 @@ import Announcement from "../Announcement/Announcement";
 import Task1 from "../Task1/Task1";
 import Task2 from "../Task2/Task2";
 import './LandingPage.css'
+import ListedReport from "../ListedReports/ListedReport";
 
 const LandingPage = () => {
   // this usestate decide which component to render:
@@ -23,6 +24,8 @@ const LandingPage = () => {
         return <Task1 />;
       case "task2":
         return <Task2 />;
+      case "reportlist":
+        return <ListedReport/>;
       default:
         return <Dashboard />;
     }
