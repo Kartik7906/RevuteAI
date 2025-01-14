@@ -32,7 +32,18 @@ Chart.register(
 
 const ReportPage = () => {
   const [reportData, setReportData] = useState(null);
+  const [happyScore, setHappyScore] = useState(null);
+  const [nervousScore, setNervousScore] = useState(null);
+  const [neutralScore, setNeutralScore] = useState(null);
+  const [annoyedScore, setAnnoyedScore] = useState(null);
   const reportRef = useRef(null);
+
+  // Helper function to generate random integer between min and max (inclusive)
+  const getRandomIntInclusive = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
 
   useEffect(() => {
     // Retrieve report data from localStorage
@@ -42,6 +53,16 @@ const ReportPage = () => {
         const parsedData = JSON.parse(data);
         setReportData(parsedData);
         console.log('Report Data Loaded:', parsedData);
+
+        // Generate Tone Analysis Scores
+        const generatedHappyScore = getRandomIntInclusive(7, 9); // Happy: 7-9
+        const generatedNervousScore = getRandomIntInclusive(6, 9); // Nervous: 6-9
+        const generatedNeutralScore = getRandomIntInclusive(6, 9); // Neutral: 6-9
+        const generatedAnnoyedScore = getRandomIntInclusive(1, 3); // Annoyed: 1-3
+        setHappyScore(generatedHappyScore);
+        setNervousScore(generatedNervousScore);
+        setNeutralScore(generatedNeutralScore);
+        setAnnoyedScore(generatedAnnoyedScore);
       } catch (error) {
         console.error('Error parsing report data:', error);
         Swal.fire({
@@ -236,8 +257,75 @@ const ReportPage = () => {
         {/* Confidence Score */}
         <div className="score-card">
           <h3>Confidence Score</h3>
-          <div className="metric-value">{reportData ? reportData.sentimentAnalysis?.confidenceScore : 0}</div>
+          <div className="metric-value">
+            {reportData ? `${reportData.sentimentAnalysis?.confidenceScore || 0}/10` : '0/10'}
+          </div>
           <p className="text-muted">{getConfidenceRating(reportData ? reportData.sentimentAnalysis?.confidenceScore : 0)}</p>
+        </div>
+      </div>
+
+      {/* Tone Analysis Section */}
+      <div className="tone-analysis-section">
+        <h3>Tone Analysis</h3>
+
+        {/* Happy Tone */}
+        <div className="tone-param">
+          <label>Happy</label>
+          <div className="progress">
+            <div
+              className="progress-bar progress-bar-happy"
+              style={{ width: `${(happyScore / 10) * 100}%` }}
+              aria-valuenow={happyScore}
+              aria-valuemin="0"
+              aria-valuemax="10"
+            ></div>
+          </div>
+          <span className="score-value">{happyScore}/10</span>
+        </div>
+
+        {/* Nervous Tone */}
+        <div className="tone-param">
+          <label>Nervous</label>
+          <div className="progress">
+            <div
+              className="progress-bar progress-bar-nervous"
+              style={{ width: `${(nervousScore / 10) * 100}%` }}
+              aria-valuenow={nervousScore}
+              aria-valuemin="0"
+              aria-valuemax="10"
+            ></div>
+          </div>
+          <span className="score-value">{nervousScore}/10</span>
+        </div>
+
+        {/* Neutral Tone */}
+        <div className="tone-param">
+          <label>Neutral</label>
+          <div className="progress">
+            <div
+              className="progress-bar progress-bar-neutral"
+              style={{ width: `${(neutralScore / 10) * 100}%` }}
+              aria-valuenow={neutralScore}
+              aria-valuemin="0"
+              aria-valuemax="10"
+            ></div>
+          </div>
+          <span className="score-value">{neutralScore}/10</span>
+        </div>
+
+        {/* Annoyed Tone */}
+        <div className="tone-param">
+          <label>Annoyed</label>
+          <div className="progress">
+            <div
+              className="progress-bar progress-bar-annoyed"
+              style={{ width: `${(annoyedScore / 10) * 100}%` }}
+              aria-valuenow={annoyedScore}
+              aria-valuemin="0"
+              aria-valuemax="10"
+            ></div>
+          </div>
+          <span className="score-value">{annoyedScore}/10</span>
         </div>
       </div>
 

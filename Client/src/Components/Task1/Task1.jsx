@@ -385,7 +385,7 @@ const Task1 = () => {
     formData.append('wpm', speechDataRef.current.wpm);
 
     try {
-      const response = await fetch('https://revuteai.onrender.com/api/upload', {
+      const response = await fetch('http://localhost:8000/api/upload', {
         method: 'POST',
         body: formData
       });
@@ -437,7 +437,7 @@ const Task1 = () => {
         didOpen: () => Swal.showLoading()
       });
 
-      const response = await fetch('https://revuteai.onrender.com/api/upload', {
+      const response = await fetch('http://localhost:8000/api/upload', {
         method: 'POST',
         body: formData
       });

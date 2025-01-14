@@ -54,13 +54,14 @@ const upload = multer({
 ]);
 
 
-const allowedOrigins = ['https://revute-ai-xs8f.vercel.app'];
+// const allowedOrigins = ['https://revute-ai-xs8f.vercel.app'];
 // middleware:
 dotenv.config();
-app.use(cors({
-    origin: allowedOrigins,
-    credentials: true,
-  }));
+// app.use(cors({
+//     origin: allowedOrigins,
+//     credentials: true,
+//   }));
+app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname)));

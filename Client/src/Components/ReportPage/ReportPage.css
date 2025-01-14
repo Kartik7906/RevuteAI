@@ -169,3 +169,67 @@ body {
       padding: 0;
   }
 }
+
+
+/* css after correting the issue */
+.tone-analysis-section {
+  margin: 20px 0;
+}
+
+.tone-analysis-section h3 {
+  margin-bottom: 15px;
+}
+
+.tone-param {
+  margin-bottom: 15px;
+}
+
+.tone-param label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.score-value {
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.progress {
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-bar-happy {
+  background-color: #4caf50; /* Green */
+}
+
+.progress-bar-nervous {
+  background-color: #ff9800; /* Orange */
+}
+
+.progress-bar-neutral {
+  background-color: #2196f3; /* Blue */
+}
+
+.progress-bar-annoyed {
+  background-color: #f44336; /* Red */
+}
+
+.confidence-score-display {
+  margin-top: 20px;
+}
+
+.confidence-score-display .metric-value {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
