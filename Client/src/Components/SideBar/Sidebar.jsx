@@ -23,8 +23,8 @@ const Sidebar = ({ setSection }) => {
       <ul>
         <li onClick={() => setSection('dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
         <li onClick={() => setSection('announcements')}><GrAnnounce size={20}/> Announcements</li>
-        <li onClick={handleIntro_navigation}> <MdOutlineTaskAlt size={20}/> Introduction</li>
-        <li onClick={() => setSection('task2')}> <MdOutlineTaskAlt size={20}/> Bot</li>
+        <li onClick={handleIntro_navigation}> <MdOutlineTaskAlt size={20}/> Self intro pitch</li>
+        <li onClick={() => setSection('task2')}> <MdOutlineTaskAlt size={20}/> Bot_ mock pitch</li>
         
         <li onClick={handleReportBtn}>
           <TbReportSearch size={20} /> Report
