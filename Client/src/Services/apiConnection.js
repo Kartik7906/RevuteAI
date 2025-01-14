@@ -1,4 +1,4 @@
-const URL = "http://localhost:8000/api";
+const URL = "https://revuteai.onrender.com/api";
 
 // LOGIN
 export const login = ({ email, password }) => {
