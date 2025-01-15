@@ -429,6 +429,10 @@ const Task1 = () => {
         totalWords: speechDataRef.current.totalWords
       }));
 
+        // Save transcript to local storage
+      localStorage.setItem('transcript', JSON.stringify(speechDataRef.current.transcripts));
+
+
       // Show loading
       Swal.fire({
         title: 'Processing...',

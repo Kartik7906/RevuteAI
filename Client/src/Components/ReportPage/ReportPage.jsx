@@ -36,6 +36,7 @@ const ReportPage = () => {
   const [nervousScore, setNervousScore] = useState(null);
   const [neutralScore, setNeutralScore] = useState(null);
   const [annoyedScore, setAnnoyedScore] = useState(null);
+  const [transcript, setTranscript] = useState('');
   
   // New state for Overall Score
   const [overallScore, setOverallScore] = useState(null);
@@ -51,6 +52,18 @@ const ReportPage = () => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
+
+
+  useEffect(() => {
+    // Fetch transcript data from local storage
+    const storedTranscript = localStorage.getItem('transcript');
+    if (storedTranscript) {
+      // Parse, process, and format the transcript
+      const parsedTranscript = JSON.parse(storedTranscript);
+      const formattedTranscript = [...new Set(parsedTranscript.map(text => text.trim()))].join(' ');
+      setTranscript(formattedTranscript);
+    }
+  }, []);
 
   useEffect(() => {
     // Retrieve report data from localStorage
@@ -378,7 +391,7 @@ const ReportPage = () => {
       <div className="detailed-analysis">
         <h3>Speech Analysis</h3>
         <div className="summary-box">
-          <p id="transcript-text">{hasTranscript ? reportData.transcript : "Transcript Not Available"}</p>
+        <p id="transcript-text">User: {transcript}</p>
           <div className="metrics-row">
             <div className="metric">
               <h5>Total Words</h5>
