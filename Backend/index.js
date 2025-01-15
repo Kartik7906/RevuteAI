@@ -53,7 +53,6 @@ const upload = multer({
   { name: 'audioFile', maxCount: 1 }
 ]);
 
-
 // const allowedOrigins = ['https://revute-ai-xs8f.vercel.app'];
 // middleware:
 dotenv.config();
@@ -181,6 +180,33 @@ function analyzeEmotions(emotionData) {
       return { "Neutral": "100.0" };
   }
 }
+
+// =============================
+// New endpoint to analyze transcript for suggestions
+// =============================
+app.post('/api/gemini', async (req, res) => {
+  try {
+    const { transcript } = req.body;
+
+    // Simple example checks:
+    let suggestions = [];
+    if (!transcript.toLowerCase().includes('project')) {
+      suggestions.push('Please mention your projects or relevant experiences.');
+    }
+    if (!transcript.toLowerCase().includes('goal')) {
+      suggestions.push('Consider stating your career goals or aspirations.');
+    }
+
+    // You could optionally call analyzeWithGemini(transcript)
+    // or other advanced logic here if desired.
+
+    return res.json({ suggestions });
+  } catch (error) {
+    console.error('Gemini suggestions error:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+// =============================
 
 // Main upload and analysis endpoint
 app.post('/api/upload', (req, res) => {
