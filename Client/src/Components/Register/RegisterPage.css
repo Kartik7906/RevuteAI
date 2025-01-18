@@ -1,201 +1,320 @@
+/* Reset and Base Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    background: #f5f5f5; 
-  }
-  
-  .register-box {
-    /* background: #fff; */
-    width: 400px;
-    padding: 30px;
-    border-radius: 6px;
-    /* box-shadow: 0 0 10px rgba(0,0,0,0.1); */
-    text-align: center;
-  }
-  
-  .register-header {
-    margin-bottom: 20px;
-  }
-  
-  .brain-icon {
-    font-size: 60px;
-    color: #000;
-  }
-  
-  .register-header h2 {
-    font-size: 24px;
-    margin: 10px 0;
-    letter-spacing: 2px;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
 
-  .register-form .input-field {
-    display: block;
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid #000;
-    margin-bottom: 15px;
-    font-size: 14px;
-    padding: 8px 0;
-    outline: none;
-    background: transparent;
-  }
-  
-  /* --- Terms & conditions text --- */
-  .terms-text {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-  }
-  
-  .terms {
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  
-  /* --- Submit button --- */
-  .submit-btn {
-    width: 100%;
-    height: 40px;
-    background: #000;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    font-size: 14px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-  
-  /* --- Existing account text & sign-in link --- */
-  .existing-text {
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .login-link {
-    font-weight: 600;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  /* --- Hover states --- */
-  .terms:hover {
-    font-weight: 600;
-  }
-  
-  .login-link:hover {
-    color: red;
-  }
-  
-  /* --- Media queries for small screens --- */
-  @media (max-width: 480px) {
-    .register-box {
-      width: 90%;
-      padding: 20px;
-    }
-    
-    .register-header .brain-icon {
-      font-size: 50px;
-    }
-  
-    .register-header h2 {
-      font-size: 20px;
-    }
-  }
+body {
+  background-color: #ffffff;
+  color: #333333;
+}
 
+/* Register Container */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: #f5f5f5;
+}
 
-  /* popup modal: */
-/* Overlay with blurred background effect */
-/* ============================================= */
-/*  Popup Overlay & Modal Content Styling        */
-/* ============================================= */
+/* Register Box */
+.register-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
+/* Register Header */
+.register-header {
+  margin-bottom: 20px;
+}
+
+.register-header h2 {
+  font-size: 24px;
+  margin: 10px 0;
+  letter-spacing: 2px;
+  color: #6a0dad;
+}
+
+.register-header p {
+  font-size: 14px;
+  color: #555555;
+}
+
+/* Registration Form */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Input Groups */
+.input-group {
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 40px 12px 15px; /* Extra padding for password toggle */
+  font-size: 16px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  background: transparent;
+}
+
+.input-field::placeholder {
+  color: #999999;
+}
+
+.input-field:focus {
+  border-color: #6a0dad;
+  outline: none;
+}
+
+.input-error {
+  border-color: #e74c3c;
+}
+
+/* Password Visibility Toggle */
+.password-group {
+  position: relative;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999999;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.password-toggle-icon:hover {
+  color: #6a0dad;
+}
+
+/* Error Messages */
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+  height: 18px; /* Reserve space to prevent layout shift */
+}
+
+/* Terms & Conditions */
+.terms-text {
+  font-size: 14px;
+  color: #555555;
+  margin-bottom: 20px;
+}
+
+.terms {
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.terms:hover {
+  color: #6a0dad;
+}
+
+/* API Error */
+.api-error {
+  width: 100%;
+  background-color: #fdecea;
+  color: #e74c3c;
+  padding: 10px;
+  border: 1px solid #e74c3c;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #6a0dad;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:disabled {
+  background-color: #a08fd1;
+  cursor: not-allowed;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: #4b0082;
+}
+
+/* Existing Account Text */
+.existing-text {
+  font-size: 14px;
+  color: #555555;
+  margin-top: 20px;
+}
+
+.login-link {
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #6a0dad;
+}
+
+.login-link:hover {
+  color: #4b0082;
+}
+
+/* Popup Overlay Modal */
 .popup-overlay-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  
-  /* Semi-transparent black overlay */
   background-color: rgba(0, 0, 0, 0.5);
-  
-  /* Center the modal content */
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  /* Bring overlay above other elements */
   z-index: 9999;
 }
 
+/* Popup Content Modal */
 .popup-content-modal {
-  /* Modal box appearance */
-  background-color: #fff;
-  width: 400px;
-  max-width: 90%;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 400px;
   padding: 2rem;
   border-radius: 8px;
-  
-  /* Slight shadow for depth */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  
-  /* Center text and elements inside */
   text-align: center;
 }
 
-/* ============================================= */
-/*  Radio Labels Inside the Modal                */
-/* ============================================= */
+/* Popup Form Labels */
 .popup-content-modal form label {
   display: flex;
   align-items: center;
   margin: 1rem 0;
-  font-size: 1rem;
+  font-size: 16px;
   cursor: pointer;
 }
 
 .popup-content-modal form label input[type="radio"] {
-  margin-right: 0.5rem;
+  margin-right: 10px;
   cursor: pointer;
 }
 
 .popup-content-modal form label span {
-  margin-left: 0.25rem;
+  margin-left: 5px;
 }
 
-/* ============================================= */
-/*  Modal Submit Button                          */
-/* ============================================= */
+/* Modal Submit Button */
 .submit-btn-modal {
-  background-color: #1d4ed8; /* or any brand color */
-  color: #fff;
-  padding: 0.75rem 1.5rem;
+  width: 100%;
+  padding: 12px;
+  background-color: #1d4ed8; /* Brand color */
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  margin-top: 1rem;
+  margin-top: 20px;
   transition: background-color 0.3s ease;
 }
 
-.submit-btn-modal:hover {
-  background-color: #1e40af; /* slightly darker shade on hover */
+.submit-btn-modal:disabled {
+  background-color: #a0c4ff;
+  cursor: not-allowed;
 }
 
+.submit-btn-modal:hover:not(:disabled) {
+  background-color: #1e40af;
+}
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .register-box {
+    padding: 25px;
+  }
 
+  .register-header h2 {
+    font-size: 22px;
+  }
 
+  .register-header p {
+    font-size: 13px;
+  }
 
+  .input-field {
+    font-size: 14px;
+    padding: 10px 35px 10px 12px; /* Adjust padding for smaller screens */
+  }
 
-  
+  .password-toggle-icon {
+    font-size: 16px;
+  }
+
+  .submit-btn,
+  .submit-btn-modal {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .popup-content-modal {
+    padding: 1.5rem;
+  }
+
+  .popup-content-modal form label {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-box {
+    padding: 20px;
+  }
+
+  .register-header h2 {
+    font-size: 20px;
+  }
+
+  .register-header p {
+    font-size: 12px;
+  }
+
+  .input-field {
+    font-size: 13px;
+    padding: 8px 30px 8px 10px;
+  }
+
+  .password-toggle-icon {
+    font-size: 14px;
+  }
+
+  .submit-btn,
+  .submit-btn-modal {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .popup-content-modal form label {
+    font-size: 13px;
+  }
+}

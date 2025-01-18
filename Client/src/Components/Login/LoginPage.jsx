@@ -1,102 +1,150 @@
-import React, { useState } from 'react';
-import './LoginPage.css';
+import React, { useState } from "react";
+import "./LoginPage.css";
 import { FaBrain } from "react-icons/fa6";
-import { useNavigate } from 'react-router-dom';
-import { login } from '../../Services/apiConnection'; 
+import { useNavigate } from "react-router-dom";
+import { login } from "../../Services/apiConnection";
+import companylogo from '../../images/company_logo.jpeg'
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validate = () => {
+    const errors = {};
+    // Simple email regex for validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      errors.email = "Email is required.";
+    } else if (!emailRegex.test(email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!password) {
+      errors.password = "Password is required.";
+    } else if (password.length < 6) {
+      errors.password = "Password must be at least 6 characters.";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleLogin = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
+
+    if (!validate()) {
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       const response = await login({ email, password });
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.message || 'Invalid login');
+        setErrors({ apiError: data.message || "Invalid login." });
       } else {
-        console.log('Login response:', data);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
-        navigate('/landingpage');
+        console.log("Login response:", data);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+        navigate("/landingpage");
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      alert('Something went wrong');
+      console.error("Error during login:", error);
+      setErrors({ apiError: "Something went wrong. Please try again later." });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleSignup = () => {
-    navigate('/register');
+    navigate("/register");
   };
 
   const handleForgotPassword = () => {
-    alert('Forgot password clicked!');
+    navigate("/forgot-password");
   };
 
   return (
-    <div className="main-container">
-      {/* Left Section */}
-      <div className="left-section">
-        <div className="login-box">
-          <div className="text-center">
-            {/* Wrap form elements in a <form> */}
-            <form onSubmit={handleLogin}>
-              <p className="greeting-words">Get Started</p>
-
-              <input
-                type="email"
-                className="email"
-                id="email"
-                placeholder="✉️ Enter Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <br /><br />
-
-              <input
-                type="password"
-                className="password"
-                id="password"
-                placeholder="🔑 Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <br /><br />
-
-              <a className="forget" onClick={handleForgotPassword}>
-                Forget Password?
-              </a>
-              <br /><br />
-
-              <button className="submit" type="submit">
-                SUBMIT
-              </button>
-              <br /><br />
-
-              <a className="new_account">
-                New User! Create Account -
-                <span className="sign_up" onClick={handleSignup}> Sign Up</span>
-              </a>
-            </form>
-          </div>
-        </div>
+    <div className="main-login-container">
+      {/* Branding Icon */}
+      <div className="branding">
+        <img src={companylogo} alt="" />
       </div>
 
-      {/* Right Section */}
-      <div className="right-section">
-        <div className="right-section-middlepart">
-          <p className="welcome-statement">Welcome To</p>
-          <FaBrain size={70} color="white" />
-          <h4 className="title">RevuteAI</h4>
-          <a className="welcome">Kindly Login to proceed!</a>
+      {/* Login Form */}
+      <form className="login-form" onSubmit={handleLogin} noValidate>
+        <h2 className="form-title">Get Started</h2>
+
+        {/* Email Input */}
+        <div className="input-group">
+          <input
+            type="email"
+            id="email"
+            className={`input-field ${errors.email ? "input-error" : ""}`}
+            placeholder="✉️ Enter Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          {errors.email && <span className="error-message">{errors.email}</span>}
         </div>
-      </div>
+
+        {/* Password Input */}
+        <div className="input-group">
+          <input
+            type="password"
+            id="password"
+            className={`input-field ${errors.password ? "input-error" : ""}`}
+            placeholder="🔑 Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          {errors.password && <span className="error-message">{errors.password}</span>}
+        </div>
+
+        {/* API Error */}
+        {errors.apiError && <div className="api-error">{errors.apiError}</div>}
+
+        {/* Forgot Password */}
+        <div className="forgot-password">
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="forgot-button"
+          >
+            Forget Password?
+          </button>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="submit-button"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Logging in..." : "SUBMIT"}
+        </button>
+
+        {/* Signup Link */}
+        <div className="signup-link">
+          <span>New User! Create Account - </span>
+          <button
+            type="button"
+            onClick={handleSignup}
+            className="signup-button"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
