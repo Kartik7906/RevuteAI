@@ -21,10 +21,14 @@ body {
 }
 
 /* Branding Section */
-.branding {
+.login-logo {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+}
+.login-logo img {
+  width: 350px;
+  height: 100px;
 }
 
 .branding-text {

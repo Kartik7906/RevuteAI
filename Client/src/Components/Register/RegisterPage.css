@@ -27,9 +27,13 @@ body {
   max-width: 400px;
   padding: 30px;
   border-radius: 8px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* background-color: #ffffff; */
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   text-align: center;
+}
+.register-logo img {
+  width: 350px;
+  height: 100px;
 }
 
 /* Register Header */

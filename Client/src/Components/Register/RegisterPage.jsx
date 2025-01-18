@@ -3,6 +3,7 @@ import "./RegisterPage.css";
 import { FaBrain, FaEye, FaEyeSlash } from "react-icons/fa6"; // Import eye icons for password toggle
 import { useNavigate } from "react-router-dom";
 import { register } from "../../Services/apiConnection";
+import companylogo from '../../images/company_logo.jpeg'
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -123,8 +124,9 @@ const RegisterPage = () => {
     <div className="register-container">
       <div className="register-box">
         <div className="register-header">
-          <FaBrain size={40} color="#6a0dad" />
-          <h2>RevuteAI</h2>
+          <div className="register-logo">
+              <img src={companylogo} alt="" />
+          </div>
           <p>New User! Kindly Sign Up to proceed</p>
         </div>
 

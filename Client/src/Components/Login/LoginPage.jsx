@@ -3,7 +3,7 @@ import "./LoginPage.css";
 import { FaBrain } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../Services/apiConnection";
-import companylogo from '../../images/company_logo.jpeg'
+import companylogo from "../../images/company_logo.jpeg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -74,7 +74,8 @@ const LoginPage = () => {
   return (
     <div className="main-login-container">
       {/* Branding Icon */}
-      <div className="branding">
+      {/* Branding Icon */}
+      <div className="login-logo">
         <img src={companylogo} alt="" />
       </div>
 
@@ -93,7 +94,9 @@ const LoginPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors.email && <span className="error-message">{errors.email}</span>}
+          {errors.email && (
+            <span className="error-message">{errors.email}</span>
+          )}
         </div>
 
         {/* Password Input */}
@@ -107,7 +110,9 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {errors.password && <span className="error-message">{errors.password}</span>}
+          {errors.password && (
+            <span className="error-message">{errors.password}</span>
+          )}
         </div>
 
         {/* API Error */}
@@ -125,11 +130,7 @@ const LoginPage = () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          className="submit-button"
-          disabled={isSubmitting}
-        >
+        <button type="submit" className="submit-button" disabled={isSubmitting}>
           {isSubmitting ? "Logging in..." : "SUBMIT"}
         </button>
 
