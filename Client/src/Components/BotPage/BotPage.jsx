@@ -386,9 +386,17 @@ const BotPage = () => {
     startAvatar(pc);
   }, [handleTrackEvent, startAvatar]);
 
+
+  // here is also some key handles:
   const requestAvatarToken = useCallback(() => {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", `https://${cogSvcRegion}.tts.speech.microsoft.com/cognitiveservices/avatar/relay/token/v1`);
+    const cogSvcRegion = process.env.COG_SVC_REGION;
+    const cogSvcSubKey = process.env.COG_SVC_SUB_KEY;
+  
+    xhr.open(
+      "GET",
+      `https://${cogSvcRegion}.tts.speech.microsoft.com/cognitiveservices/avatar/relay/token/v1`
+    );
     xhr.setRequestHeader("Ocp-Apim-Subscription-Key", cogSvcSubKey);
     xhr.onreadystatechange = function () {
       if (this.readyState === 4 && this.status === 200) {
@@ -399,7 +407,7 @@ const BotPage = () => {
       }
     };
     xhr.send();
-  }, [cogSvcRegion, cogSvcSubKey, setupWebRTC]);
+  }, [setupWebRTC]);
 
   const connectAvatar = useCallback(() => {
     if (!SpeechSDK) {
