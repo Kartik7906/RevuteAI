@@ -1,7 +1,6 @@
 // const URL = "https://revuteai.onrender.com/api";
 const URL = "http://localhost:8000/api";
 
-
 // LOGIN
 export const login = ({ email, password }) => {
   return fetch(`${URL}/users/login`, {

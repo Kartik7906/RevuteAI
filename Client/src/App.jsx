@@ -7,6 +7,8 @@ import ReportPage from "./Components/ReportPage/ReportPage";
 import HomePage from "./Components/HomePage/HomePage";
 import Task1 from "./Components/Task1/Task1";
 import ListedReport from "./Components/ListedReports/ListedReport";
+import BotPage from "./Components/BotPage/BotPage";
+import Admin from "./Components/AdminDashboard/Admin";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/report" element={<ReportPage/>} />
           <Route path="/task1" element={<Task1/>} />
           <Route path="/reportlist" element={<ListedReport/>} />
+          <Route path="/botpage" element={<BotPage/>} />
+          <Route path="/admin" element={<Admin/>} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./RegisterPage.css";
-import { FaBrain, FaEye, FaEyeSlash } from "react-icons/fa6"; // Import eye icons for password toggle
+import { FaBrain, FaEye, FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../Services/apiConnection";
 import companylogo from '../../images/company_logo.jpeg'
