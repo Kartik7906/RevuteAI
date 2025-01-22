@@ -10,6 +10,8 @@ import ListedReport from "./Components/ListedReports/ListedReport";
 import BotPage from "./Components/BotPage/BotPage";
 import Admin from "./Components/AdminDashboard/Admin";
 import SuperAdmin from "./Components/SuperAdmin/SuperAdmin";
+import CoursesPage from "./Components/Courses/CoursesPage";
+import ContactusPage from "./Components/ContactusPage/ContactusPage";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path="/botpage" element={<BotPage/>} />
           <Route path="/admin" element={<Admin/>} />
           <Route path="/superadmin" element={<SuperAdmin/>} />
+          <Route path="/contactus" element={<ContactusPage/>} />
+          <Route path="/course" element={<CoursesPage/>} />
         </Routes>
       </BrowserRouter>
     </>

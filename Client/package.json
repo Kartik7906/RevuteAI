@@ -20,6 +20,7 @@
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.7",
     "dotenv": "^16.4.7",
+    "emailjs-com": "^3.2.0",
     "font-awesome": "^4.7.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",

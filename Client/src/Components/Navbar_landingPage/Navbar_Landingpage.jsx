@@ -9,15 +9,28 @@ const Navbar_Landingpage = () => {
       navigate('/login')
     }
 
+    const handleCoursehere = ()=>{
+      navigate('/course')
+    }
+
+    const handleAboutushere = ()=>{
+      navigate('/about')
+    }
+
+    const handleContactushere = ()=>{
+      navigate('/contactus')
+    }
+
+
   return (
     <div className='navbarHomepage-container'>
       <div className='companyHomepage-logo'>
         <img src={company_logo} alt="Company Logo" />
       </div>
       <div className='userHomepage-navigator-div'>
-      <span onClick={handleloginhere} className='loginHomepage-container'>Courses</span>
-      <span onClick={handleloginhere} className='loginHomepage-container'>About Us</span>
-      <span onClick={handleloginhere} className='loginHomepage-container'>Contact Us</span>
+      <span onClick={handleCoursehere} className='loginHomepage-container'>Courses</span>
+      <span onClick={handleAboutushere} className='loginHomepage-container'>About Us</span>
+      <span onClick={handleContactushere} className='loginHomepage-container'>Contact Us</span>
         <span onClick={handleloginhere} className='loginHomepage-container'>Log In</span>
         <button className='demoHomepage-container'>Book a Demo</button>
       </div>
