@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './BotPage.css';
 import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
 import { useNavigate } from 'react-router-dom';
-require('dotenv').config();
 const URL = "http://localhost:8000/api";
 
 const BotPage = () => {
@@ -631,6 +630,10 @@ const BotPage = () => {
     navigate('/admin');
   }
 
+  const handleSuperAdminNavigation = () =>{
+    navigate('/superadmin');
+  }
+
   // Ui start from here:
   return (
     <div className="bot-page-container">
@@ -641,7 +644,7 @@ const BotPage = () => {
         <div className="bot-header-right">
           <nav>
             <ul className="bot-nav-links">
-              <li>Super Admin</li>
+              <li onClick={handleSuperAdminNavigation}>Super Admin</li>
               <li onClick={handleAdminNavigation}>Admin</li>
             </ul>
           </nav>

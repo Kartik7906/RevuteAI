@@ -659,9 +659,9 @@ const Task1 = () => {
   return (
     <>
     <Navbar/>
-    <div className="box">
-      <div id="asses1" className="asses1" ref={asses1Ref}>
-        <div className="intro_text">
+    <div className="task1-box">
+      <div id="asses1" className="task1-asses1" ref={asses1Ref}>
+        <div className="task1-intro_text">
           <h3>Self Introduction Assessment</h3>
           <p>Please provide a 2-minute self-introduction covering:</p>
           <ul>
@@ -672,33 +672,33 @@ const Task1 = () => {
           </ul>
         </div>
         <center>
-          <button className="button" id="start" onClick={startAssessment}>Start Assessment</button>
+          <button className="task1-button" id="start" onClick={startAssessment}>Start Assessment</button>
         </center>
       </div>
 
-      <div id="recordings" className="recordings" ref={recordingsRef} style={{ display: 'none' }}>
-        <h3 className="self">Self-Introduction Recording</h3>
+      <div id="recordings" className="task1-recordings" ref={recordingsRef} style={{ display: 'none' }}>
+        <h3 className="task1-self">Self-Introduction Recording</h3>
 
-        <div className="video-container">
-          <video ref={videoRef} className="video" autoPlay muted playsInline></video>
-          <div id="emotion" className="emotion-display">Expression: {emotion}</div>
+        <div className="task1-video-container">
+          <video ref={videoRef} className="task1-video" autoPlay muted playsInline></video>
+          <div id="emotion" className="task1-emotion-display">Expression: {emotion}</div>
         </div>
 
-        <div className="metrics-container">
-          <div className="metric-card">
-            <div id="timer" className="timer">Time: {timer}</div>
+        <div className="task1-metrics-container">
+          <div className="task1-metric-card">
+            <div id="timer" className="task1-timer">Time: {timer}</div>
           </div>
-          <div className="metric-card">
-            <div id="wpm" className="status">Words per minute: {wpm}</div>
+          <div className="task1-metric-card">
+            <div id="wpm" className="task1-status">Words per minute: {wpm}</div>
           </div>
-          <div className="metric-card">
-            <div id="word-count" className="status">Total words: {wordCount}</div>
+          <div className="task1-metric-card">
+            <div id="word-count" className="task1-status">Total words: {wordCount}</div>
           </div>
         </div>
 
-        <div className="controls">
-          <button className="button" id="start_record" onClick={startRecording} ref={startRecordButtonRef}>Start Recording</button>
-          <button className="button stop" id="stop_record" onClick={stopRecording} ref={stopRecordButtonRef} style={{ display: 'none' }}>Stop Recording</button>
+        <div className="task1-controls">
+          <button className="task1-button" id="start_record" onClick={startRecording} ref={startRecordButtonRef}>Start Recording</button>
+          <button className="task1-button stop" id="stop_record" onClick={stopRecording} ref={stopRecordButtonRef} style={{ display: 'none' }}>Stop Recording</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./RegisterPage.css";
-import { FaBrain, FaEye, FaEyeSlash } from "react-icons/fa6";
+import { FaBrain, FaEye, FaEyeSlash } from "react-icons/fa6"; // Import eye icons for password toggle
 import { useNavigate } from "react-router-dom";
 import { register } from "../../Services/apiConnection";
 import companylogo from '../../images/company_logo.jpeg'
@@ -94,6 +94,7 @@ const RegisterPage = () => {
         email: formData.email,
         username: formData.username,
         password: formData.password,
+        confirmPassword: formData.confirmPassword,
         role,
       });
 

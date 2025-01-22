@@ -13,14 +13,14 @@ import { IoStatsChartSharp } from "react-icons/io5";
 const HomePage = () => {
   return (
     <>
-      <div className="main-container">
+      <div className="homepage-main-container">
         <Navbar_Landingpage />
-        <div className="main-content">
-          <div className="overlayer-text">
-            <div className="overlayer-text-left">
+        <div className="homepage-main-content">
+          <div className="homepage-overlayer-text">
+            <div className="homepage-overlayer-text-left">
               <h2>Immersive Soft Skills Training</h2>
             </div>
-            <div className="overlayer-text-right">
+            <div className="homepage-overlayer-text-right">
               <p>
                 Join 550,000+ professionals and boost your career with
                 AI-powered training on public speaking, leadership, sales, and
@@ -30,41 +30,41 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="choose-us-container">
-          <div className="choose-us-reason">
+        <div className="homepage-choose-us-container">
+          <div className="homepage-choose-us-reason">
             <h2>Why RevuteAI?</h2>
-            <div className="reasons">
-              <div className="reason">
+            <div className="homepage-reasons">
+              <div className="homepage-reason">
                 <FaLightbulb />
                 <h3>Proven success</h3>
-                <span className="horizontal"></span>
+                <span className="homepage-horizontal"></span>
                 <p>
                   Join over 550,000 people across 130+ countries using
                   VirtualSpeech to upskill themselves.
                 </p>
               </div>
-              <div className="reason">
+              <div className="homepage-reason">
                 <FaBookOpen />
                 <h3>Learn by doing</h3>
-                <span className="horizontal"></span>
+                <span className="homepage-horizontal"></span>
                 <p>
                   With over 55 hands-on practice exercises, you'll improve your
                   skills up to 4x faster.
                 </p>
               </div>
-              <div className="reason">
+              <div className="homepage-reason">
                 <RiRobot3Fill />
                 <h3>AI feedback</h3>
-                <span className="horizontal"></span>
+                <span className="homepage-horizontal"></span>
                 <p>
                   After each practice session, you'll get AI-powered feedback on
                   areas you need practice.
                 </p>
               </div>
-              <div className="reason">
+              <div className="homepage-reason">
                 <IoStatsChartSharp />
                 <h3>Boost your career</h3>
-                <span className="horizontal"></span>
+                <span className="homepage-horizontal"></span>
                 <p>
                   Our accredited courses help you get a promotion and progress
                   as a manager.
@@ -73,9 +73,9 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="IntroWhyUs">
+        <div className="homepage-IntroWhyUs">
           <img src={bgImage} alt="" />
-          <div className="Overlayer2-toWhyUs">
+          <div className="homepage-Overlayer2-toWhyUs">
             <h2>Different ways to practice</h2>
             <p>
               Our AI-powered exercises are designed to simulate real-world
@@ -84,18 +84,18 @@ const HomePage = () => {
             </p>
           </div>
         </div>
-        <div className="learningPath">
-          <div className="learningPath-container">
-            <div className="learningPath-title">
+        <div className="homepage-learningPath">
+          <div className="homepage-learningPath-container">
+            <div className="homepage-learningPath-title">
               <h2>The learning journey</h2>
               <p>
                 Our blended courses combine e-learning with practice and
                 feedback.
               </p>
             </div>
-            <div className="learningPath-cards">
-              <div className="learningPath-card">
-                <div className="cirecular-image-div">
+            <div className="homepage-learningPath-cards">
+              <div className="homepage-learningPath-card">
+                <div className="homepage-cirecular-image-div">
                   <img src={workplaceimg} alt="Workplace Skills" />
                 </div>
                 <h3>Learn workplace skills</h3>
@@ -104,8 +104,8 @@ const HomePage = () => {
                   These teach you fundamental workplace skills.
                 </p>
               </div>
-              <div className="learningPath-card">
-                <div className="cirecular-image-div">
+              <div className="homepage-learningPath-card">
+                <div className="homepage-cirecular-image-div">
                   <img src={practiceing} alt="Practice Learning" />
                 </div>
                 <h3>Practice what you learn</h3>
@@ -114,8 +114,8 @@ const HomePage = () => {
                   online or in VR/MR.
                 </p>
               </div>
-              <div className="learningPath-card">
-                <div className="cirecular-image-div">
+              <div className="homepage-learningPath-card">
+                <div className="homepage-cirecular-image-div">
                   <img src={feedbackimg} alt="Instant Feedback" />
                 </div>
                 <h3>Get instant feedback</h3>
@@ -127,10 +127,10 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-        <div className="footer-homePage">
-          <div className="footer-wrapper">
-            <div className="footer-top">
-              <div className="footer-column">
+        <div className="homepage-footer-homePage">
+          <div className="homepage-footer-wrapper">
+            <div className="homepage-footer-top">
+              <div className="homepage-footer-column">
                 <h3>PLATFORM</h3>
                 <ul>
                   <li>AI Roleplays</li>
@@ -140,7 +140,7 @@ const HomePage = () => {
                   <li>Skill Assessment</li>
                 </ul>
               </div>
-              <div className="footer-column">
+              <div className="homepage-footer-column">
                 <h3>RESOURCES</h3>
                 <ul>
                   <li>Blog</li>
@@ -148,7 +148,7 @@ const HomePage = () => {
                   <li>Webinars</li>
                 </ul>
               </div>
-              <div className="footer-column">
+              <div className="homepage-footer-column">
                 <h3>LINKS</h3>
                 <ul>
                   <li>Contact</li>
@@ -158,7 +158,7 @@ const HomePage = () => {
                   <li>Newsletter</li>
                 </ul>
               </div>
-              <div className="footer-column">
+              <div className="homepage-footer-column">
                 <h3>SUPPORT</h3>
                 <ul>
                   <li>Help Center</li>
@@ -169,10 +169,10 @@ const HomePage = () => {
                 </ul>
               </div>
             </div>
-            <div className="footer-bottom">
-              <p className="footer-company">2025 VirtualSpeech Ltd.</p>
-              <p className="footer-links">Terms | Privacy | Accessibility</p>
-              <div className="footer-social">
+            <div className="homepage-footer-bottom">
+              <p className="homepage-footer-company">2025 VirtualSpeech Ltd.</p>
+              <p className="homepage-footer-links">Terms | Privacy | Accessibility</p>
+              <div className="homepage-footer-social">
                 <i className="fab fa-facebook-f">F</i>
                 <i className="fab fa-x-twitter">X</i>
                 <i className="fab fa-youtube">Y</i>

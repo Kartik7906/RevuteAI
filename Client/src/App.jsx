@@ -9,6 +9,7 @@ import Task1 from "./Components/Task1/Task1";
 import ListedReport from "./Components/ListedReports/ListedReport";
 import BotPage from "./Components/BotPage/BotPage";
 import Admin from "./Components/AdminDashboard/Admin";
+import SuperAdmin from "./Components/SuperAdmin/SuperAdmin";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/reportlist" element={<ListedReport/>} />
           <Route path="/botpage" element={<BotPage/>} />
           <Route path="/admin" element={<Admin/>} />
+          <Route path="/superadmin" element={<SuperAdmin/>} />
         </Routes>
       </BrowserRouter>
     </>

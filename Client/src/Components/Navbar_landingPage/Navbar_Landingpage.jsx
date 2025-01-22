@@ -10,13 +10,16 @@ const Navbar_Landingpage = () => {
     }
 
   return (
-    <div className='navbar-container'>
-      <div className='company-logo'>
+    <div className='navbarHomepage-container'>
+      <div className='companyHomepage-logo'>
         <img src={company_logo} alt="Company Logo" />
       </div>
-      <div className='user-navigator-div'>
-        <span onClick={handleloginhere} className='login-container'>Log In</span>
-        <button className='demo-container'>Book a Demo</button>
+      <div className='userHomepage-navigator-div'>
+      <span onClick={handleloginhere} className='loginHomepage-container'>Courses</span>
+      <span onClick={handleloginhere} className='loginHomepage-container'>About Us</span>
+      <span onClick={handleloginhere} className='loginHomepage-container'>Contact Us</span>
+        <span onClick={handleloginhere} className='loginHomepage-container'>Log In</span>
+        <button className='demoHomepage-container'>Book a Demo</button>
       </div>
     </div>
   );

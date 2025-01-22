@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FaBell } from 'react-icons/fa'
-import { FaBrain } from "react-icons/fa6";
+// import { FaBrain } from "react-icons/fa6";
 import './Navbar.css'
+import company_logo from '../../images/company_logo.jpeg';
+
 
 const Navbar = () => {
   // this state is to keep track of dropdown in mobile responsive:
@@ -30,10 +32,9 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <FaBrain />
-        <span>RevuteAI</span>
-      </div>
+      <div className='companyHomepage-logo'>
+         <img src={company_logo} alt="Company Logo" />
+       </div>
 
       <div className="navbar-actions">
         <div className="notification-bell">
