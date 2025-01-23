@@ -1,60 +1,57 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { FaBell } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import companyLogo from '../../images/company_logo.jpeg';
 import './Navbar.css';
-import company_logo from '../../images/company_logo.jpeg';
 
 const Navbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setShowDropdown((prev) => !prev);
+  const handleProfile = () => {
+    navigate('/profile');
+    setIsMenuOpen(false);
   };
 
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setShowDropdown(false);
-    }
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/login');
+    setIsMenuOpen(false);
   };
 
-  // Using React's `onBlur` to handle outside clicks
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <nav className="navbar">
-      <div className="companyHomepage-logo">
-        <img src={company_logo} alt="Company Logo" />
+      {/* Logo Section */}
+      <div className="navbar__logo">
+        <img src={companyLogo} alt="Company Logo" />
       </div>
 
-      <div className="navbar-actions">
-        <div className="notification-bell">
+      {/* Hamburger Toggle */}
+      <button 
+        className="navbar__toggle" 
+        onClick={toggleMenu}
+        aria-label="Toggle navigation menu"
+      >
+        <span className="navbar__toggle-bar" />
+        <span className="navbar__toggle-bar" />
+        <span className="navbar__toggle-bar" />
+      </button>
+
+      {/* Nav Items (mobile menu) */}
+      <div className={`navbar__menu ${isMenuOpen ? 'active' : ''}`}>
+        <div className="navbar__notification">
           <FaBell />
         </div>
-
-        <div
-          className="profile-container"
-          ref={dropdownRef}
-          onBlur={handleClickOutside}
-          tabIndex={0} // Enables focus for onBlur to work
-        >
-          <div
-            className="profile-circle"
-            onClick={toggleDropdown}
-            role="button"
-            aria-haspopup="true"
-            aria-expanded={showDropdown}
-          >
-            <span>ME</span>
-          </div>
-
-          {showDropdown && (
-            <div className="profile-dropdown">
-              <ul>
-                <li>Edit Profile</li>
-                <li>Support</li>
-                <li>Logout</li>
-              </ul>
-            </div>
-          )}
-        </div>
+        <button className="navbar__btn" onClick={handleProfile}>
+          Profile
+        </button>
+        <button className="navbar__btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </nav>
   );

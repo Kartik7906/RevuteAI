@@ -10,10 +10,8 @@ import './LandingPage.css'
 import ListedReport from "../ListedReports/ListedReport";
 
 const LandingPage = () => {
-  // this usestate decide which component to render:
   const [section, setSection] = useState("dashboard");
 
-  // this is just an simple function with switch case:
   const renderSection = () => {
     switch (section) {
       case "dashboard":

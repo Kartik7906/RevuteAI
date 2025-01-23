@@ -2,37 +2,45 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Arial', sans-serif; 
 }
 
 .sidebar {
-  width: 200px;
-  background-color: #fefefe;
+  min-width: 200px;
+  background-color: #ffffff; 
   border-right: 1px solid #e2e8f0;
-  /* padding: 1rem; */
-  box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.9);
-  /* background-color: yellowgreen; */
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar ul {
   list-style: none;
+  padding: 0;
 }
 
 .sidebar li {
-  padding: 0.8rem 0;
+  padding: 1rem; 
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 18px;
-  font-weight: 300;
+  transition: background-color 0.3s ease, border-left 0.3s ease;
+  font-size: 16px; 
+  font-weight: 400; 
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-left: 15px;
-  /* background-color: red; */
+  color: #333; 
+  width: 100%; 
+  text-align: left; 
 }
 
 .sidebar li:hover {
-  background-color: #e8f0ff;
-  border-left: 3px solid blue;
+  background-color: #e8f0ff; 
+  border-left: 4px solid #007bff; 
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    width: 100%;
+    min-width: auto;
+    box-shadow: none;
+    border-right: none;
+  }
 }

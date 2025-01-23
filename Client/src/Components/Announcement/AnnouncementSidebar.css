@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  /* If you want to keep a softer shadow, reduce the opacity or remove this. */
   box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.9);
 }
 
@@ -22,7 +23,6 @@
   border-radius: 10px;
   padding: 1.5rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  /* text-align: center; */
 }
 
 .announcement-section h3,
@@ -63,4 +63,18 @@
 
 .view-all-text:hover {
   text-decoration: underline;
+}
+
+/* 
+  Stacks the announcement sidebar below or above 
+  when screen is smaller.
+*/
+@media (max-width: 992px) {
+  .announcement-sidebar {
+    width: 100%;
+    min-width: auto;
+    box-shadow: none;
+    border-left: none;
+    margin-top: 1rem;
+  }
 }

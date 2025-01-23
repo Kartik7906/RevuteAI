@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import emailjs from 'emailjs-com'; 
+import emailjs from 'emailjs-com';
 import './ContactPage.css';
 
 const ContactusPage = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    country: '',
-    phoneNumber: '',
-    discussion: '',
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
   });
 
   const handleChange = (e) => {
@@ -18,23 +17,19 @@ const ContactusPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Replace these with your EmailJS credentials
-    const serviceId = 'service_e3wphqs'; // Enclose in quotes
-    const templateId = 'template_m8ao98k'; // Enclose in quotes
-    const userId = '7YcnQZuizCdA4HVeN'; // Enclose in quotes
-
+    const serviceId = 'service_e3wphqs';
+    const templateId = 'template_m8ao98k';
+    const userId = '7YcnQZuizCdA4HVeN';
 
     emailjs
       .send(serviceId, templateId, formData, userId)
       .then(() => {
         alert('Your message has been sent successfully!');
         setFormData({
-          firstName: '',
-          lastName: '',
-          country: '',
-          phoneNumber: '',
-          discussion: '',
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
         });
       })
       .catch((error) => {
@@ -44,54 +39,78 @@ const ContactusPage = () => {
   };
 
   return (
-    <div className="contact-page">
-      <div className="contact-left">
-        <h2>Get In Touch</h2>
-        <p>We'd love to hear from you. Fill out the form, and we'll get back to you shortly!</p>
-      </div>
-      <div className="contact-right">
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="country"
-            placeholder="Country"
-            value={formData.country}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="tel"
-            name="phoneNumber"
-            placeholder="Phone Number"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="discussion"
-            placeholder="What do you want to discuss?"
-            value={formData.discussion}
-            onChange={handleChange}
-            required
-          ></textarea>
-          <button type="submit">Submit</button>
-        </form>
+    <div className="contact-container">
+      <h1 className="contact-title">Get In Touch</h1>
+      <p className="contact-subtitle">
+        We provide a smart way to enhance your personality and soft skills through practice with AI.
+        No worries—our AI will guide, support, and improve you at every step.
+      </p>
+
+      <div className="contact-content">
+        {/* Left: Contact Info */}
+        <div className="contact-info">
+          <h2 className="info-title">Contact Information</h2>
+          <p className="info-text">
+            We provide a smart way to enhance your personality and soft skills through practice
+            with AI. No worries—our AI will guide, support, and improve you at every step.
+          </p>
+          <ul className="info-list">
+            <li className="info-item">91+ 7906904795</li>
+            <li className="info-item">91+ 7906904785</li>
+            <li className="info-item">Support@revuteai.com</li>
+            <li className="info-item">Hyderabad, India</li>
+          </ul>
+        </div>
+
+        {/* Right: Form */}
+        <div className="contact-form-section">
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <label htmlFor="name" className="input-label">Your Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="email" className="input-label">Your Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter Your Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="subject" className="input-label">Your Subject</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              placeholder="I want to ask about..."
+              value={formData.subject}
+              onChange={handleChange}
+              required
+            />
+
+            <label htmlFor="message" className="input-label">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Write here your message"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
+
+            <button type="submit" className="submit-btn">Send Message</button>
+          </form>
+        </div>
       </div>
     </div>
   );
