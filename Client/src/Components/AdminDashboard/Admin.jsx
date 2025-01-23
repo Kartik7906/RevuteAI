@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Admin.css'
+const URL = "http://localhost:8000";
+
 const Admin = () => {
   const [selectedScenarios, setSelectedScenarios] = useState(new Set());
   const [selectedUserScenarios, setSelectedUserScenarios] = useState(new Set());
@@ -11,25 +13,31 @@ const Admin = () => {
     loadUserScenarios();
   }, []);
 
-  const loadScenarios = async () => {
-    try {
-      const response = await fetch('/admin/scenarios');
-      const data = await response.json();
-      setScenarios(data);
-    } catch (error) {
-      console.error('Failed to load scenarios', error);
-    }
-  };
+  //  const Scenarios = fetch('dbUrl')
+ const loadScenarios = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/admin/accepted-scenarios', {
+      credentials: 'same-origin'  // Include credentials (cookies, authorization headers, etc.)
+    });
+    const data = await response.json();
+    setScenarios(data);
+  } catch (error) {
+    console.error('Failed to load scenarios', error);
+  }
+};
 
-  const loadUserScenarios = async () => {
-    try {
-      const response = await fetch('/admin/current-user-scenarios');
-      const data = await response.json();
-      setUserScenarios(data);
-    } catch (error) {
-      console.error('Failed to load user scenarios', error);
-    }
-  };
+const loadUserScenarios = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/admin/current-user-scenarios', {
+      credentials: 'same-origin'
+    });
+    const data = await response.json();
+    setUserScenarios(data);
+  } catch (error) {
+    console.error('Failed to load user scenarios', error);
+  }
+};
+
 
   const toggleScenarioSelection = (id) => {
     setSelectedScenarios((prev) => {
@@ -95,10 +103,10 @@ const Admin = () => {
         <div className="admin-container-fluid">
           <a className="admin-navbar-brand" href="#">
             <img src="https://via.placeholder.com/150x40.png?text=AdminLogo" alt="Logo" style={{ height: '40px' }} />
-             Admin Dashboard                                                      
+             Admin Dashboard
           </a>
-          
-                <a href="/" class="admin-btn btn-outline-light">Back to Home</a>
+
+                <a href="/" className="admin-btn btn-outline-light">Back to Home</a>
           
         </div>
       </nav>

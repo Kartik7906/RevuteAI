@@ -1,38 +1,56 @@
-import React from 'react';
-import './CoursesPage.css';
+import React from "react";
+import "./CoursesPage.css";
 
 const CoursesPage = () => {
   return (
-    <div className="course-container">
-      <div className="course-header">
-        <h1 className="course-title">Skillful Selling</h1>
-        <ul className="course-list">
-          <li className="course-item">Learn Proven Sales Strategies</li>
-          <li className="course-item">Become a Sales Expert</li>
-          <li className="course-item">Get Certified with Our Courses</li>
+    <div className="courses-container">
+      {/* Left Section */}
+      <div className="left-section">
+        <h1 className="main-heading">Skillful Selling</h1>
+        <ul className="points-list">
+          <li>Learn Proven Sales Strategies</li>
+          <li>Become a Sales Expert</li>
+          <li>Get Certified with Our Courses</li>
         </ul>
-        <button className="course-button">Buy Now</button>
+        <button className="buy-btn">Buy Now</button>
       </div>
-      <div className="course-grid">
-        <div className="course-card course-mastery">
-          <div className="course-icon course-icon-mastery"></div>
-          <h2 className="course-subtitle">Sales Mastery</h2>
-          <p className="course-description">Explore diverse courses to enhance your sales skills and achieve success in your career.</p>
+
+      {/* Right Section (2x2 course cards) */}
+      <div className="right-section">
+        <div className="course-box mastery">
+          <div className="course-icon icon-mastery"></div>
+          <h2 className="box-title">Sales Mastery</h2>
+          <p className="box-desc">
+            Explore diverse courses to enhance your sales skills and achieve
+            success in your career.
+          </p>
         </div>
-        <div className="course-card course-advanced">
-          <div className="course-icon course-icon-advanced"></div>
-          <h2 className="course-subtitle">Advanced Techniques</h2>
-          <p className="course-description">Take your sales game to the next level with our advanced strategies and techniques.</p>
+
+        <div className="course-box advanced">
+          <div className="course-icon icon-advanced"></div>
+          <h2 className="box-title">Advanced Techniques</h2>
+          <p className="box-desc">
+            Take your sales game to the next level with our advanced strategies
+            and techniques.
+          </p>
         </div>
-        <div className="course-card course-essential">
-          <div className="course-icon course-icon-essential"></div>
-          <h2 className="course-subtitle">Essential Skills</h2>
-          <p className="course-description">Boost your sales skills with our dynamic courses tailored for success.</p>
+
+        <div className="course-box essential">
+          <div className="course-icon icon-essential"></div>
+          <h2 className="box-title">Essential Skills</h2>
+          <p className="box-desc">
+            Boost your sales skills with our dynamic courses tailored for
+            success.
+          </p>
         </div>
-        <div className="course-card course-certification">
-          <div className="course-icon course-icon-certification"></div>
-          <h2 className="course-subtitle">Sales Certification</h2>
-          <p className="course-description">Boost your sales skills with our dynamic courses tailored for success.</p>
+
+        <div className="course-box certification">
+          <div className="course-icon icon-certification"></div>
+          <h2 className="box-title">Sales Certification</h2>
+          <p className="box-desc">
+            Boost your sales skills with our dynamic courses tailored for
+            success.
+          </p>
         </div>
       </div>
     </div>

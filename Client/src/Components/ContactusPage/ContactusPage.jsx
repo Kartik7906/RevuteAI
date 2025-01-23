@@ -46,7 +46,7 @@ const ContactusPage = () => {
   return (
     <div className="contact-page">
       <div className="contact-left">
-        <h2>Talk to my team</h2>
+        <h2>Get In Touch</h2>
         <p>We'd love to hear from you. Fill out the form, and we'll get back to you shortly!</p>
       </div>
       <div className="contact-right">

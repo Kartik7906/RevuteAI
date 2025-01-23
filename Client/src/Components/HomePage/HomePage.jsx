@@ -9,8 +9,13 @@ import { FaLightbulb } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa";
 import { RiRobot3Fill } from "react-icons/ri";
 import { IoStatsChartSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const handelCoursesNavigation = () => {
+    navigate("/course");
+  };
   return (
     <>
       <div className="homepage-main-container">
@@ -18,13 +23,13 @@ const HomePage = () => {
         <div className="homepage-main-content">
           <div className="homepage-overlayer-text">
             <div className="homepage-overlayer-text-left">
-              <h2>Unlock Your Sales Superpower with AI</h2>
+              <h2>Elevate Your BFSI Career with AI-Powered Training</h2>
             </div>
             <div className="homepage-overlayer-text-right">
               <p>
-              Transform sales performance with AI-powered training. 550,000+ professionals trust us to boost their careers. 3x higher close rates.
+              Upskill and unlock new opportunities in the financial sector with our AI-powered learning platform. 550,000+ professionals trust us to boost their careers. Achieve 3x higher close rates. Transform your sales performance today.
               </p>
-              <button>Let's Chat</button>
+              <button onClick={handelCoursesNavigation}>Explore Courses</button>
             </div>
           </div>
         </div>
@@ -96,30 +101,27 @@ const HomePage = () => {
                 <div className="homepage-cirecular-image-div">
                   <img src={workplaceimg} alt="Workplace Skills" />
                 </div>
-                <h3>Learn workplace skills</h3>
+                <h3>Sales Mastery in BFSI</h3>
                 <p>
-                  Courses on presentation skills, leadership, sales, and more.
-                  These teach you fundamental workplace skills.
+                Learn effective sales strategies tailored for the Banking, Financial Services, and Insurance sectors.
                 </p>
               </div>
               <div className="homepage-learningPath-card">
                 <div className="homepage-cirecular-image-div">
                   <img src={practiceing} alt="Practice Learning" />
                 </div>
-                <h3>Practice what you learn</h3>
+                <h3>BFSI Domain Knowledge</h3>
                 <p>
-                  Apply your learning with AI-powered practice exercises, either
-                  online or in VR/MR.
+                Gain in-depth understanding of banking products, insurance, and financial services workflows.
                 </p>
               </div>
               <div className="homepage-learningPath-card">
                 <div className="homepage-cirecular-image-div">
                   <img src={feedbackimg} alt="Instant Feedback" />
                 </div>
-                <h3>Get instant feedback</h3>
+                <h3>Placement Assistance Program</h3>
                 <p>
-                  Receive instant feedback after each practice session so you
-                  can easily identify areas to improve.
+                Receive resume-building guidance, interview preparation, and placement support with top BFSI companies.
                 </p>
               </div>
             </div>

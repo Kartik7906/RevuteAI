@@ -16,7 +16,11 @@ dotenv.config();
 const PORT = process.env.PORT || 8000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
-app.use(cors());
+app.use(cors({
+  origin: '*',                    
+  methods: ['GET', 'POST'],        
+  allowedHeaders: ['Content-Type'] 
+}));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
@@ -25,6 +29,7 @@ app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes from original code, convert all the routes in this way to follow industry level code:
 app.use("/api/users", require("./Routes/UserRoute"));
 
 app.get("/", (req, res) => {
@@ -166,7 +171,6 @@ app.post("/api/upload", (req, res) => {
   });
 });
 
-
 // General error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -177,7 +181,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
@@ -187,7 +190,6 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to first MongoDB:", err);
   });
-
 
 //  CONNECT SECOND DB 
 const secondMongoURI = process.env.SECOND_MONGO_URI;
@@ -253,6 +255,7 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
+
       app.get("/api/scenarios", async (req, res) => {
         try {
           const scenarios = await secondDb
@@ -266,8 +269,6 @@ function connectSecondDatabaseAndStartServer() {
           res.status(500).json({ error: "Failed to fetch scenarios" });
         }
       });
-
-      
 
       app.post("/api/scenarios/prompt", async (req, res) => {
         try {
@@ -545,7 +546,7 @@ function connectSecondDatabaseAndStartServer() {
     
 
 
-      app.post("/save_chat_history", async (req, res) => {
+      app.post("api/save_chat_history", async (req, res) => { 
         try {
           const { chatHistory } = req.body;
           if (!chatHistory) {
@@ -615,14 +616,14 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-      app.get("/accepted-scenarios", async (req, res) => {
+      app.get("/api/accepted-scenarios", async (req, res) => {
         try {
           const scenarios = await secondDb
             .collection("admin")
             .find({ visible_to_users: true })
             .sort({ user_approval_date: -1 })
             .toArray();
-
+      
           res.json(
             scenarios.map((scenario) => ({
               _id: scenario._id,
@@ -634,9 +635,10 @@ function connectSecondDatabaseAndStartServer() {
           );
         } catch (error) {
           console.error("Error fetching accepted scenarios:", error);
-          res.status(500).json({ error: error.toString() });
+          res.status(500).json({ error: "Internal Server Error" });
         }
       });
+      
 
       app.get("/admin/scenarios", async (req, res) => {
         try {

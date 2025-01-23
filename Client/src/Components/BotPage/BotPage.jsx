@@ -1,51 +1,60 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import './BotPage.css';
-import * as SpeechSDK from 'microsoft-cognitiveservices-speech-sdk';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import "./BotPage.css";
+import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
+import { useNavigate } from "react-router-dom";
 const URL = "http://localhost:8000/api";
 
 const BotPage = () => {
   const navigate = useNavigate();
-  const azureOpenAIEndpoint = process.env.AZURE_OPENAI_ENDPOINT;
-  const azureOpenAIApiKey = process.env.AZURE_OPENAI_API_KEY;
-  const azureOpenAIDeploymentName = process.env.AZURE_OPENAI_DEPLOYMENT_NAME;
-  
-  const cogSvcRegion = process.env.COG_SVC_REGION;
-  const cogSvcSubKey = process.env.COG_SVC_SUB_KEY;
-  
+
+  // add links here: -- start from here:
+
+  // add links here --ends from here:
+
   const [messages, setMessages] = useState([]);
   const [messageInitiated, setMessageInitiated] = useState(false);
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [isLoadingAvatar, setIsLoadingAvatar] = useState(false);
-  const [chatHistory, setChatHistory] = useState('');
+  const [chatHistory, setChatHistory] = useState("");
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [spokenTextQueue, setSpokenTextQueue] = useState([]);
-  const [language, setLanguage] = useState('en-IN');
-  const [selectedScenario, setSelectedScenario] = useState('');
+  const [language, setLanguage] = useState("en-IN");
+  const [selectedScenario, setSelectedScenario] = useState("");
   const [isMicrophoneActive, setIsMicrophoneActive] = useState(false);
   const [showAnalysisOverlay, setShowAnalysisOverlay] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [isNotificationDropdownVisible, setIsNotificationDropdownVisible] = useState(false);
+  const [isNotificationDropdownVisible, setIsNotificationDropdownVisible] =
+    useState(false);
   const [scenarios, setScenarios] = useState([]);
   const [lastSpeakTime, setLastSpeakTime] = useState(null);
 
-  const sentenceLevelPunctuations = ['.', '?', '!', ':', ';', '।', '?', '!', ':', ';'];
+  const sentenceLevelPunctuations = [
+    ".",
+    "?",
+    "!",
+    ":",
+    ";",
+    "।",
+    "?",
+    "!",
+    ":",
+    ";",
+  ];
 
-  // these are some references here: 
   const speechRecognizerRef = useRef(null);
   const avatarSynthesizerRef = useRef(null);
   const peerConnectionRef = useRef(null);
 
-  // i dont know what is this, look at this again 
+  // i dont know what is this, look at this again
   const htmlEncode = (txt) => {
     const entityMap = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;',
-      '/': '&#x2F;'
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+      "/": "&#x2F;",
     };
     return String(txt).replace(/[&<>"'/]/g, (s) => entityMap[s]);
   };
@@ -56,7 +65,7 @@ const BotPage = () => {
       "te-IN": "te-IN-ShrutiNeural",
       "ta-IN": "ta-IN-PallaviNeural",
       "kn-IN": "kn-IN-SapnaNeural",
-      "en-IN": "en-IN-NeerjaNeural"
+      "en-IN": "en-IN-NeerjaNeural",
     };
     return voices[lang] || "en-US-JennyMultilingualNeural";
   };
@@ -77,14 +86,14 @@ const BotPage = () => {
     `;
     if (endingSilenceMs > 0) {
       ssml = ssml.replace(
-        '</mstts:ttsembedding>',
+        "</mstts:ttsembedding>",
         `<break time='${endingSilenceMs}ms' /></mstts:ttsembedding>`
       );
     }
     return ssml;
   };
 
-  const showToast = useCallback((message, type = 'info') => {
+  const showToast = useCallback((message, type = "info") => {
     alert(`${type.toUpperCase()}: ${message}`);
   }, []);
 
@@ -98,15 +107,28 @@ const BotPage = () => {
     });
   }, []);
 
-
-  // 3. Microphone Logic not working check this again 
+  // 3. Microphone Logic not working check this again
   const startMicrophoneAsync = useCallback(() => {
     const recognizer = speechRecognizerRef.current;
-    if (!recognizer) return;
-    recognizer.startContinuousRecognitionAsync(
-      () => setIsMicrophoneActive(true),
-      (err) => console.error("Start mic error:", err)
-    );
+
+    if (!recognizer) {
+      console.error("Speech recognizer is not initialized.");
+      return;
+    }
+
+    try {
+      recognizer.startContinuousRecognitionAsync(
+        () => {
+          console.log("Microphone started successfully.");
+          setIsMicrophoneActive(true);
+        },
+        (err) => {
+          console.error("Error starting microphone recognition:", err);
+        }
+      );
+    } catch (error) {
+      console.error("Unexpected error starting microphone:", error);
+    }
   }, []);
 
   const stopMicrophoneAsync = useCallback(() => {
@@ -146,7 +168,6 @@ const BotPage = () => {
     }
   }, [isSpeaking, isMicrophoneActive, startMicrophoneAsync]);
 
-
   // 4. Speech logic:
   const speakNext = useCallback(
     (text, endingSilenceMs = 0) => {
@@ -159,7 +180,8 @@ const BotPage = () => {
       const synthesizer = avatarSynthesizerRef.current;
       if (!synthesizer) return;
 
-      synthesizer.speakSsmlAsync(ssml)
+      synthesizer
+        .speakSsmlAsync(ssml)
         .then(() => {
           setTimeout(() => {
             if (spokenTextQueue.length === 0) autoStartMicrophone();
@@ -176,7 +198,7 @@ const BotPage = () => {
           });
         })
         .catch((error) => {
-          console.error('Speech error:', error);
+          console.error("Speech error:", error);
           setIsSpeaking(false);
           setSpokenTextQueue([]);
         });
@@ -198,7 +220,8 @@ const BotPage = () => {
   const stopSpeaking = useCallback(() => {
     setSpokenTextQueue([]);
     if (avatarSynthesizerRef.current) {
-      avatarSynthesizerRef.current.stopSpeakingAsync()
+      avatarSynthesizerRef.current
+        .stopSpeakingAsync()
         .then(() => setIsSpeaking(false))
         .catch((err) => console.error("Error stopping speech:", err));
     }
@@ -206,21 +229,16 @@ const BotPage = () => {
 
   // 5. Speech Recognizer Setup
   const setupSpeechRecognition = useCallback(() => {
-    const selectedLang = language;
-    const speechConfig = SpeechSDK.SpeechConfig.fromEndpoint(
-      new URL(`wss://${cogSvcRegion}.stt.speech.microsoft.com/speech/universal/v2`),
-      cogSvcSubKey
+    const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+      cogSvcSubKey,
+      cogSvcRegion
     );
-    speechConfig.setProperty(
-      SpeechSDK.PropertyId.SpeechServiceConnection_LanguageIdMode,
-      "Continuous"
-    );
+    speechConfig.speechRecognitionLanguage = language;
 
-    const langConfig = SpeechSDK.AutoDetectSourceLanguageConfig.fromLanguages([selectedLang]);
-    const recognizer = SpeechSDK.SpeechRecognizer.FromConfig(
+    const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+    const recognizer = new SpeechSDK.SpeechRecognizer(
       speechConfig,
-      langConfig,
-      SpeechSDK.AudioConfig.fromDefaultMicrophoneInput()
+      audioConfig
     );
 
     recognizer.recognized = (_s, e) => {
@@ -231,104 +249,134 @@ const BotPage = () => {
         }
       }
     };
+
     speechRecognizerRef.current = recognizer;
   }, [language, cogSvcRegion, cogSvcSubKey]);
 
-
-
   // 6. User Input Handling -> Azure OpenAI
-  const handleUserInput = useCallback(async (userQuery) => {
-    try {
-      autoStopMicrophone();
-      setMessages((prev) => [...prev, { role: 'user', content: userQuery }]);
-      updateChatDisplay('User', `<br/>${userQuery}`);
+  const handleUserInput = useCallback(
+    async (userQuery) => {
+      try {
+        autoStopMicrophone();
 
-      if (isSpeaking) {
-        stopSpeaking();
-      }
+        setMessages((prev) => [...prev, { role: "user", content: userQuery }]);
+        updateChatDisplay("User", `<br/>${userQuery}`);
 
-      const url = `${azureOpenAIEndpoint}/openai/deployments/${azureOpenAIDeploymentName}/chat/completions?api-version=2023-06-01-preview`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'api-key': azureOpenAIApiKey,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          messages,
-          stream: true
-        })
-      });
+        // Stop any current speech synthesis
+        if (isSpeaking) {
+          stopSpeaking();
+        }
 
-      if (!response.ok) {
-        throw new Error(`Azure OpenAI error: ${response.status}`);
-      }
+        // Define the Azure OpenAI API endpoint
+        const url = `${azureOpenAIEndpoint}/openai/deployments/${azureOpenAIDeploymentName}/chat/completions?api-version=2023-06-01-preview`;
 
-      const reader = response.body.getReader();
-      let assistantResponse = '';
-      let currentSentence = '';
+        // Prepare the payload
+        const payload = {
+          messages: [
+            ...messages, // Include previous messages for context
+            { role: "user", content: userQuery },
+          ],
+          max_tokens: 1000, // Adjust as needed
+          temperature: 0.7, // Adjust as needed
+          stream: true, // Enable streaming
+        };
 
-      updateChatDisplay("Assistant", "", false);
+        // Make the API request
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "api-key": azureOpenAIApiKey,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
 
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
+        // Handle non-200 responses
+        if (!response.ok) {
+          const errorDetails = await response.text();
+          console.error("Azure OpenAI API error:", errorDetails);
+          throw new Error(`Azure OpenAI error: ${response.status}`);
+        }
 
-        const chunk = new TextDecoder().decode(value);
-        const lines = chunk.split('\n');
+        // Process streaming response
+        const reader = response.body.getReader();
+        let assistantResponse = "";
+        let currentSentence = "";
 
-        for (const line of lines) {
-          if (line.startsWith('data:') && !line.includes('[DONE]')) {
-            try {
-              const data = JSON.parse(line.substring(5));
-              const content = data.choices?.[0]?.delta?.content;
-              if (content) {
-                assistantResponse += content;
-                currentSentence += content;
+        // Start updating the assistant's response in the UI
+        updateChatDisplay("Assistant", "", false);
 
-                if (sentenceLevelPunctuations.some((p) => content.includes(p))) {
-                  speak(currentSentence);
-                  updateChatDisplay("Assistant", currentSentence, true);
-                  currentSentence = '';
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          const chunk = new TextDecoder().decode(value);
+          const lines = chunk.split("\n");
+
+          for (const line of lines) {
+            if (line.startsWith("data:") && !line.includes("[DONE]")) {
+              try {
+                const data = JSON.parse(line.substring(5));
+                const content = data.choices?.[0]?.delta?.content;
+
+                if (content) {
+                  assistantResponse += content;
+                  currentSentence += content;
+
+                  // Check for sentence-ending punctuation
+                  if (
+                    sentenceLevelPunctuations.some((p) => content.includes(p))
+                  ) {
+                    speak(currentSentence);
+                    updateChatDisplay("Assistant", currentSentence, true);
+                    currentSentence = "";
+                  }
                 }
+              } catch (err) {
+                console.warn("Error parsing chunk:", err);
               }
-            } catch (err) {
-              console.warn('Error parsing chunk:', err);
             }
           }
         }
-      }
-      if (currentSentence) {
-        speak(currentSentence);
-        updateChatDisplay("Assistant", currentSentence, true);
-      }
 
-      setMessages((prev) => [...prev, { role: 'assistant', content: assistantResponse }]);
-    } catch (error) {
-      console.error('Chat error:', error);
-      alert('Error processing your message.');
-    }
-  }, [
-    autoStopMicrophone,
-    azureOpenAIEndpoint,
-    azureOpenAIDeploymentName,
-    azureOpenAIApiKey,
-    isSpeaking,
-    messages,
-    sentenceLevelPunctuations,
-    speak,
-    stopSpeaking,
-    updateChatDisplay
-  ]);
+        // Handle any remaining text
+        if (currentSentence) {
+          speak(currentSentence);
+          updateChatDisplay("Assistant", currentSentence, true);
+        }
+
+        // Update state with the full assistant response
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: assistantResponse },
+        ]);
+      } catch (error) {
+        console.error("Chat error:", error);
+        alert("Error processing your message. Please try again.");
+      }
+    },
+    [
+      autoStopMicrophone,
+      azureOpenAIEndpoint,
+      azureOpenAIDeploymentName,
+      azureOpenAIApiKey,
+      isSpeaking,
+      messages,
+      sentenceLevelPunctuations,
+      speak,
+      stopSpeaking,
+      updateChatDisplay,
+    ]
+  );
 
   // 7. fetch avatar from here, this is not working look again
   const handleTrackEvent = useCallback((event) => {
-    const kind = event.track.kind; 
+    const kind = event.track.kind;
     const newElem = document.createElement(kind);
     newElem.srcObject = event.streams[0];
     newElem.autoplay = true;
 
-    if (kind === 'video') {
+    if (kind === "video") {
       newElem.playsInline = true;
       newElem.onplaying = () => {
         setIsLoadingAvatar(false);
@@ -338,9 +386,9 @@ const BotPage = () => {
       };
     }
 
-    const container = document.getElementById('bot-remote-video-container');
+    const container = document.getElementById("bot-remote-video-container");
     if (container) {
-      container.innerHTML = '';
+      container.innerHTML = "";
       container.appendChild(newElem);
     }
   }, []);
@@ -351,9 +399,13 @@ const BotPage = () => {
       console.error("No avatarSynthesizer found");
       return;
     }
-    synthesizer.startAvatarAsync(pc)
+
+    synthesizer
+      .startAvatarAsync(pc)
       .then((result) => {
-        if (result.reason !== SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
+        if (
+          result.reason !== SpeechSDK.ResultReason.SynthesizingAudioCompleted
+        ) {
           console.error("Avatar start failed:", result);
           setIsSessionActive(false);
           setIsLoadingAvatar(false);
@@ -366,32 +418,32 @@ const BotPage = () => {
       });
   }, []);
 
-  const setupWebRTC = useCallback((iceServerUrl, username, credential) => {
-    const pc = new RTCPeerConnection({
-      iceServers: [
-        { urls: [iceServerUrl], username, credential }
-      ]
-    });
-    peerConnectionRef.current = pc;
+  const setupWebRTC = useCallback(
+    (iceServerUrl, username, credential) => {
+      const pc = new RTCPeerConnection({
+        iceServers: [{ urls: [iceServerUrl], username, credential }],
+      });
+      peerConnectionRef.current = pc;
 
-    pc.ontrack = handleTrackEvent;
-    pc.oniceconnectionstatechange = () => {
-      console.log("WebRTC status:", pc.iceConnectionState);
-    };
+      pc.ontrack = handleTrackEvent;
+      pc.oniceconnectionstatechange = () => {
+        console.log("WebRTC status:", pc.iceConnectionState);
+      };
 
-    pc.addTransceiver('video', { direction: 'sendrecv' });
-    pc.addTransceiver('audio', { direction: 'sendrecv' });
+      pc.addTransceiver("video", { direction: "sendrecv" });
+      pc.addTransceiver("audio", { direction: "sendrecv" });
 
-    startAvatar(pc);
-  }, [handleTrackEvent, startAvatar]);
-
+      startAvatar(pc);
+    },
+    [handleTrackEvent, startAvatar]
+  );
 
   // here is also some key handles:
   const requestAvatarToken = useCallback(() => {
     const xhr = new XMLHttpRequest();
-    const cogSvcRegion = process.env.COG_SVC_REGION;
-    const cogSvcSubKey = process.env.COG_SVC_SUB_KEY;
-  
+    // also add here keys and urls --start from here 
+
+    // --ends here
     xhr.open(
       "GET",
       `https://${cogSvcRegion}.tts.speech.microsoft.com/cognitiveservices/avatar/relay/token/v1`
@@ -413,9 +465,15 @@ const BotPage = () => {
       console.error("SpeechSDK not found.");
       return;
     }
-    const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(cogSvcSubKey, cogSvcRegion);
+    const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+      cogSvcSubKey,
+      cogSvcRegion
+    );
     const avatarConfig = new SpeechSDK.AvatarConfig("lisa", "casual-sitting");
-    const synthesizer = new SpeechSDK.AvatarSynthesizer(speechConfig, avatarConfig);
+    const synthesizer = new SpeechSDK.AvatarSynthesizer(
+      speechConfig,
+      avatarConfig
+    );
     avatarSynthesizerRef.current = synthesizer;
 
     synthesizer.avatarEventReceived = (_s, e) => {
@@ -429,11 +487,11 @@ const BotPage = () => {
   // 8. Prompt, Session Start/Stop
   const fetchPrompt = useCallback(async () => {
     if (!selectedScenario) {
-      throw new Error('No scenario selected.');
+      throw new Error("No scenario selected.");
     }
     const response = await fetch(`${URL}/scenarios/prompt`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ scenario_id: selectedScenario }),
     });
     if (!response.ok) {
@@ -441,7 +499,7 @@ const BotPage = () => {
     }
     const data = await response.json();
     if (!messageInitiated && data?.prompt) {
-      const systemMessage = { role: 'system', content: data.prompt };
+      const systemMessage = { role: "system", content: data.prompt };
       setMessages([systemMessage]);
       setMessageInitiated(true);
     }
@@ -457,8 +515,8 @@ const BotPage = () => {
       await fetchPrompt();
       connectAvatar();
     } catch (error) {
-      console.error('Session start error:', error);
-      alert('Failed to start session.');
+      console.error("Session start error:", error);
+      alert("Failed to start session.");
       setIsLoadingAvatar(false);
     }
   }, [selectedScenario, fetchPrompt, connectAvatar]);
@@ -467,18 +525,21 @@ const BotPage = () => {
     try {
       setShowAnalysisOverlay(true);
       const response = await fetch(`${URL}/save_chat_history`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ chatHistory: history }),
       });
       if (!response.ok) {
         throw new Error(`Failed to save chat history: ${response.status}`);
       }
       const result = await response.json();
-      sessionStorage.setItem('analysisResults', JSON.stringify(result.analysis));
+      sessionStorage.setItem(
+        "analysisResults",
+        JSON.stringify(result.analysis)
+      );
       setShowAnalysisOverlay(false);
     } catch (error) {
-      console.error('Failed to save chat history:', error);
+      console.error("Failed to save chat history:", error);
       setShowAnalysisOverlay(false);
       throw error;
     }
@@ -512,109 +573,133 @@ const BotPage = () => {
       setIsMicrophoneActive(false);
       setMessages([]);
       setMessageInitiated(false);
-      setChatHistory('');
-      window.location.href = '/report'; // i have to change this code into navigtion method: navigate('/report');
+      setChatHistory("");
+      window.location.href = "/report"; // i have to change this code into navigtion method: navigate('/report');
     } catch (error) {
-      console.error('Session end error:', error);
+      console.error("Session end error:", error);
       disconnectAvatar();
       setIsSessionActive(false);
       alert("Session ended with errors. Please refresh.");
     }
-  }, [chatHistory, isMicrophoneActive, saveChatHistory, stopMicrophoneAsync, stopSpeaking]);
+  }, [
+    chatHistory,
+    isMicrophoneActive,
+    saveChatHistory,
+    stopMicrophoneAsync,
+    stopSpeaking,
+  ]);
 
   const clearChatHistory = useCallback(() => {
     setMessages((prev) => {
-      const systemMsg = prev.find((m) => m.role === 'system');
+      const systemMsg = prev.find((m) => m.role === "system");
       return systemMsg ? [systemMsg] : [];
     });
-    setChatHistory('');
+    setChatHistory("");
   }, []);
 
   // 9. Notifications
   const fetchNotifications = useCallback(() => {
     fetch(`${URL}/notifications`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const notifs = data || [];
         setNotifications(notifs);
-        const unread = notifs.filter(n => !n.read).length;
+        const unread = notifs.filter((n) => !n.read).length;
         setUnreadCount(unread);
       })
-      .catch(error => console.error('Error fetching notifications:', error));
+      .catch((error) => console.error("Error fetching notifications:", error));
   }, []);
 
-  const acceptScenario = useCallback(async (scenarioId) => {
-    try {
-      const response = await fetch(`${URL}/accept-scenario`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ scenario_id: scenarioId })
-      });
-      const data = await response.json();
-      if (data.success) {
-        setNotifications(prev => prev.map(n => {
-          if (n.id === scenarioId) {
-            return { ...n, accepted: true, read: true };
-          }
-          return n;
-        }));
-        setUnreadCount(prev => (prev > 0 ? prev - 1 : 0));
-        fetchNotifications();
-        updateScenarioDropdown();
-        showToast('Scenario accepted successfully!', 'success');
-      } else {
-        console.error('Error accepting scenario:', data.error);
-        showToast(`Failed to accept scenario: ${data.message || 'Unknown error'}`, 'error');
+  const acceptScenario = useCallback(
+    async (scenarioId) => {
+      try {
+        const response = await fetch(`${URL}/accept-scenario`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ scenario_id: scenarioId }),
+        });
+        const data = await response.json();
+        if (data.success) {
+          setNotifications((prev) =>
+            prev.map((n) => {
+              if (n.id === scenarioId) {
+                return { ...n, accepted: true, read: true };
+              }
+              return n;
+            })
+          );
+          setUnreadCount((prev) => (prev > 0 ? prev - 1 : 0));
+          fetchNotifications();
+          updateScenarioDropdown();
+          showToast("Scenario accepted successfully!", "success");
+        } else {
+          console.error("Error accepting scenario:", data.error);
+          showToast(
+            `Failed to accept scenario: ${data.message || "Unknown error"}`,
+            "error"
+          );
+        }
+      } catch (error) {
+        console.error("Error in scenario acceptance:", error);
+        showToast("Error accepting scenario. Please try again.", "error");
       }
-    } catch (error) {
-      console.error('Error in scenario acceptance:', error);
-      showToast('Error accepting scenario. Please try again.', 'error');
-    }
-  }, [fetchNotifications, showToast]);
+    },
+    [fetchNotifications, showToast]
+  );
 
   const markAllRead = useCallback(async () => {
     try {
-      const response = await fetch(`${URL}/notifications/mark-all-read`, { method: 'POST' });
+      const response = await fetch(`${URL}/notifications/mark-all-read`, {
+        method: "POST",
+      });
       const data = await response.json();
       if (data.success) {
-        setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+        setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
         setUnreadCount(0);
-        showToast('All notifications marked as read.', 'success');
+        showToast("All notifications marked as read.", "success");
       } else {
-        console.error('Error marking all as read:', data.error);
-        showToast('Failed to mark all as read.', 'error');
+        console.error("Error marking all as read:", data.error);
+        showToast("Failed to mark all as read.", "error");
       }
     } catch (error) {
-      console.error('Error marking all as read:', error);
-      showToast('Error marking all as read.', 'error');
+      console.error("Error marking all as read:", error);
+      showToast("Error marking all as read.", "error");
     }
   }, [showToast]);
 
   const updateScenarioDropdown = useCallback(() => {
     fetch(`${URL}/accepted-scenarios`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const scens = data || [];
         setScenarios(scens);
-        if (scens.length > 0 && !scens.find(s => s._id === selectedScenario)) {
+        if (
+          scens.length > 0 &&
+          !scens.find((s) => s._id === selectedScenario)
+        ) {
           setSelectedScenario(scens[0]._id);
         }
       })
-      .catch(error => console.error('Error updating scenarios:', error));
+      .catch((error) => console.error("Error updating scenarios:", error));
   }, [selectedScenario]);
 
-  // 10. useEffect , those thing you want automaticlly happen 
+  // 10. useEffect , those thing you want automaticlly happen
   useEffect(() => {
     fetch(`${URL}/accepted-scenarios`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
         const scens = data || [];
         setScenarios(scens);
         if (scens.length > 0) {
           setSelectedScenario(scens[0]._id);
         }
       })
-      .catch(err => console.error('Error loading scenarios:', err));
+      .catch((err) => console.error("Error loading scenarios:", err));
 
     fetchNotifications();
     const notificationInterval = setInterval(fetchNotifications, 30000);
@@ -625,19 +710,17 @@ const BotPage = () => {
     };
   }, [fetchNotifications]);
 
+  const handleAdminNavigation = () => {
+    navigate("/admin");
+  };
 
-  const handleAdminNavigation = () =>{
-    navigate('/admin');
-  }
-
-  const handleSuperAdminNavigation = () =>{
-    navigate('/superadmin');
-  }
+  const handleSuperAdminNavigation = () => {
+    navigate("/superadmin");
+  };
 
   // Ui start from here:
   return (
     <div className="bot-page-container">
-
       {/* Header */}
       <div className="bot-header-container">
         <h1 className="bot-header-title">Talking Avatar</h1>
@@ -650,7 +733,9 @@ const BotPage = () => {
           </nav>
           <div
             className="bot-notification-bell-container"
-            onClick={() => setIsNotificationDropdownVisible(!isNotificationDropdownVisible)}
+            onClick={() =>
+              setIsNotificationDropdownVisible(!isNotificationDropdownVisible)
+            }
           >
             <svg
               className="bot-notification-bell"
@@ -664,7 +749,9 @@ const BotPage = () => {
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
               <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
             </svg>
-            {unreadCount > 0 && <span className="bot-notification-badge">{unreadCount}</span>}
+            {unreadCount > 0 && (
+              <span className="bot-notification-badge">{unreadCount}</span>
+            )}
           </div>
 
           {/* Notifications Dropdown */}
@@ -678,35 +765,51 @@ const BotPage = () => {
               </div>
               <div className="bot-notification-list">
                 {notifications.length === 0 ? (
-                  <div className="bot-no-notifications">No notifications available.</div>
+                  <div className="bot-no-notifications">
+                    No notifications available.
+                  </div>
                 ) : (
-                  notifications.map(notification => (
+                  notifications.map((notification) => (
                     <div
                       key={notification.id}
                       className={`bot-notification-item 
-                        ${notification.read ? 'bot-read' : 'bot-unread'} 
-                        ${notification.accepted ? 'bot-accepted' : ''}`}
+                        ${notification.read ? "bot-read" : "bot-unread"} 
+                        ${notification.accepted ? "bot-accepted" : ""}`}
                     >
                       <div className="bot-notification-header">
                         <div className="bot-notification-title">
                           {notification.title}
                           {notification.accepted && (
-                            <span className="bot-accepted-badge">✓ Accepted</span>
+                            <span className="bot-accepted-badge">
+                              ✓ Accepted
+                            </span>
                           )}
                         </div>
                         <span
-                          className={`bot-source-badge ${notification.source === 'superadmin' ? 'bot-bg-purple' : 'bot-bg-blue'}`}
+                          className={`bot-source-badge ${
+                            notification.source === "superadmin"
+                              ? "bot-bg-purple"
+                              : "bot-bg-blue"
+                          }`}
                         >
-                          {notification.source === 'superadmin' ? 'SuperAdmin' : 'Admin'}
+                          {notification.source === "superadmin"
+                            ? "SuperAdmin"
+                            : "Admin"}
                         </span>
                       </div>
-                      <div className="bot-notification-message">{notification.message}</div>
-                      <div className="bot-notification-time">{notification.time}</div>
+                      <div className="bot-notification-message">
+                        {notification.message}
+                      </div>
+                      <div className="bot-notification-time">
+                        {notification.time}
+                      </div>
                       {!notification.accepted && (
                         <div className="bot-notification-actions">
                           <button
                             className="bot-btn-accept"
-                            onClick={() => acceptScenario(notification.scenario_id)}
+                            onClick={() =>
+                              acceptScenario(notification.scenario_id)
+                            }
                           >
                             Accept Scenario
                           </button>
@@ -738,7 +841,11 @@ const BotPage = () => {
                 value={language}
                 onChange={(e) => {
                   if (isSessionActive) {
-                    if (window.confirm("Changing language requires reconnecting. Continue?")) {
+                    if (
+                      window.confirm(
+                        "Changing language requires reconnecting. Continue?"
+                      )
+                    ) {
                       stopSession().then(() => setLanguage(e.target.value));
                     }
                   } else {
@@ -762,7 +869,11 @@ const BotPage = () => {
                 value={selectedScenario}
                 onChange={(e) => {
                   if (isSessionActive) {
-                    if (window.confirm("Changing scenario will restart the conversation. Continue?")) {
+                    if (
+                      window.confirm(
+                        "Changing scenario will restart the conversation. Continue?"
+                      )
+                    ) {
                       clearChatHistory();
                       setSelectedScenario(e.target.value);
                     }
@@ -803,7 +914,7 @@ const BotPage = () => {
           disabled={!isSessionActive}
           className="bot-button bot-button-microphone"
         >
-          {isMicrophoneActive ? 'Stop Microphone' : 'Start Microphone'}
+          {isMicrophoneActive ? "Stop Microphone" : "Start Microphone"}
         </button>
 
         <button
@@ -836,7 +947,6 @@ const BotPage = () => {
       {/* Only show the Avatar/Video section if session is active */}
       {isSessionActive && (
         <div className="bot-video-and-chat">
-
           {/* Video Container */}
           <div className="bot-video-container" id="videoContainer">
             <div id="bot-remote-video-container" className="bot-remote-video" />
@@ -857,7 +967,6 @@ const BotPage = () => {
               dangerouslySetInnerHTML={{ __html: chatHistory }}
             />
           </div>
-
         </div>
       )}
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SuperAdmin.css';
-
+const URL = "http://localhost:8000";
 function SuperAdmin() {
   const [showForm, setShowForm] = useState(false);
   const [selectedScenarios, setSelectedScenarios] = useState(new Set());
@@ -12,7 +12,7 @@ function SuperAdmin() {
 
   const loadHistory = async () => {
     try {
-      const response = await fetch('/history');
+      const response = await fetch('http://localhost:8000/history',{credentials: 'same-origin'});
       const data = await response.json();
       setHistoryData(data);
     } catch (error) {
@@ -22,11 +22,14 @@ function SuperAdmin() {
 
   const loadCurrentScenarios = async () => {
     try {
-      const adminResponse = await fetch('/superadmin/current-admin-scenarios');
+      const adminResponse = await fetch('http://localhost:8000/superadmin/current-admin-scenarios', {
+      credentials: 'same-origin'  // Include credentials (cookies, authorization headers, etc.));
+
+    });
       const adminData = await adminResponse.json();
       setAdminScenarios(adminData);
 
-      const userResponse = await fetch('/superadmin/current-user-scenarios');
+      const userResponse = await fetch('http://localhost:8000/superadmin/current-user-scenarios',{credentials: 'same-origin'});
       const userData = await userResponse.json();
       setUserScenarios(userData);
     } catch (error) {
@@ -119,6 +122,7 @@ function SuperAdmin() {
               <th>Prompt</th>
               <th>Question</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -141,6 +145,7 @@ function SuperAdmin() {
               <th>Scenario Name</th>
               <th>Approval Date</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -162,6 +167,7 @@ function SuperAdmin() {
               <th>Scenario Name</th>
               <th>Approval Date</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
