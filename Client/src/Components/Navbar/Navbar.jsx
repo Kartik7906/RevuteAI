@@ -1,48 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { FaBell } from 'react-icons/fa'
-// import { FaBrain } from "react-icons/fa6";
-import './Navbar.css'
+import React, { useState, useRef } from 'react';
+import { FaBell } from 'react-icons/fa';
+import './Navbar.css';
 import company_logo from '../../images/company_logo.jpeg';
 
-
 const Navbar = () => {
-  // this state is to keep track of dropdown in mobile responsive:
-  const [showDropdown, setShowDropdown] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Ref to detect clicks outside the dropdown
-  const dropdownRef = useRef(null)
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
+  };
 
-  // handle dropdown when user click on profile icon here:
-  const handleProfileClick = () => {
-    setShowDropdown((prev) => !prev)
-  }
-
-  // this useeffect hook is used to decide to close the dropdown menu when user click outside the dropdown menu
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false)
-      }
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+  };
 
+  // Using React's `onBlur` to handle outside clicks
   return (
     <nav className="navbar">
-      <div className='companyHomepage-logo'>
-         <img src={company_logo} alt="Company Logo" />
-       </div>
+      <div className="companyHomepage-logo">
+        <img src={company_logo} alt="Company Logo" />
+      </div>
 
       <div className="navbar-actions">
         <div className="notification-bell">
           <FaBell />
         </div>
 
-        <div className="profile-container" ref={dropdownRef}>
-          <div className="profile-circle" onClick={handleProfileClick}>
+        <div
+          className="profile-container"
+          ref={dropdownRef}
+          onBlur={handleClickOutside}
+          tabIndex={0} // Enables focus for onBlur to work
+        >
+          <div
+            className="profile-circle"
+            onClick={toggleDropdown}
+            role="button"
+            aria-haspopup="true"
+            aria-expanded={showDropdown}
+          >
             <span>ME</span>
           </div>
 
@@ -58,7 +57,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

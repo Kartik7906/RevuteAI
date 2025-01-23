@@ -1,19 +1,70 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Task1.css';
-import { Camera } from '@mediapipe/camera_utils';
-import { FaceMesh } from '@mediapipe/face_mesh';
-import Swal from 'sweetalert2';
-import Navbar from '../Navbar/Navbar'
+import React, { useState, useEffect, useRef } from "react";
+import "./Task1.css";
+import { Camera } from "@mediapipe/camera_utils";
+import { FaceMesh } from "@mediapipe/face_mesh";
+import Swal from "sweetalert2";
+import Navbar from "../Navbar/Navbar";
+
+const templates = {
+  software: {
+    title: "Software Engineering Introduction",
+    points: [
+      "Technical skills and programming languages",
+      "Key projects and contributions",
+      "System design experience",
+      "Development methodologies",
+    ],
+  },
+  banking: {
+    title: "Banking Professional Introduction",
+    points: [
+      "Financial expertise and specialization",
+      "Regulatory knowledge",
+      "Client portfolio management",
+      "Risk assessment experience",
+    ],
+  },
+  healthcare: {
+    title: "Healthcare Professional Introduction",
+    points: [
+      "Medical specialization",
+      "Patient care experience",
+      "Clinical skills",
+      "Certifications and training",
+    ],
+  },
+};
 
 const Task1 = () => {
-  // State Variables
+  const [currentMode, setCurrentMode] = useState(null);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [assessmentStarted, setAssessmentStarted] = useState(false);
+
+  const selectMode = (mode) => {
+    setCurrentMode(mode);
+    setSelectedTemplate(null);
+    if (mode === "dynamic") {
+      setAssessmentStarted(false);
+    }
+  };
+
+  const selectTemplate = (template) => {
+    setSelectedTemplate(template);
+    setAssessmentStarted(true);
+  };
+
+  const backToModes = () => {
+    setCurrentMode(null);
+    setSelectedTemplate(null);
+    setAssessmentStarted(false);
+  };
+
   const [isRecording, setIsRecording] = useState(false);
   const [timer, setTimer] = useState("2:00");
   const [wordCount, setWordCount] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [emotion, setEmotion] = useState("Neutral");
 
-  // Refs
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioRecorderRef = useRef(null);
@@ -29,21 +80,17 @@ const Task1 = () => {
   const speechDataRef = useRef({
     totalWords: 0,
     wpm: 0,
-    transcripts: []
+    transcripts: [],
   });
 
-  // DOM Element Refs (Removed unnecessary refs for display elements)
   const asses1Ref = useRef(null);
   const recordingsRef = useRef(null);
   const startRecordButtonRef = useRef(null);
   const stopRecordButtonRef = useRef(null);
 
-  // Initialize FaceMesh and Speech Recognition on component mount
   useEffect(() => {
     initializeFaceMesh();
     setupSpeechRecognition();
-
-    // Cleanup on unmount
     return () => {
       if (cameraRef.current) {
         cameraRef.current.stop();
@@ -57,10 +104,8 @@ const Task1 = () => {
       clearInterval(timerIntervalRef.current);
       clearInterval(emotionIntervalRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Manage recording state effects
   useEffect(() => {
     if (isRecording) {
       startTimer();
@@ -75,33 +120,28 @@ const Task1 = () => {
         recognitionRef.current.stop();
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRecording]);
 
-  // Store wordCount and wpm in localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('wordCount', wordCount);
+    localStorage.setItem("wordCount", wordCount);
   }, [wordCount]);
 
   useEffect(() => {
-    localStorage.setItem('wpm', wpm);
+    localStorage.setItem("wpm", wpm);
   }, [wpm]);
 
-  // Initialize FaceMesh
   const initializeFaceMesh = () => {
     faceMeshRef.current = new FaceMesh({
-      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+      locateFile: (file) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
     });
-
     faceMeshRef.current.setOptions({
       maxNumFaces: 1,
       refineLandmarks: true,
       minDetectionConfidence: 0.7,
-      minTrackingConfidence: 0.7
+      minTrackingConfidence: 0.7,
     });
-
     faceMeshRef.current.onResults(onFaceResults);
-
     if (videoRef.current) {
       cameraRef.current = new Camera(videoRef.current, {
         onFrame: async () => {
@@ -116,14 +156,12 @@ const Task1 = () => {
     }
   };
 
-  // Handle face detection results
   const onFaceResults = (results) => {
     if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
       const landmarks = results.multiFaceLandmarks[0];
       if (isRecording) {
         analyzeExpression(landmarks);
       }
-      // For debugging
       console.log("Face detected.");
     } else {
       if (isRecording) {
@@ -134,29 +172,26 @@ const Task1 = () => {
     }
   };
 
-  // Setup speech recognition
   const setupSpeechRecognition = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       Swal.fire({
-        title: 'Speech Recognition Not Supported',
-        text: 'Your browser does not support the Speech Recognition API.',
-        icon: 'error'
+        title: "Speech Recognition Not Supported",
+        text: "Your browser does not support the Speech Recognition API.",
+        icon: "error",
       });
       return;
     }
-
     recognitionRef.current = new SpeechRecognition();
     recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = false;
-    recognitionRef.current.lang = 'en-US';
-
+    recognitionRef.current.lang = "en-US";
     recognitionRef.current.onresult = (event) => {
       const transcript = event.results[event.results.length - 1][0].transcript;
       console.log("Transcript received:", transcript);
       handleSpeechResult(transcript);
     };
-
     recognitionRef.current.onend = () => {
       if (isRecording) {
         recognitionRef.current.start();
@@ -164,30 +199,23 @@ const Task1 = () => {
     };
   };
 
-  // Handle speech results
   const handleSpeechResult = (transcript) => {
     const words = transcript.trim().split(/\s+/);
     console.log(`Words spoken: ${words.length}`);
-    setWordCount(prevCount => {
+    setWordCount((prevCount) => {
       const updatedCount = prevCount + words.length;
       speechDataRef.current.totalWords = updatedCount;
-
-      // Calculate WPM
       const minutesElapsed = (Date.now() - startTimeRef.current) / 60000;
-      const newWpm = minutesElapsed > 0 ? Math.round(updatedCount / minutesElapsed) : 0;
+      const newWpm =
+        minutesElapsed > 0 ? Math.round(updatedCount / minutesElapsed) : 0;
       setWpm(newWpm);
       speechDataRef.current.wpm = newWpm;
-
-      // Store transcript
       speechDataRef.current.transcripts.push(transcript);
-
       console.log(`Updated wordCount: ${updatedCount}, WPM: ${newWpm}`);
-
       return updatedCount;
     });
   };
 
-  // Start assessment
   const startAssessment = async () => {
     const hasPermissions = await checkPermissions();
     if (hasPermissions) {
@@ -195,34 +223,32 @@ const Task1 = () => {
     }
   };
 
-  // Check permissions
   const checkPermissions = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
-        audio: true
+        audio: true,
       });
-      stream.getTracks().forEach(track => track.stop());
+      stream.getTracks().forEach((track) => track.stop());
       return true;
     } catch (error) {
       Swal.fire({
-        title: 'Permission Required',
-        html: 'Please enable camera and microphone access.<br><br>How to enable:<br>1. Click the camera icon in the address bar<br>2. Allow both permissions<br>3. Refresh the page',
-        icon: 'warning'
+        title: "Permission Required",
+        html: "Please enable camera and microphone access.<br><br>How to enable:<br>1. Click the camera icon in the address bar<br>2. Allow both permissions<br>3. Refresh the page",
+        icon: "warning",
       });
       return false;
     }
   };
 
-  // Show consent dialog
   const showConsentDialog = () => {
     Swal.fire({
-      title: 'Start Assessment',
-      html: 'This assessment will record:<br>• Video<br>• Audio<br>• Facial expressions<br>• Speech analysis',
-      icon: 'info',
+      title: "Start Assessment",
+      html: "This assessment will record:<br>• Video<br>• Audio<br>• Facial expressions<br>• Speech analysis",
+      icon: "info",
       showCancelButton: true,
-      confirmButtonText: 'Start',
-      cancelButtonText: 'Cancel'
+      confirmButtonText: "Start",
+      cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         initializeRecording();
@@ -230,30 +256,27 @@ const Task1 = () => {
     });
   };
 
-  // Initialize recording interface
   const initializeRecording = async () => {
     if (asses1Ref.current && recordingsRef.current) {
-      asses1Ref.current.style.display = 'none';
-      recordingsRef.current.style.display = 'block';
+      asses1Ref.current.style.display = "none";
+      recordingsRef.current.style.display = "block";
     }
-
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
       videoRef.current.srcObject = stream;
-
-      // Setup MediaRecorder for video
       mediaRecorderRef.current = new MediaRecorder(stream);
-      mediaRecorderRef.current.ondataavailable = event => {
+      mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
           recordedChunks.current.push(event.data);
           console.log("Video chunk recorded.");
         }
       };
-
-      // Setup MediaRecorder for audio
       const audioStream = new MediaStream(stream.getAudioTracks());
       audioRecorderRef.current = new MediaRecorder(audioStream);
-      audioRecorderRef.current.ondataavailable = event => {
+      audioRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
           audioChunks.current.push(event.data);
           console.log("Audio chunk recorded.");
@@ -264,7 +287,6 @@ const Task1 = () => {
     }
   };
 
-  // Start recording
   const startRecording = () => {
     setIsRecording(true);
     setWordCount(0);
@@ -275,48 +297,49 @@ const Task1 = () => {
     speechDataRef.current = {
       totalWords: 0,
       wpm: 0,
-      transcripts: []
+      transcripts: [],
     };
     startTimeRef.current = Date.now();
-
     if (mediaRecorderRef.current && audioRecorderRef.current) {
       mediaRecorderRef.current.start();
       audioRecorderRef.current.start();
       console.log("MediaRecorder started.");
     }
-
     if (startRecordButtonRef.current && stopRecordButtonRef.current) {
-      startRecordButtonRef.current.style.display = 'none';
-      stopRecordButtonRef.current.style.display = 'inline-block';
+      startRecordButtonRef.current.style.display = "none";
+      stopRecordButtonRef.current.style.display = "inline-block";
     }
-
     Swal.fire({
-      title: 'Recording Started',
-      text: 'You can stop recording at any time using the Stop button',
-      icon: 'success',
+      title: "Recording Started",
+      text: "You can stop recording at any time using the Stop button",
+      icon: "success",
       timer: 2000,
-      showConfirmButton: false
+      showConfirmButton: false,
     });
   };
 
-  // Stop recording
   const stopRecording = () => {
     Swal.fire({
-      title: 'Stop Recording?',
-      text: 'Are you sure you want to stop the recording?',
-      icon: 'question',
+      title: "Stop Recording?",
+      text: "Are you sure you want to stop the recording?",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonText: 'Yes, stop recording',
-      cancelButtonText: 'No, continue'
+      confirmButtonText: "Yes, stop recording",
+      cancelButtonText: "No, continue",
     }).then((result) => {
       if (result.isConfirmed) {
         setIsRecording(false);
-
-        if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        if (
+          mediaRecorderRef.current &&
+          mediaRecorderRef.current.state !== "inactive"
+        ) {
           mediaRecorderRef.current.stop();
           console.log("MediaRecorder stopped.");
         }
-        if (audioRecorderRef.current && audioRecorderRef.current.state !== 'inactive') {
+        if (
+          audioRecorderRef.current &&
+          audioRecorderRef.current.state !== "inactive"
+        ) {
           audioRecorderRef.current.stop();
           console.log("AudioRecorder stopped.");
         }
@@ -328,28 +351,30 @@ const Task1 = () => {
           cameraRef.current.stop();
           console.log("Camera stopped.");
         }
-
         if (stopRecordButtonRef.current && startRecordButtonRef.current) {
-          stopRecordButtonRef.current.style.display = 'none';
-          startRecordButtonRef.current.style.display = 'inline-block';
+          stopRecordButtonRef.current.style.display = "none";
+          startRecordButtonRef.current.style.display = "inline-block";
         }
-
         processRecordings();
       }
     });
   };
 
-  // Finish recording and process data
   const finishRecording = async () => {
     setIsRecording(false);
     clearInterval(timerIntervalRef.current);
     clearInterval(emotionIntervalRef.current);
-
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== "inactive"
+    ) {
       mediaRecorderRef.current.stop();
       console.log("MediaRecorder stopped due to timer.");
     }
-    if (audioRecorderRef.current && audioRecorderRef.current.state !== 'inactive') {
+    if (
+      audioRecorderRef.current &&
+      audioRecorderRef.current.state !== "inactive"
+    ) {
       audioRecorderRef.current.stop();
       console.log("AudioRecorder stopped due to timer.");
     }
@@ -361,116 +386,98 @@ const Task1 = () => {
       cameraRef.current.stop();
       console.log("Camera stopped due to timer.");
     }
-
-    // Show processing dialog
     Swal.fire({
-      title: 'Processing',
-      html: 'Analyzing your recording...',
+      title: "Processing",
+      html: "Analyzing your recording...",
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
-      }
+      },
     });
-
-    // Process recordings
-    const videoBlob = new Blob(recordedChunks.current, { type: 'video/webm' });
-    const audioBlob = new Blob(audioChunks.current, { type: 'audio/webm' });
-
-    // Prepare data for upload
+    const videoBlob = new Blob(recordedChunks.current, { type: "video/webm" });
+    const audioBlob = new Blob(audioChunks.current, { type: "audio/webm" });
     const formData = new FormData();
-    formData.append('videoFile', videoBlob, 'recording.webm');
-    formData.append('audioFile', audioBlob, 'audio.webm');
-    formData.append('emotionData', JSON.stringify(emotionDataRef.current));
-    formData.append('speechData', JSON.stringify(speechDataRef.current));
-    formData.append('wpm', speechDataRef.current.wpm);
-
+    formData.append("videoFile", videoBlob, "recording.webm");
+    formData.append("audioFile", audioBlob, "audio.webm");
+    formData.append("emotionData", JSON.stringify(emotionDataRef.current));
+    formData.append("speechData", JSON.stringify(speechDataRef.current));
+    formData.append("wpm", speechDataRef.current.wpm);
     try {
-      const response = await fetch('http://localhost:8000/api/upload', {
-        method: 'POST',
-        body: formData
+      const response = await fetch("http://localhost:8000/api/upload", {
+        method: "POST",
+        body: formData,
       });
-
       const result = await response.json();
-      console.log('Upload result:', result); // Debug log
-
+      console.log("Upload result:", result);
       if (result.success) {
-        // Store report data
-        localStorage.setItem('reportData', JSON.stringify(result.report));
-
-        // Redirect to report page
-        window.location.href = '/report';
+        localStorage.setItem("reportData", JSON.stringify(result.report));
+        window.location.href = "/report";
       } else {
-        throw new Error(result.message || 'Processing failed');
+        throw new Error(result.message || "Processing failed");
       }
     } catch (error) {
-      console.error('Processing error:', error);
+      console.error("Processing error:", error);
       Swal.fire({
-        title: 'Processing Failed',
+        title: "Processing Failed",
         text: error.message,
-        icon: 'error'
+        icon: "error",
       });
     }
   };
 
-  // Process recordings (called from stopRecording)
   const processRecordings = async () => {
     try {
-      const videoBlob = new Blob(recordedChunks.current, { type: 'video/webm' });
-      const audioBlob = new Blob(audioChunks.current, { type: 'audio/webm' });
-
+      const videoBlob = new Blob(recordedChunks.current, {
+        type: "video/webm",
+      });
+      const audioBlob = new Blob(audioChunks.current, { type: "audio/webm" });
       const formData = new FormData();
-      formData.append('videoFile', videoBlob, 'recording.webm');
-      formData.append('audioFile', audioBlob, 'audio.webm');
-      formData.append('emotionData', JSON.stringify(emotionDataRef.current));
-      formData.append('speechData', JSON.stringify({
-        transcripts: speechDataRef.current.transcripts,
-        duration: Math.floor((Date.now() - startTimeRef.current) / 1000),
-        wpm: speechDataRef.current.wpm,
-        totalWords: speechDataRef.current.totalWords
-      }));
-
-      // Save transcript to local storage
-      localStorage.setItem('transcript', JSON.stringify(speechDataRef.current.transcripts));
-
-      // Show loading
+      formData.append("videoFile", videoBlob, "recording.webm");
+      formData.append("audioFile", audioBlob, "audio.webm");
+      formData.append("emotionData", JSON.stringify(emotionDataRef.current));
+      formData.append(
+        "speechData",
+        JSON.stringify({
+          transcripts: speechDataRef.current.transcripts,
+          duration: Math.floor((Date.now() - startTimeRef.current) / 1000),
+          wpm: speechDataRef.current.wpm,
+          totalWords: speechDataRef.current.totalWords,
+        })
+      );
+      localStorage.setItem(
+        "transcript",
+        JSON.stringify(speechDataRef.current.transcripts)
+      );
       Swal.fire({
-        title: 'Processing...',
-        text: 'Analyzing your recording',
+        title: "Processing...",
+        text: "Analyzing your recording",
         allowOutsideClick: false,
-        didOpen: () => Swal.showLoading()
+        didOpen: () => Swal.showLoading(),
       });
-
-      const response = await fetch('http://localhost:8000/api/upload', {
-        method: 'POST',
-        body: formData
+      const response = await fetch("http://localhost:8000/api/upload", {
+        method: "POST",
+        body: formData,
       });
-
       const result = await response.json();
-      console.log('Upload result:', result); // Debug log
-
+      console.log("Upload result:", result);
       if (result.success) {
-        // Store report data
-        localStorage.setItem('reportData', JSON.stringify(result.report));
-
-        // Redirect
-        window.location.href = '/report';
+        localStorage.setItem("reportData", JSON.stringify(result.report));
+        window.location.href = "/report";
       } else {
-        throw new Error(result.message || 'Processing failed');
+        throw new Error(result.message || "Processing failed");
       }
     } catch (error) {
-      console.error('Processing error:', error);
+      console.error("Processing error:", error);
       Swal.fire({
-        title: 'Processing Failed',
+        title: "Processing Failed",
         text: error.message,
-        icon: 'error'
+        icon: "error",
       });
     }
   };
 
-  // Show results dialog (Optional, based on your original code)
   const showResults = (data) => {
     const report = data;
-
     const reportHTML = `
       <div class="report-container">
         <div class="report-section">
@@ -479,13 +486,11 @@ const Task1 = () => {
           <p>Words per Minute: ${report.summary.wordsPerMinute}</p>
           <p>Total Words: ${report.summary.totalWords}</p>
         </div>
-
         <div class="report-section">
           <h3>Grammar Analysis</h3>
           <div class="score-circle">${report.grammarAnalysis.score}/10</div>
           <p>${report.grammarAnalysis.feedback}</p>
         </div>
-
         <div class="report-section">
           <h3>Communication Analysis</h3>
           <div class="scores-grid">
@@ -501,7 +506,6 @@ const Task1 = () => {
           <p>Overall Impression: ${report.sentimentAnalysis.overallImpression}</p>
           <p>Sentiment: ${report.sentimentAnalysis.sentiment}</p>
         </div>
-
         <div class="report-section">
           <h3>Professional Analysis</h3>
           <div class="scores-grid">
@@ -516,33 +520,37 @@ const Task1 = () => {
           </div>
           <h4>Recommendations:</h4>
           <ul>
-            ${report.professionalAnalysis.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+            ${report.professionalAnalysis.recommendations
+              .map((rec) => `<li>${rec}</li>`)
+              .join("")}
           </ul>
         </div>
-
         <div class="report-section">
           <h3>Emotion Analysis</h3>
           <div class="emotion-chart">
-            ${Object.entries(report.emotionAnalysis).map(([emotion, percentage]) => `
+            ${Object.entries(report.emotionAnalysis)
+              .map(
+                ([emotion, percentage]) => `
               <div class="emotion-bar">
                 <label>${emotion}</label>
                 <div class="bar" style="width: ${percentage}%">${percentage}%</div>
               </div>
-            `).join('')}
+            `
+              )
+              .join("")}
           </div>
         </div>
       </div>
     `;
-
     Swal.fire({
-      title: 'Assessment Report',
+      title: "Assessment Report",
       html: reportHTML,
       width: 800,
       showCloseButton: true,
       showConfirmButton: true,
-      confirmButtonText: 'Download Report',
+      confirmButtonText: "Download Report",
       showCancelButton: true,
-      cancelButtonText: 'Close'
+      cancelButtonText: "Close",
     }).then((result) => {
       if (result.isConfirmed) {
         downloadReport(report);
@@ -550,12 +558,11 @@ const Task1 = () => {
     });
   };
 
-  // Function to download report as PDF or JSON
   const downloadReport = (report) => {
     const reportJson = JSON.stringify(report, null, 2);
-    const blob = new Blob([reportJson], { type: 'application/json' });
+    const blob = new Blob([reportJson], { type: "application/json" });
     const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `assessment-report-${new Date().toISOString()}.json`;
     document.body.appendChild(a);
@@ -564,68 +571,72 @@ const Task1 = () => {
     document.body.removeChild(a);
   };
 
-  // Handle face lost during recording
   const handleFaceLost = () => {
     setEmotion("Face not detected");
     console.log("Face lost during recording.");
   };
 
-  // Handle recording error
   const handleRecordingError = (error) => {
-    console.error('Recording error:', error);
+    console.error("Recording error:", error);
     Swal.fire({
-      title: 'Recording Error',
-      text: 'Failed to start recording. Please refresh and try again.',
-      icon: 'error'
+      title: "Recording Error",
+      text: "Failed to start recording. Please refresh and try again.",
+      icon: "error",
     });
   };
 
-  // Start emotion tracking
   const startEmotionTracking = () => {
-    let lastEmotion = 'Neutral';
+    let lastEmotion = "Neutral";
     emotionIntervalRef.current = setInterval(() => {
-      if (lastEmotion !== 'Face not detected') {
+      if (lastEmotion !== "Face not detected") {
         emotionDataRef.current.push({
           timestamp: Date.now(),
-          emotion: lastEmotion
+          emotion: lastEmotion,
         });
       }
     }, 1000);
   };
 
-  // Analyze facial expressions
   const analyzeExpression = (landmarks) => {
     const expressions = {
-      eyeOpenness: calculateRatio(landmarks[159], landmarks[145], landmarks[386], landmarks[374]),
-      browRaise: calculateRatio(landmarks[70], landmarks[159], landmarks[300], landmarks[386]),
-      mouthOpenness: calculateRatio(landmarks[13], landmarks[14], landmarks[61], landmarks[291])
+      eyeOpenness: calculateRatio(
+        landmarks[159],
+        landmarks[145],
+        landmarks[386],
+        landmarks[374]
+      ),
+      browRaise: calculateRatio(
+        landmarks[70],
+        landmarks[159],
+        landmarks[300],
+        landmarks[386]
+      ),
+      mouthOpenness: calculateRatio(
+        landmarks[13],
+        landmarks[14],
+        landmarks[61],
+        landmarks[291]
+      ),
     };
-
     console.log("Facial Expressions Ratios:", expressions);
-
     let currentEmotion = determineEmotion(expressions);
     setEmotion(currentEmotion);
     emotionDataRef.current.push({
       timestamp: Date.now(),
-      emotion: currentEmotion
+      emotion: currentEmotion,
     });
-
     console.log(`Determined Emotion: ${currentEmotion}`);
   };
 
-  // Determine emotion from expressions
   const determineEmotion = (expressions) => {
-    // Enhanced emotion detection logic with adjusted thresholds
     if (expressions.mouthOpenness > 0.5) return "Speaking";
     if (expressions.browRaise > 1.5) return "Happy";
     if (expressions.browRaise < 0.8) return "Sad";
     if (expressions.browRaise > 1.2) return "Engaged";
     if (expressions.eyeOpenness < 0.5) return "Blinking";
-
     return "Neutral";
   };
 
-  // Calculate facial ratios
   const calculateRatio = (p1, p2, p3, p4) => {
     const dist1 = Math.hypot(p2.x - p1.x, p2.y - p1.y);
     const dist2 = Math.hypot(p4.x - p3.x, p4.y - p3.y);
@@ -634,14 +645,12 @@ const Task1 = () => {
     return ratio;
   };
 
-  // Start timer
   const startTimer = () => {
-    let timeLeft = 120; // 2 minutes in seconds
+    let timeLeft = 120;
     setTimer(formatTime(timeLeft));
     timerIntervalRef.current = setInterval(() => {
       timeLeft--;
       setTimer(formatTime(timeLeft));
-
       if (timeLeft <= 0) {
         clearInterval(timerIntervalRef.current);
         finishRecording();
@@ -649,7 +658,6 @@ const Task1 = () => {
     }, 1000);
   };
 
-  // Format time helper
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -658,50 +666,182 @@ const Task1 = () => {
 
   return (
     <>
-    <Navbar/>
-    <div className="task1-box">
-      <div id="asses1" className="task1-asses1" ref={asses1Ref}>
-        <div className="task1-intro_text">
-          <h3>Self Introduction Assessment</h3>
-          <p>Please provide a 2-minute self-introduction covering:</p>
-          <ul>
-            <li>Your background and experience</li>
-            <li>Educational qualifications</li>
-            <li>Professional achievements</li>
-            <li>Key skills and interests</li>
-          </ul>
+      <Navbar />
+      <div className="box">
+        <div>
+          {currentMode === null && (
+            <div className="mode-selection" id="modeSelection">
+              <h2 className="self">Choose Your Introduction Type</h2>
+              <div className="mode-cards">
+                <div className="mode-card" onClick={() => selectMode("static")}>
+                  <h3>Static Introduction</h3>
+                  <p>
+                    Standard self-introduction format suitable for general
+                    purposes
+                  </p>
+                  <ul className="list-unstyled">
+                    <li>✓ Personal Background</li>
+                    <li>✓ Educational History</li>
+                    <li>✓ Work Experience</li>
+                    <li>✓ Skills & Interests</li>
+                  </ul>
+                  <button className="button">Select Static Mode</button>
+                </div>
+                <div
+                  className="mode-card"
+                  onClick={() => selectMode("dynamic")}
+                >
+                  <h3>Dynamic Introduction</h3>
+                  <p>Industry-specific format with customized templates</p>
+                  <ul className="list-unstyled">
+                    <li>✓ Role-specific Format</li>
+                    <li>✓ Industry Guidelines</li>
+                    <li>✓ Targeted Evaluation</li>
+                    <li>✓ Specialized Feedback</li>
+                  </ul>
+                  <button className="button">Select Dynamic Mode</button>
+                </div>
+              </div>
+            </div>
+          )}
+          {currentMode === "dynamic" && !assessmentStarted && (
+            <div className="template-selection" id="templateSelection">
+              <h3 className="self">Select Your Industry Template</h3>
+              <div className="template-cards">
+                <div
+                  className="template-card"
+                  onClick={() => selectTemplate("software")}
+                >
+                  <h4>Software Engineering</h4>
+                  <p>
+                    Focus on technical skills, projects, and development
+                    experience
+                  </p>
+                </div>
+                <div
+                  className="template-card"
+                  onClick={() => selectTemplate("banking")}
+                >
+                  <h4>Banking & Finance</h4>
+                  <p>
+                    Emphasis on financial expertise, regulations, and client
+                    management
+                  </p>
+                </div>
+                <div
+                  className="template-card"
+                  onClick={() => selectTemplate("healthcare")}
+                >
+                  <h4>Healthcare</h4>
+                  <p>
+                    Highlight medical expertise, patient care, and
+                    certifications
+                  </p>
+                </div>
+              </div>
+              <button className="button" onClick={backToModes}>
+                Back to Modes
+              </button>
+            </div>
+          )}
+          {(currentMode === "static" ||
+            (currentMode === "dynamic" && assessmentStarted)) && (
+            <div className="task1-box">
+              <div id="asses1" className="task1-asses1" ref={asses1Ref}>
+                <div className="task1-intro_text">
+                  <h3>Self Introduction Assessment</h3>
+                  <p>Please provide a 2-minute self-introduction covering:</p>
+                  <ul>
+                    {currentMode === "static" ? (
+                      <>
+                        <li>Your background and experience</li>
+                        <li>Educational qualifications</li>
+                        <li>Professional achievements</li>
+                        <li>Key skills and interests</li>
+                      </>
+                    ) : (
+                      templates[selectedTemplate] &&
+                      templates[selectedTemplate].points.map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))
+                    )}
+                  </ul>
+                </div>
+                <center>
+                  <button
+                    className="task1-button"
+                    id="start"
+                    onClick={startAssessment}
+                  >
+                    Start Assessment
+                  </button>
+                </center>
+              </div>
+              <div
+                id="recordings"
+                className="task1-recordings"
+                ref={recordingsRef}
+                style={{ display: "none" }}
+              >
+                <h3 className="task1-self">Self-Introduction Recording</h3>
+                <div className="task1-video-container">
+                  <video
+                    ref={videoRef}
+                    className="task1-video"
+                    autoPlay
+                    muted
+                    playsInline
+                  ></video>
+                  <div id="emotion" className="task1-emotion-display">
+                    Expression: {emotion}
+                  </div>
+                </div>
+                <div className="task1-metrics-container">
+                  <div className="task1-metric-card">
+                    <div id="timer" className="task1-timer">
+                      Time: {timer}
+                    </div>
+                  </div>
+                  <div className="task1-metric-card">
+                    <div id="wpm" className="task1-status">
+                      Words per minute: {wpm}
+                    </div>
+                  </div>
+                  <div className="task1-metric-card">
+                    <div id="word-count" className="task1-status">
+                      Total words: {wordCount}
+                    </div>
+                  </div>
+                </div>
+                <div className="task1-controls">
+                  <button
+                    className="task1-button"
+                    id="start_record"
+                    onClick={startRecording}
+                    ref={startRecordButtonRef}
+                  >
+                    Start Recording
+                  </button>
+                  <button
+                    className="task1-button stop"
+                    id="stop_record"
+                    onClick={stopRecording}
+                    ref={stopRecordButtonRef}
+                    style={{ display: "none" }}
+                  >
+                    Stop Recording
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {(currentMode || selectedTemplate) && (
+            <button className="button" onClick={backToModes}>
+              Back to Modes
+            </button>
+          )}
         </div>
-        <center>
-          <button className="task1-button" id="start" onClick={startAssessment}>Start Assessment</button>
-        </center>
       </div>
-
-      <div id="recordings" className="task1-recordings" ref={recordingsRef} style={{ display: 'none' }}>
-        <h3 className="task1-self">Self-Introduction Recording</h3>
-
-        <div className="task1-video-container">
-          <video ref={videoRef} className="task1-video" autoPlay muted playsInline></video>
-          <div id="emotion" className="task1-emotion-display">Expression: {emotion}</div>
-        </div>
-
-        <div className="task1-metrics-container">
-          <div className="task1-metric-card">
-            <div id="timer" className="task1-timer">Time: {timer}</div>
-          </div>
-          <div className="task1-metric-card">
-            <div id="wpm" className="task1-status">Words per minute: {wpm}</div>
-          </div>
-          <div className="task1-metric-card">
-            <div id="word-count" className="task1-status">Total words: {wordCount}</div>
-          </div>
-        </div>
-
-        <div className="task1-controls">
-          <button className="task1-button" id="start_record" onClick={startRecording} ref={startRecordButtonRef}>Start Recording</button>
-          <button className="task1-button stop" id="stop_record" onClick={stopRecording} ref={stopRecordButtonRef} style={{ display: 'none' }}>Stop Recording</button>
-        </div>
-      </div>
-    </div>
     </>
   );
 };

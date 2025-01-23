@@ -1,8 +1,9 @@
+/* General Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .navbar {
@@ -10,27 +11,27 @@
   top: 0;
   width: 100%;
   height: 60px;
-  /* background-color: #317ee2; */
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  color: #fff;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .companyHomepage-logo img {
-  height: 40px; /* Adjust as needed */
+  height: 40px;
   width: auto;
 }
 
 .navbar-actions {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
+/* Notification Icon */
 .notification-bell {
   margin-right: 1rem;
   cursor: pointer;
@@ -38,6 +39,7 @@
   color: black;
 }
 
+/* Profile Circle */
 .profile-container {
   position: relative;
 }
@@ -60,44 +62,39 @@
   transform: scale(1.05);
 }
 
+/* Dropdown Menu */
 .profile-dropdown {
   position: absolute;
-  top: 45px;
+  top: 50px;
   right: 0;
-  background-color: #fff;
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
   width: 150px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
 }
 
 .profile-dropdown ul {
-  list-style: none;
+  list-style-type: none;
 }
 
-.profile-dropdown li {
+.profile-dropdown ul li {
   padding: 10px 15px;
+  font-size: 14px;
+  color: black;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.profile-dropdown li:hover {
-  background-color: #f1f1f1;
+.profile-dropdown ul li:hover {
+  background-color: #f0f0f0;
 }
 
-/* ========== MEDIA QUERIES ========== */
-
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .navbar {
-    height: auto;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0.5rem;
-  }
-
-  .navbar-logo {
-    margin-bottom: 0.5rem;
   }
 
   .navbar-actions {
@@ -106,6 +103,6 @@
   }
 
   .notification-bell {
-    margin-right: 0;
+    display: none;
   }
 }

@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes from original code, convert all the routes in this way to follow industry level code:
 app.use("/api/users", require("./Routes/UserRoute"));
 
 app.get("/", (req, res) => {
@@ -167,6 +166,7 @@ app.post("/api/upload", (req, res) => {
   });
 });
 
+
 // General error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -177,6 +177,7 @@ app.use((err, req, res, next) => {
   });
 });
 
+
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
@@ -186,6 +187,7 @@ mongoose
   .catch((err) => {
     console.error("Error connecting to first MongoDB:", err);
   });
+
 
 //  CONNECT SECOND DB 
 const secondMongoURI = process.env.SECOND_MONGO_URI;
@@ -251,7 +253,6 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-
       app.get("/api/scenarios", async (req, res) => {
         try {
           const scenarios = await secondDb
@@ -265,6 +266,8 @@ function connectSecondDatabaseAndStartServer() {
           res.status(500).json({ error: "Failed to fetch scenarios" });
         }
       });
+
+      
 
       app.post("/api/scenarios/prompt", async (req, res) => {
         try {
