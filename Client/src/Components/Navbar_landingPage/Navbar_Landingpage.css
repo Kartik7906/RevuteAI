@@ -1,64 +1,114 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
 .navbarHomepage-container {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #ffffff; 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 60px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-/* Company Logo */
 .companyHomepage-logo img {
-    height: 40px; /* Adjust as needed */
-    width: auto;
+  height: 40px;
+  width: auto;
 }
 
-/* User Navigator Container */
 .userHomepage-navigator-div {
-    display: flex;
-    align-items: center;
-    gap: 40px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  transition: all 0.3s;
 }
 
-/* Log In Text */
 .loginHomepage-container {
-    font-size: 18px;
-    font-weight: 800;
-    color: #333333;
-    cursor: pointer;
-    transition: color 0.3s;
+  font-size: 18px;
+  font-weight: 800;
+  color: #333333;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
 .loginHomepage-container:hover {
-    color: #8b37f6;
+  color: #8b37f6;
 }
 
-/* Book a Demo Button */
 .demoHomepage-container {
-    padding: 10px 18px;
-    background-color: #007BFF;
-    color: #ffffff;
-    border: none;
-    border-radius: 25px;
-    font-size: 18px;
-    font-weight: 400;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 10px 18px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .demoHomepage-container:hover {
-    background-color: #7bdcb5;
+  background-color: #7bdcb5;
+}
+
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  transition: all 0.3s;
+}
+
+.bar.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.bar.open:nth-child(2) {
+  opacity: 0;
+}
+
+.bar.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: flex;
+  }
+
+  .userHomepage-navigator-div {
+    position: fixed;
+    top: 60px;
+    right: -100%;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #ffffff;
+    width: 100%;
+    height: calc(100vh - 60px);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+  }
+
+  .userHomepage-navigator-div.menu-active {
+    right: 0;
+  }
 }

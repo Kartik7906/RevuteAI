@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   overflow-x: hidden;
 }
 
@@ -19,34 +19,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 100px;
-  padding-bottom: 100px; 
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 5%;
+  /* background: linear-gradient(135deg, #1e3c72, #2a5298); */
+  background: linear-gradient(135deg, #141e30, #243b55);
   position: relative;
+  flex-direction: column;
+  text-align: center;
 }
 
 .homepage-overlayer-text {
-  text-align: center;
   color: #ffffff;
-  max-width: auto;
-  height: auto;
+  max-width: 1200px;
+  width: 90%;
   padding: 40px;
   display: flex;
+  flex-direction: column;
   gap: 30px;
-  /* background-color: red; */
 }
 
-.homepage-overlayer-text h2 {
-  font-size: 4rem;
-  margin-bottom: 20px;
+.homepage-overlayer-text-left h2 {
+  font-size: 2.5rem;
   font-weight: 700;
+  color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .homepage-overlayer-text p {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
+  font-size: 1.2rem;
   line-height: 1.6;
+  margin-bottom: 30px;
 }
 
 .homepage-overlayer-text button {
@@ -64,6 +65,58 @@
 .homepage-overlayer-text button:hover {
   background-color: #7bdcb5;
   transform: translateY(-1px);
+}
+
+@media (max-width: 1024px) {
+  .homepage-main-content {
+    padding: 8%;
+  }
+
+  .homepage-overlayer-text-left h2 {
+    font-size: 2rem;
+  }
+
+  .homepage-overlayer-text p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-main-content {
+    padding: 10%;
+  }
+
+  .homepage-overlayer-text-left h2 {
+    font-size: 1.8rem;
+  }
+
+  .homepage-overlayer-text p {
+    font-size: 1rem;
+  }
+
+  .homepage-overlayer-text button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-main-content {
+    padding: 12%;
+  }
+
+  .homepage-overlayer-text-left h2 {
+    font-size: 1.5rem;
+  }
+
+  .homepage-overlayer-text p {
+    font-size: 0.9rem;
+  }
+
+  .homepage-overlayer-text button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
 }
 
 .homepage-choose-us-container {
@@ -131,14 +184,14 @@
   display: block;
   width: 50px;
   height: 4px;
-  background-color: #43D787;
+  background-color: #43d787;
   border-radius: 2px;
   margin: 15px 0;
 }
 
 .homepage-reason svg {
   font-size: 3.5rem;
-  color: #43D787;
+  color: #43d787;
   margin-bottom: 15px;
 }
 
@@ -230,14 +283,15 @@
 
 .homepage-Overlayer2-toWhyUs h2 {
   font-size: 2.5rem;
+  color: white;
   margin-bottom: 1.7rem;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .homepage-Overlayer2-toWhyUs p {
   font-size: 1.6rem;
   line-height: 1.2;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .homepage-learningPath {
@@ -315,10 +369,10 @@
   color: #f0f0f0;
 }
 
-
-
 .homepage-footer-wrapper {
-  background-color: #2c2f33;
+  /* background-color: #2c2f33; */
+  background: linear-gradient(135deg, #141e30, #243b55);
+
   color: #ffffff;
   padding: 40px 40px;
   font-family: sans-serif;
@@ -362,7 +416,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid rgba(255,255,255,0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 15px;
 }
 

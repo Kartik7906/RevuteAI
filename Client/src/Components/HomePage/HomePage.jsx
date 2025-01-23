@@ -18,13 +18,11 @@ const HomePage = () => {
         <div className="homepage-main-content">
           <div className="homepage-overlayer-text">
             <div className="homepage-overlayer-text-left">
-              <h2>Immersive Soft Skills Training</h2>
+              <h2>Unlock Your Sales Superpower with AI</h2>
             </div>
             <div className="homepage-overlayer-text-right">
               <p>
-                Join 550,000+ professionals and boost your career with
-                AI-powered training on public speaking, leadership, sales, and
-                more.
+              Transform sales performance with AI-powered training. 550,000+ professionals trust us to boost their careers. 3x higher close rates.
               </p>
               <button>Let's Chat</button>
             </div>
