@@ -93,17 +93,40 @@ app.post("/api/gemini", async (req, res) => {
     let suggestions = [];
 
     if (!transcript.toLowerCase().includes("project")) {
-      suggestions.push("Please mention your projects or relevant experiences.");
+      suggestions.push("Mention the projects you've worked on to showcase your experience.");
     }
+
     if (!transcript.toLowerCase().includes("goal")) {
-      suggestions.push("Consider stating your career goals or aspirations.");
+      suggestions.push("Add a clear statement of your career goals or future aspirations.");
     }
+
+    if (!transcript.toLowerCase().includes("leadership")) {
+      suggestions.push("Highlight any leadership roles or team experiences you've had.");
+    }
+
+    if (!transcript.toLowerCase().includes("belong")) {
+      suggestions.push("Include a brief note about where you are from or your cultural background.");
+    }
+
+    if (!transcript.toLowerCase().includes("currently")) {
+      suggestions.push("Mention what you're currently doing (e.g., your job, studies, or side projects).");
+    }
+
+    while (suggestions.length < 3) {
+      suggestions.push("Provide more detailed examples to make your introduction stand out.");
+    }
+
+    if (suggestions.length > 5) {
+      suggestions = suggestions.slice(0, 5);
+    }
+
     res.json({ suggestions });
   } catch (error) {
     console.error("Gemini suggestions error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 // Endpoint to handle uploads
 app.post("/api/upload", (req, res) => {
