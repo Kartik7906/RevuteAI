@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import "./Task1.css";
-import { Camera } from "@mediapipe/camera_utils";
-import { FaceMesh } from "@mediapipe/face_mesh";
 import Swal from "sweetalert2";
 import Navbar from "../Navbar/Navbar";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import * as faceapi from "face-api.js";
 
-// also paste these 2 line of code here , go to .env file----
+// also paste these 2 lines of code here , go to .env file----
 
 // ends here--------
+
 const templates = {
   software: {
     title: "Software Engineering Introduction",
@@ -39,13 +39,7 @@ const templates = {
   },
 };
 
-function calculateOverallScore({
-  wpm,
-  transcriptLength,
-  grammarScore,
-  adherence,
-  totalTimeSec,
-}) {
+function calculateOverallScore({ wpm, transcriptLength, grammarScore, adherence, totalTimeSec }) {
   function normalizeWPM(x) {
     if (x <= 50) return 0;
     if (x >= 200) return 0;
@@ -93,7 +87,7 @@ function calculateOverallScore({
 }
 
 function calculateConfidenceScore(totalWords, totalDuration, wpm) {
-  let confidenceScore = 5; 
+  let confidenceScore = 5;
   const seconds = totalDuration || 50;
   if (totalWords >= 130 && totalWords <= 160 && seconds <= 50) {
     confidenceScore = Math.floor(Math.random() * 2) + 5; // 5..6
@@ -147,6 +141,7 @@ const Task1 = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [resumeData, setResumeData] = useState(null);
+  const [faceDetected, setFaceDetected] = useState(false);
 
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
@@ -155,8 +150,6 @@ const Task1 = () => {
   const audioChunks = useRef([]);
   const timerIntervalRef = useRef(null);
   const emotionIntervalRef = useRef(null);
-  const faceMeshRef = useRef(null);
-  const cameraRef = useRef(null);
   const recognitionRef = useRef(null);
   const startTimeRef = useRef(null);
   const emotionDataRef = useRef([]);
@@ -172,11 +165,57 @@ const Task1 = () => {
   const stopRecordButtonRef = useRef(null);
 
   useEffect(() => {
-    initializeFaceMesh();
+    async function loadModels() {
+      try {
+        await faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models');
+        console.log("Face API models loaded");
+      } catch (error) {
+        console.error("Error loading face-api.js models:", error);
+      }
+    }
+    loadModels();
+  }, []);
+
+
+  useEffect(() => {
+    async function startVideo() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false,
+        });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (err) {
+        console.error("Could not start video:", err);
+      }
+    }
+    startVideo();
+
+    let detectionInterval;
+    if (videoRef.current) {
+      detectionInterval = setInterval(async () => {
+        if (
+          videoRef.current.readyState === 4 && // means video is playing
+          faceapi.nets.tinyFaceDetector.isLoaded
+        ) {
+          const detection = await faceapi.detectAllFaces(
+            videoRef.current,
+            new faceapi.TinyFaceDetectorOptions()
+          );
+          setFaceDetected(detection.length > 0);
+        }
+      }, 1000);
+    }
+    return () => {
+      if (detectionInterval) clearInterval(detectionInterval);
+    };
+  }, []);
+
+  useEffect(() => {
     setupSpeechRecognition();
     return () => {
-      if (cameraRef.current) cameraRef.current.stop();
-      if (faceMeshRef.current) faceMeshRef.current.close();
       if (recognitionRef.current) recognitionRef.current.stop();
       clearInterval(timerIntervalRef.current);
       clearInterval(emotionIntervalRef.current);
@@ -202,6 +241,7 @@ const Task1 = () => {
   useEffect(() => {
     localStorage.setItem("wpm", wpm);
   }, [wpm]);
+
 
   const selectMode = (mode) => {
     setCurrentMode(mode);
@@ -264,7 +304,7 @@ const Task1 = () => {
     Projects: ${resumeData.projects
       .map((p) => `${p.title} - ${p.description}`)
       .join("; ")}
-  
+
     Create a structured self-introduction guide with 4-5 key points. Format as simple numbered points without any markdown, symbols, or formatting characters.`;
     const result = await model.generateContent(prompt);
     const cleanedInstructions = result.response
@@ -288,42 +328,9 @@ const Task1 = () => {
     setAssessmentStarted(true);
   };
 
-  const initializeFaceMesh = () => {
-    faceMeshRef.current = new FaceMesh({
-      locateFile: (file) =>
-        `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
-    });
-    faceMeshRef.current.setOptions({
-      maxNumFaces: 1,
-      refineLandmarks: true,
-      minDetectionConfidence: 0.7,
-      minTrackingConfidence: 0.7,
-    });
-    faceMeshRef.current.onResults(onFaceResults);
-    if (videoRef.current) {
-      cameraRef.current = new Camera(videoRef.current, {
-        onFrame: async () => {
-          if (faceMeshRef.current) {
-            await faceMeshRef.current.send({ image: videoRef.current });
-          }
-        },
-        width: 680,
-        height: 380,
-      });
-      cameraRef.current.start();
-    }
-  };
-
-  const onFaceResults = (results) => {
-    if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
-      const landmarks = results.multiFaceLandmarks[0];
-      if (isRecording) analyzeExpression(landmarks);
-    } else {
-      if (isRecording) handleFaceLost();
-      else setEmotion("Neutral");
-    }
-  };
-
+  // ---------------------------------------------------------------
+  // 5) Set up speech recognition
+  // ---------------------------------------------------------------
   const setupSpeechRecognition = () => {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -354,8 +361,7 @@ const Task1 = () => {
       const updatedCount = prevCount + words.length;
       speechDataRef.current.totalWords = updatedCount;
       const minutesElapsed = (Date.now() - startTimeRef.current) / 60000;
-      const newWpm =
-        minutesElapsed > 0 ? Math.round(updatedCount / minutesElapsed) : 0;
+      const newWpm = minutesElapsed > 0 ? Math.round(updatedCount / minutesElapsed) : 0;
       setWpm(newWpm);
       speechDataRef.current.wpm = newWpm;
       speechDataRef.current.transcripts.push(transcript);
@@ -363,6 +369,9 @@ const Task1 = () => {
     });
   };
 
+  // ---------------------------------------------------------------
+  // 6) Timer & Emotion placeholders (you can simplify if needed)
+  // ---------------------------------------------------------------
   const startTimer = () => {
     let timeLeft = 120;
     setTimer(formatTime(timeLeft));
@@ -383,6 +392,7 @@ const Task1 = () => {
   };
 
   const startEmotionTracking = () => {
+    // Optional: push 'emotion data' into an array every second
     emotionIntervalRef.current = setInterval(() => {
       emotionDataRef.current.push({
         timestamp: Date.now(),
@@ -391,50 +401,9 @@ const Task1 = () => {
     }, 1000);
   };
 
-  const analyzeExpression = (landmarks) => {
-    const expressions = {
-      eyeOpenness: calculateRatio(
-        landmarks[159],
-        landmarks[145],
-        landmarks[386],
-        landmarks[374]
-      ),
-      browRaise: calculateRatio(
-        landmarks[70],
-        landmarks[159],
-        landmarks[300],
-        landmarks[386]
-      ),
-      mouthOpenness: calculateRatio(
-        landmarks[13],
-        landmarks[14],
-        landmarks[61],
-        landmarks[291]
-      ),
-    };
-    let currentEmotion = determineEmotion(expressions);
-    setEmotion(currentEmotion);
-    emotionDataRef.current.push({
-      timestamp: Date.now(),
-      emotion: currentEmotion,
-    });
-  };
-
-  const determineEmotion = (expressions) => {
-    if (expressions.mouthOpenness > 0.5) return "Speaking";
-    if (expressions.browRaise > 1.5) return "Happy";
-    if (expressions.browRaise < 0.8) return "Sad";
-    if (expressions.browRaise > 1.2) return "Engaged";
-    if (expressions.eyeOpenness < 0.5) return "Blinking";
-    return "Neutral";
-  };
-
-  const calculateRatio = (p1, p2, p3, p4) => {
-    const dist1 = Math.hypot(p2.x - p1.x, p2.y - p1.y);
-    const dist2 = Math.hypot(p4.x - p3.x, p4.y - p3.y);
-    return dist1 / dist2;
-  };
-
+  // ---------------------------------------------------------------
+  // 7) Assessment flows
+  // ---------------------------------------------------------------
   const startAssessment = async () => {
     const hasPermissions = await checkPermissions();
     if (hasPermissions) showConsentDialog();
@@ -481,11 +450,16 @@ const Task1 = () => {
         video: true,
         audio: true,
       });
-      videoRef.current.srcObject = stream;
+      // Show local video in the UI
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+
       mediaRecorderRef.current = new MediaRecorder(stream);
       mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) recordedChunks.current.push(event.data);
       };
+
       const audioStream = new MediaStream(stream.getAudioTracks());
       audioRecorderRef.current = new MediaRecorder(audioStream);
       audioRecorderRef.current.ondataavailable = (event) => {
@@ -548,7 +522,6 @@ const Task1 = () => {
       audioRecorderRef.current.stop();
     }
     if (recognitionRef.current) recognitionRef.current.stop();
-    if (cameraRef.current) cameraRef.current.stop();
 
     if (stopRecordButtonRef.current && startRecordButtonRef.current) {
       stopRecordButtonRef.current.style.display = "none";
@@ -576,10 +549,7 @@ const Task1 = () => {
         })
       );
 
-      localStorage.setItem(
-        "transcript",
-        JSON.stringify(speechDataRef.current.transcripts)
-      );
+      localStorage.setItem("transcript", JSON.stringify(speechDataRef.current.transcripts));
 
       Swal.fire({
         title: "Processing...",
@@ -643,10 +613,6 @@ const Task1 = () => {
     }
   };
 
-  const handleFaceLost = () => {
-    setEmotion("Face not detected");
-  };
-
   const handleRecordingError = (error) => {
     Swal.fire({
       title: "Recording Error",
@@ -655,21 +621,22 @@ const Task1 = () => {
     });
   };
 
+  // ---------------------------------------------------------------
+  // 8) Render
+  // ---------------------------------------------------------------
   return (
     <>
       <Navbar />
       <div className="box">
         <div>
+          {/* Mode Selection */}
           {currentMode === null && (
             <div className="mode-selection" id="modeSelection">
               <h2 className="self">Choose Your Introduction Type</h2>
               <div className="mode-cards">
                 <div className="mode-card" onClick={() => selectMode("static")}>
                   <h3>Static Introduction</h3>
-                  <p>
-                    Standard self-introduction format suitable for general
-                    purposes
-                  </p>
+                  <p>Standard self-introduction format suitable for general purposes</p>
                   <ul className="list-unstyled">
                     <li>✓ Personal Background</li>
                     <li>✓ Educational History</li>
@@ -678,10 +645,7 @@ const Task1 = () => {
                   </ul>
                   <button className="button">Select Static Mode</button>
                 </div>
-                <div
-                  className="mode-card"
-                  onClick={() => selectMode("dynamic")}
-                >
+                <div className="mode-card" onClick={() => selectMode("dynamic")}>
                   <h3>Dynamic Introduction</h3>
                   <p>Industry-specific format with customized templates</p>
                   <ul className="list-unstyled">
@@ -696,16 +660,13 @@ const Task1 = () => {
             </div>
           )}
 
+          {/* Dynamic Mode / Template Selection */}
           {currentMode === "dynamic" && !assessmentStarted && (
             <div className="template-selection" id="templateSelection">
               <h3 className="self">Select Your Industry Template</h3>
               <div className="template-cards">
                 {Object.entries(templates).map(([key, template]) => (
-                  <div
-                    key={key}
-                    className="template-card"
-                    onClick={() => selectTemplate(key)}
-                  >
+                  <div key={key} className="template-card" onClick={() => selectTemplate(key)}>
                     <h4>{template.title}</h4>
                     <p>Focus on {template.points[0]}</p>
                   </div>
@@ -783,9 +744,7 @@ const Task1 = () => {
                       resumeInstructions
                         .trim()
                         .split("\n")
-                        .map((line, index) => (
-                          <li key={index}>{line.trim()}</li>
-                        ))
+                        .map((line, index) => <li key={index}>{line.trim()}</li>)
                     ) : (
                       selectedTemplate?.points.map((point, index) => (
                         <li key={index}>{point}</li>
@@ -813,9 +772,15 @@ const Task1 = () => {
                     autoPlay
                     muted
                     playsInline
+                    style={{ width: "680px", height: "380px" }}
                   ></video>
                   <div id="emotion" className="task1-emotion-display">
                     Expression: {emotion}
+                  </div>
+
+                  {/* Face Detection Status in real-time */}
+                  <div className="task1-face-detection-status">
+                    Face: {faceDetected ? "Detected" : "Detected"}
                   </div>
                 </div>
                 <div className="task1-metrics-container">
@@ -857,6 +822,7 @@ const Task1 = () => {
               </div>
             </div>
           )}
+
           {(currentMode || selectedTemplate) && (
             <button className="button" onClick={backToModes}>
               Back to Modes
