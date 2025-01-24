@@ -6,9 +6,9 @@ import Swal from "sweetalert2";
 import Navbar from "../Navbar/Navbar";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI("AIzaSyCRxcQJL0lRiT8nd71y4Kvwm5WTE9rwuZ0");
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+// also paste these 2 line of code here , go to .env file----
 
+// ends here--------
 const templates = {
   software: {
     title: "Software Engineering Introduction",

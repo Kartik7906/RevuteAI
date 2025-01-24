@@ -36,8 +36,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-const genAI = new GoogleGenerativeAI("AIzaSyCRxcQJL0lRiT8nd71y4Kvwm5WTE9rwuZ0");
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+// put privatekey of google generative AI here: only 2 line of code:
+
+// ends here:
 
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
