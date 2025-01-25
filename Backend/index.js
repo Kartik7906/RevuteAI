@@ -16,11 +16,13 @@ dotenv.config();
 const PORT = process.env.PORT || 8000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
-app.use(cors({
-  origin: '*',                    
-  methods: ['GET', 'POST'],        
-  allowedHeaders: ['Content-Type'] 
-}));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
@@ -70,7 +72,7 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 50 * 1024 * 1024, 
+    fileSize: 50 * 1024 * 1024,
   },
 }).fields([
   { name: "videoFile", maxCount: 1 },
@@ -94,27 +96,39 @@ app.post("/api/gemini", async (req, res) => {
     let suggestions = [];
 
     if (!transcript.toLowerCase().includes("project")) {
-      suggestions.push("Mention the projects you've worked on to showcase your experience.");
+      suggestions.push(
+        "Mention the projects you've worked on to showcase your experience."
+      );
     }
 
     if (!transcript.toLowerCase().includes("goal")) {
-      suggestions.push("Add a clear statement of your career goals or future aspirations.");
+      suggestions.push(
+        "Add a clear statement of your career goals or future aspirations."
+      );
     }
 
     if (!transcript.toLowerCase().includes("leadership")) {
-      suggestions.push("Highlight any leadership roles or team experiences you've had.");
+      suggestions.push(
+        "Highlight any leadership roles or team experiences you've had."
+      );
     }
 
     if (!transcript.toLowerCase().includes("belong")) {
-      suggestions.push("Include a brief note about where you are from or your cultural background.");
+      suggestions.push(
+        "Include a brief note about where you are from or your cultural background."
+      );
     }
 
     if (!transcript.toLowerCase().includes("currently")) {
-      suggestions.push("Mention what you're currently doing (e.g., your job, studies, or side projects).");
+      suggestions.push(
+        "Mention what you're currently doing (e.g., your job, studies, or side projects)."
+      );
     }
 
     while (suggestions.length < 3) {
-      suggestions.push("Provide more detailed examples to make your introduction stand out.");
+      suggestions.push(
+        "Provide more detailed examples to make your introduction stand out."
+      );
     }
 
     if (suggestions.length > 5) {
@@ -127,7 +141,6 @@ app.post("/api/gemini", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 // Endpoint to handle uploads
 app.post("/api/upload", (req, res) => {
@@ -215,7 +228,7 @@ mongoose
     console.error("Error connecting to first MongoDB:", err);
   });
 
-//  CONNECT SECOND DB 
+//  CONNECT SECOND DB
 const secondMongoURI = process.env.SECOND_MONGO_URI;
 let secondDb = null;
 
@@ -278,7 +291,6 @@ function connectSecondDatabaseAndStartServer() {
           res.status(500).json({ error: "Server error" });
         }
       });
-
 
       app.get("/api/scenarios", async (req, res) => {
         try {
@@ -400,7 +412,6 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-    
       app.get("/api/notifications", async (req, res) => {
         try {
           const notifications = await secondDb
@@ -450,7 +461,9 @@ function connectSecondDatabaseAndStartServer() {
           });
         } catch (error) {
           console.error("Error marking notifications as read:", error);
-          res.status(500).json({ error: "Failed to mark notifications as read" });
+          res
+            .status(500)
+            .json({ error: "Failed to mark notifications as read" });
         }
       });
 
@@ -468,11 +481,12 @@ function connectSecondDatabaseAndStartServer() {
           });
         } catch (error) {
           console.error("Error marking notification as read:", error);
-          res.status(500).json({ error: "Failed to mark notification as read" });
+          res
+            .status(500)
+            .json({ error: "Failed to mark notification as read" });
         }
       });
 
-    
       app.post("/api/superadmin/toggle-user-visibility", async (req, res) => {
         try {
           const { ids, action } = req.body;
@@ -541,7 +555,7 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-      app.post("/get_prompt", async (req, res) => {
+      app.post("/api/get_prompt", async (req, res) => {
         try {
           const scenario_id = req.body.scenario_id;
           if (!scenario_id) {
@@ -567,10 +581,7 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-    
-
-
-      app.post("api/save_chat_history", async (req, res) => { 
+      app.post("api/save_chat_history", async (req, res) => {
         try {
           const { chatHistory } = req.body;
           if (!chatHistory) {
@@ -582,7 +593,11 @@ function connectSecondDatabaseAndStartServer() {
             .replace(/<br\/>/g, "\n")
             .trim();
 
-          await fsPromises.writeFile("chat_history.txt", cleanedHistory, "utf8");
+          await fsPromises.writeFile(
+            "chat_history.txt",
+            cleanedHistory,
+            "utf8"
+          );
 
           const analysis = await analyzeConversation(cleanedHistory);
           await fsPromises.writeFile(
@@ -607,12 +622,12 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-    
       app.get("/report", async (req, res) => {
         try {
           if (!(await fileExists("analysis_report.json"))) {
             return res.render("report", {
-              error: "No analysis report found. Please complete a conversation first.",
+              error:
+                "No analysis report found. Please complete a conversation first.",
             });
           }
 
@@ -647,7 +662,7 @@ function connectSecondDatabaseAndStartServer() {
             .find({ visible_to_users: true })
             .sort({ user_approval_date: -1 })
             .toArray();
-      
+
           res.json(
             scenarios.map((scenario) => ({
               _id: scenario._id,
@@ -662,7 +677,6 @@ function connectSecondDatabaseAndStartServer() {
           res.status(500).json({ error: "Internal Server Error" });
         }
       });
-      
 
       app.get("/admin/scenarios", async (req, res) => {
         try {
@@ -716,10 +730,12 @@ function connectSecondDatabaseAndStartServer() {
           }
 
           const objectIds = ids.map((id) => new ObjectId(id));
-          const visibleToAdmin = await secondDb.collection("admin").countDocuments({
-            _id: { $in: objectIds },
-            visible_to_admin: true,
-          });
+          const visibleToAdmin = await secondDb
+            .collection("admin")
+            .countDocuments({
+              _id: { $in: objectIds },
+              visible_to_admin: true,
+            });
 
           if (visibleToAdmin !== ids.length) {
             return res.status(403).json({
@@ -736,7 +752,9 @@ function connectSecondDatabaseAndStartServer() {
             for (const scenario of scenarios) {
               await secondDb.collection("notifications").insertOne({
                 title: "New Scenario Available",
-                message: `New scenario available: '${scenario.scenario || "Unnamed"}'`,
+                message: `New scenario available: '${
+                  scenario.scenario || "Unnamed"
+                }'`,
                 timestamp: new Date(),
                 read: false,
                 accepted: false,
@@ -851,7 +869,6 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-    
       app.post("/api/chat/process", async (req, res) => {
         const { messages } = req.body;
 
@@ -861,7 +878,9 @@ function connectSecondDatabaseAndStartServer() {
             history: messages.slice(0, -1),
           });
 
-          const result = await chat.sendMessage(messages[messages.length - 1].content);
+          const result = await chat.sendMessage(
+            messages[messages.length - 1].content
+          );
           const response = await result.response;
 
           res.json({ reply: response.text() });
@@ -879,7 +898,11 @@ function connectSecondDatabaseAndStartServer() {
           }
 
           const formattedHistory = await formatChatHistory(chatHistory);
-          await fsPromises.writeFile("chat_history.txt", formattedHistory, "utf8");
+          await fsPromises.writeFile(
+            "chat_history.txt",
+            formattedHistory,
+            "utf8"
+          );
 
           const analysis = await analyzeConversation(formattedHistory);
           await fsPromises.writeFile(
@@ -923,8 +946,6 @@ function connectSecondDatabaseAndStartServer() {
         }
       });
 
-     
-    
       async function formatChatHistory(chatHistory) {
         let cleaned = chatHistory
           .replace(/<br>/g, "\n")
@@ -1027,7 +1048,9 @@ function connectSecondDatabaseAndStartServer() {
         res.status(500).json({
           error: "Internal Server Error",
           message:
-            process.env.NODE_ENV === "development" ? err.message : "Something went wrong",
+            process.env.NODE_ENV === "development"
+              ? err.message
+              : "Something went wrong",
         });
       });
 

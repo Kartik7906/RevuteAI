@@ -1,176 +1,341 @@
+/* Navbar Styles */
+.admin-navbar {
+  background-color: #3498db;
+  padding: 10px 20px;
+}
 
-.admin-text-center{
-    text-align: center;
+.admin-navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-navbar-brand {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.admin-navbar-brand img {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.admin-button-group {
+  display: flex;
+  align-items: center;
+}
+
+.admin-btn-outline {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-btn-outline:hover {
+  background-color: #ffffff;
+  color: #3498db;
+}
+
+/* Container Styles */
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+.admin-header {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2em;
+}
+
+/* Section Titles */
+.admin-section-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Button Styles */
+.admin-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-btn-primary {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.admin-btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.admin-btn-success {
+  background-color: #27ae60;
+  color: #ffffff;
+}
+
+.admin-btn-success:hover {
+  background-color: #219a52;
+}
+
+.admin-btn-danger {
+  background-color: #e74c3c;
+  color: #ffffff;
+}
+
+.admin-btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.admin-btn-secondary {
+  background-color: #95a5a6;
+  color: #ffffff;
+}
+
+.admin-btn-secondary:hover {
+  background-color: #7f8c8d;
+}
+
+.admin-btn-outline {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-btn-outline:hover {
+  background-color: #ffffff;
+  color: #3498db;
+}
+
+.admin-btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.me-2 {
+  margin-right: 8px;
+}
+
+.admin-btn-full-width {
+  width: 100%;
+}
+
+/* Card Styles */
+.admin-card {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+/* Batch Actions Styles */
+.admin-batch-actions {
+  display: none;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-out;
+}
+
+.admin-batch-actions.visible {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-batch-actions-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.admin-batch-actions-container span {
+  font-size: 16px;
+}
+
+/* Table Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.admin-table th, .admin-table td {
+  padding: 12px 15px;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+
+.admin-table th {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.admin-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Visible Row */
+.admin-visible-row {
+  background-color: #d4edda;
+}
+
+/* Modal Styles */
+.admin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+  z-index: 1000;
+}
+
+.admin-modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-out;
+}
+
+.admin-modal-header, .admin-modal-footer {
+  padding: 16px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-modal-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.admin-close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.admin-modal-body {
+  padding: 16px;
+}
+
+.admin-modal-footer {
+  border-top: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-modal-footer .admin-btn {
+  margin-left: 10px;
+}
+
+/* Toast Styles */
+.admin-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #343a40;
+  padding: 15px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  opacity: 0;
+  animation: toastFadeIn 0.5s forwards;
+  z-index: 1001;
+}
+
+.admin-toast-success {
+  border-left: 5px solid #27ae60;
+}
+
+.admin-toast-error {
+  border-left: 5px solid #e74c3c;
+}
+
+.admin-toast-info {
+  border-left: 5px solid #3498db;
+}
+
+@keyframes toastFadeIn {
+  to {
+    opacity: 1;
   }
-  
-  /* Navbar */
-  .admin-navbar {
-    background-color: #3498db;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-20px); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .admin-batch-actions-container {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .admin-navbar-brand{
-    color: #fff;
+
+  .admin-batch-actions-container div {
+    margin-top: 10px;
   }
-  
-  
-  .admin-navbar-brand img {
-    height: 40px;
-    width: auto;
+
+  .admin-modal {
+    width: 90%;
   }
-  
-  /* Main Container */
-  .admin-container {
-    flex: 1;
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    box-sizing: border-box;
+
+  .admin-header {
+    font-size: 1.5em;
   }
-  
-  /* Card Styles */
-  .admin-card {
-    background-color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: center;
+
+  .admin-section-title {
+    font-size: 1.2em;
   }
-  
-  /* Title Styling */
-  .admin-card-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  /* Button Styles */
-  .admin-btn-primary {
-    background-color: #3498db;
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  .admin-btn-btn-outline-light{
-    color: #fff;
-    align: right;
-  }
-  
-  .admin-btn-primary:hover {
-    background-color: #2980b9;
-  }
-  
-  .admin-btn-success {
-    background-color: #27ae60;
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .admin-btn-success:hover {
-    background-color: #219a52;
-  }
-  
-  .admin-btn-danger {
-    background-color: #e74c3c;
-    border: none;
-    padding: 10px 15px;
-    color: white;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .admin-btn-danger:hover {
-    background-color: #c0392b;
-  }
-  
-  /* Table Styles */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  table thead {
-    
-    color: black;
-  }
-  
-  table th, table td {
-    text-align: left;
-    padding: 10px;
-    border: 1px solid #ddd;
-    font-size: 14px;
-  }
-  
-  /* Empty State Styling */
-  .admin-empty-state {
-    font-size: 16px;
-    color: #999;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  /* Batch Actions */
-  .admin-batch-actions {
-    display: none;
-    padding: 10px;
-    background: #fff;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .admin-batch-actions.visible {
-    display: block;
-    animation: slideDown 0.3s ease-out;
-  }
-  
-  @keyframes slideDown {
-    from {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  /* Row Visibility */
-  .admin-visible-row {
-    background-color: #d4edda;
-  }
-  
-  /* Checkbox Styles */
-  .admin-scenario-checkbox {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-  }
-  
-  /* Fade-Out Animation */
-  .admin-fade-out {
-    animation: fadeOut 0.5s ease-out forwards;
-  }
-  
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    to {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-  }
-  
+}
