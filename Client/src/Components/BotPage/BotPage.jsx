@@ -8,19 +8,17 @@ const url = "http://localhost:8000/api";
 const BotPage = () => {
   const navigate = useNavigate();
 
-  // put Azure OpenAI and Speech Service Configuration api here: ----start from here:
+  // put keys from .env file here 
 
 
 
 
   
-  // put Azure OpenAI and Speech Service Configuration api here: ----end here:
+  // put keys from .env file here
 
-  // State management
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [isNotificationDropdownVisible, setIsNotificationDropdownVisible] =
-    useState(false);
+  const [isNotificationDropdownVisible, setIsNotificationDropdownVisible] = useState(false);
   const [scenarios, setScenarios] = useState([]);
   const [selectedScenario, setSelectedScenario] = useState("");
   const [language, setLanguage] = useState("en-IN");
@@ -31,23 +29,19 @@ const BotPage = () => {
   const [spokenTextQueue, setSpokenTextQueue] = useState([]);
   const [showAnalysisOverlay, setShowAnalysisOverlay] = useState(false);
 
-  // Refs for elements
   const loaderRef = useRef(null);
   const microphoneRef = useRef(null);
   const stopSessionRef = useRef(null);
   const chatHistoryRef = useRef(null);
   const remoteVideoRef = useRef(null);
 
-  // Refs for Speech and WebRTC
   const avatarSynthesizerRef = useRef(null);
   const speechRecognizerRef = useRef(null);
   const peerConnectionRef = useRef(null);
 
-  // Persistent variables using useRef
   const lastSpeakTimeRef = useRef(null);
   const sessionActiveRef = useRef(false);
 
-  // Fetch Notifications
   const fetchNotifications = useCallback(async () => {
     try {
       const response = await fetch(`${url}/notifications`);
@@ -59,7 +53,6 @@ const BotPage = () => {
     }
   }, []);
 
-  // Fetch Scenarios
   const fetchScenarios = useCallback(async () => {
     try {
       const response = await fetch(`${url}/accepted-scenarios`);
@@ -73,7 +66,6 @@ const BotPage = () => {
     }
   }, []);
 
-  // Fetch Prompt
   const fetchPrompt = useCallback(async () => {
     try {
       const response = await fetch(`${url}/get_prompt`, {
@@ -104,7 +96,6 @@ const BotPage = () => {
     }
   }, [selectedScenario, messageInitiated]);
 
-  // Initial Fetches and Polling
   useEffect(() => {
     fetchNotifications();
     fetchScenarios();
@@ -120,9 +111,7 @@ const BotPage = () => {
     const newLanguage = e.target.value;
     if (isSessionActive) {
       if (
-        window.confirm(
-          "Changing language requires reconnecting. Continue?"
-        )
+        window.confirm("Changing language requires reconnecting. Continue?")
       ) {
         stopSession().then(() => setLanguage(newLanguage));
       }
@@ -147,41 +136,6 @@ const BotPage = () => {
     }
   };
 
-  // Accept Scenario
-  const acceptScenario = async (scenarioId) => {
-    try {
-      const response = await fetch(`${url}/accept-scenario`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ scenario_id: scenarioId }),
-      });
-      const data = await response.json();
-      if (data.success) {
-        setNotifications((prev) =>
-          prev.map((n) =>
-            n.id === scenarioId
-              ? { ...n, accepted: true, read: true }
-              : n
-          )
-        );
-        setUnreadCount((prev) => (prev > 0 ? prev - 1 : 0));
-        fetchNotifications();
-        fetchScenarios();
-        showToast("Scenario accepted successfully!", "success");
-      } else {
-        console.error("Error accepting scenario:", data.error);
-        showToast(
-          `Failed to accept scenario: ${data.message || "Unknown error"}`,
-          "error"
-        );
-      }
-    } catch (error) {
-      console.error("Error in scenario acceptance:", error);
-      showToast("Error accepting scenario. Please try again.", "error");
-    }
-  };
-
-  // Show Toast
   const showToast = (message, type = "info") => {
     const toast = document.createElement("div");
     toast.className = `toast toast-${type}`;
@@ -199,7 +153,6 @@ const BotPage = () => {
     }, 100);
   };
 
-  // Mark All Read
   const markAllRead = async () => {
     try {
       const response = await fetch(`${url}/notifications/mark-all-read`, {
@@ -220,7 +173,6 @@ const BotPage = () => {
     }
   };
 
-  // Clear Chat History
   const clearChatHistory = () => {
     setMessages((prev) => {
       const systemMsg = prev.find((m) => m.role === "system");
@@ -231,7 +183,6 @@ const BotPage = () => {
     }
   };
 
-  // Start Session
   const startSession = async () => {
     try {
       loaderRef.current.style.display = "flex";
@@ -245,7 +196,6 @@ const BotPage = () => {
     }
   };
 
-  // Stop Speaking
   const stopSpeaking = () => {
     if (avatarSynthesizerRef.current) {
       avatarSynthesizerRef.current.stopSpeakingAsync(
@@ -261,7 +211,6 @@ const BotPage = () => {
     }
   };
 
-  // Stop Session
   const stopSession = useCallback(async () => {
     try {
       stopSpeaking();
@@ -290,7 +239,6 @@ const BotPage = () => {
     }
   }, [navigate]);
 
-  // Save Chat History
   const saveChatHistory = async (chatHistory) => {
     try {
       setShowAnalysisOverlay(true);
@@ -317,7 +265,6 @@ const BotPage = () => {
     }
   };
 
-  // Connect Avatar
   const connectAvatar = () => {
     const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
       cogSvcSubKey,
@@ -334,14 +281,16 @@ const BotPage = () => {
     requestAvatarToken();
   };
 
-  // Setup Speech Recognition
   const setupSpeechRecognition = () => {
     const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
       cogSvcSubKey,
       cogSvcRegion
     );
     const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
-    const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+    const recognizer = new SpeechSDK.SpeechRecognizer(
+      speechConfig,
+      audioConfig
+    );
 
     recognizer.recognized = (s, e) => {
       if (e.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
@@ -355,7 +304,6 @@ const BotPage = () => {
     speechRecognizerRef.current = recognizer;
   };
 
-  // Request Avatar Token
   const requestAvatarToken = () => {
     const xhr = new XMLHttpRequest();
     xhr.open(
@@ -372,7 +320,6 @@ const BotPage = () => {
     xhr.send();
   };
 
-  // Setup WebRTC
   const setupWebRTC = (iceServerUrl, username, credential) => {
     const pc = new RTCPeerConnection({
       iceServers: [{ urls: [iceServerUrl], username, credential }],
@@ -385,7 +332,6 @@ const BotPage = () => {
     startAvatar(pc);
   };
 
-  // Setup Peer Connection Events
   const setupPeerConnectionEvents = (pc) => {
     pc.ontrack = (event) => {
       const element = document.createElement(event.track.kind);
@@ -411,7 +357,6 @@ const BotPage = () => {
     };
   };
 
-  // Start Avatar Function (Properly Defined)
   const startAvatar = useCallback((pc) => {
     if (avatarSynthesizerRef.current) {
       avatarSynthesizerRef.current
@@ -430,7 +375,6 @@ const BotPage = () => {
     }
   }, []);
 
-  // Handle Avatar Error
   const handleAvatarError = () => {
     console.error("Avatar start failed");
     alert("Failed to start avatar. Please try again.");
@@ -438,19 +382,21 @@ const BotPage = () => {
     setIsSessionActive(false);
   };
 
-  // User Input Handling
   const handleUserInput = async (userQuery) => {
     try {
-      // Add user message to context
-      setMessages((prev) => [...prev, { role: "user", content: userQuery }]);
+      const updatedMessages = [
+        ...messages,
+        { role: "user", content: userQuery },
+      ];
+      setMessages(updatedMessages);
       updateChatDisplay("User", userQuery);
 
-      // Stop any ongoing speech
       if (isSpeaking) {
         stopSpeaking();
       }
 
-      // Prepare Azure OpenAI request
+      console.log("Sending messages to Azure OpenAI:", updatedMessages);
+
       const response = await fetch(
         `${azureOpenAIEndpoint}/openai/deployments/${azureOpenAIDeploymentName}/chat/completions?api-version=2023-06-01-preview`,
         {
@@ -459,12 +405,16 @@ const BotPage = () => {
             "api-key": azureOpenAIApiKey,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ messages, stream: true }),
+          body: JSON.stringify({ messages: updatedMessages, stream: true }),
         }
       );
 
       if (!response.ok) {
-        throw new Error(`Azure OpenAI error: ${response.status}`);
+        const errorText = await response.text();
+        console.error("Azure OpenAI Error Details:", errorText);
+        throw new Error(
+          `Azure OpenAI error: ${response.status} - ${errorText}`
+        );
       }
 
       const reader = response.body.getReader();
@@ -525,7 +475,6 @@ const BotPage = () => {
     }
   };
 
-  // Speech Synthesis
   const speak = (text) => {
     if (isSpeaking) {
       setSpokenTextQueue((prev) => [...prev, text]);
@@ -583,7 +532,6 @@ const BotPage = () => {
     `;
   };
 
-  // HTML Encode
   const htmlEncode = (text) => {
     const entityMap = {
       "&": "&amp;",
@@ -596,7 +544,6 @@ const BotPage = () => {
     return String(text).replace(/[&<>"'/]/g, (s) => entityMap[s]);
   };
 
-  // Microphone Controls
   const startMicrophone = () => {
     if (speechRecognizerRef.current) {
       microphoneRef.current.disabled = true;
@@ -638,7 +585,6 @@ const BotPage = () => {
     }
   };
 
-  // Disconnect Avatar
   const disconnectAvatar = () => {
     if (avatarSynthesizerRef.current) {
       avatarSynthesizerRef.current.close();
@@ -659,7 +605,6 @@ const BotPage = () => {
     sessionActiveRef.current = false;
   };
 
-  // Handle Stop Session
   const handleStopSession = async () => {
     try {
       stopSpeaking();
@@ -688,7 +633,6 @@ const BotPage = () => {
     }
   };
 
-  // Handle Video Stream Start
   const handleVideoStart = () => {
     if (loaderRef.current) loaderRef.current.style.display = "none";
     if (microphoneRef.current) microphoneRef.current.disabled = false;
@@ -697,17 +641,12 @@ const BotPage = () => {
     lastSpeakTimeRef.current = new Date();
   };
 
-  // Session Status Polling
   useEffect(() => {
     const interval = setInterval(() => {
       if (isSessionActive) {
-        // Check for idle state
         if (lastSpeakTimeRef.current) {
           const currentTime = new Date();
-          if (
-            currentTime - lastSpeakTimeRef.current > 15000 &&
-            !isSpeaking
-          ) {
+          if (currentTime - lastSpeakTimeRef.current > 15000 && !isSpeaking) {
             if (remoteVideoRef.current) {
               remoteVideoRef.current.style.width = "0.1px";
             }
@@ -716,7 +655,6 @@ const BotPage = () => {
           }
         }
 
-        // Check video stream
         const videoElement = remoteVideoRef.current?.querySelector("video");
         if (videoElement) {
           const currentTime = videoElement.currentTime;
@@ -733,7 +671,6 @@ const BotPage = () => {
     return () => clearInterval(interval);
   }, [isSessionActive, isSpeaking, connectAvatar]);
 
-  // Handle Window Unload
   useEffect(() => {
     const handleUnload = () => {
       disconnectAvatar();
@@ -744,7 +681,6 @@ const BotPage = () => {
 
   return (
     <div className="bot-page-container">
-      {/* Header Section */}
       <div className="header-container">
         <h1 className="header-title">Talking Avatar</h1>
         <div className="header-right">
@@ -776,8 +712,6 @@ const BotPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Notification Dropdown */}
       {isNotificationDropdownVisible && (
         <div className="notification-dropdown">
           <div className="notification-header">
@@ -832,8 +766,6 @@ const BotPage = () => {
           </div>
         </div>
       )}
-
-      {/* Configuration */}
       <div className="configuration-container">
         <div className="control-panel">
           <div className="select-container">
@@ -851,7 +783,6 @@ const BotPage = () => {
               <option value="kn-IN">ಕನ್ನಡ</option>
             </select>
           </div>
-
           <div className="select-container">
             <label htmlFor="scenarioSelect">Select Scenario</label>
             <select
@@ -873,8 +804,6 @@ const BotPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Buttons */}
       <div className="button-container">
         <button
           id="startSession"
@@ -918,8 +847,6 @@ const BotPage = () => {
           End Chat
         </button>
       </div>
-
-      {/* Video and Chat Display */}
       <div className="chat-container">
         <div className="video-container">
           <div ref={remoteVideoRef} className="remote-video"></div>
@@ -940,8 +867,6 @@ const BotPage = () => {
           className="upload-img-icon"
         />
       </div>
-
-      {/* Analysis Overlay */}
       {showAnalysisOverlay && (
         <div className="analysis-loading-overlay">
           <div className="analysis-loading-content">
