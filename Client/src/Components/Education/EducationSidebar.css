@@ -1,0 +1,228 @@
+/* src/components/Education/EducationSidebar.css */
+
+.education-sidebar {
+  position: fixed;
+  top: 60px; /* Height of the navbar */
+  left: 0;
+  width: 260px;
+  height: calc(100% - 60px);
+  background-color: #2c3e50; /* Dark slate */
+  color: #ecf0f1; /* Light text */
+  padding: 20px 15px;
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+  z-index: 999;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.education-sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  background-color: #ecf0f1;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
+.sidebar-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+  text-align: center;
+  border-bottom: 1px solid #7f8c8d;
+  padding-bottom: 10px;
+}
+
+.days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.day-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ecf0f1;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.day-link:hover {
+  background-color: #34495e;
+  transform: translateX(5px);
+}
+
+.day-link.active {
+  background-color: #1abc9c; /* Turquoise for active */
+  box-shadow: inset 5px 0 0 #16a085;
+}
+
+.day-link.completed .progressbar-container {
+  opacity: 0.7;
+}
+
+.progressbar-container {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+}
+
+.day-title {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.badges-section {
+  margin-top: 30px;
+}
+
+.badges-section h4 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 1px solid #7f8c8d;
+  padding-bottom: 8px;
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #34495e;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.badge:hover {
+  background-color: #1abc9c;
+}
+
+.badge img {
+  width: 24px;
+  height: 24px;
+}
+
+.badge span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+  .education-sidebar {
+    width: 220px;
+    padding: 18px 12px;
+  }
+
+  .sidebar-toggle {
+    font-size: 1.3rem;
+    padding: 6px;
+  }
+
+  .sidebar-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+
+  .day-link {
+    padding: 8px;
+  }
+
+  .progressbar-container {
+    width: 35px;
+    height: 35px;
+    margin-right: 12px;
+  }
+
+  .day-title {
+    font-size: 0.95rem;
+  }
+
+  .badges-section h4 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .badge img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .badge span {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .education-sidebar {
+    width: 180px;
+    padding: 15px 10px;
+  }
+
+  .sidebar-toggle {
+    font-size: 1.2rem;
+    padding: 5px;
+  }
+
+  .sidebar-title {
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+  }
+
+  .day-link {
+    padding: 6px;
+  }
+
+  .progressbar-container {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .day-title {
+    font-size: 0.9rem;
+  }
+
+  .badges-section h4 {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+
+  .badge img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .badge span {
+    font-size: 0.8rem;
+  }
+}

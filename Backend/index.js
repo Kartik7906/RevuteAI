@@ -40,7 +40,6 @@ app.get("/", (req, res) => {
 
 // put privatekey of google generative AI here: only 2 line of code:
 
-
 // ends here:
 
 const uploadDir = path.join(__dirname, "uploads");

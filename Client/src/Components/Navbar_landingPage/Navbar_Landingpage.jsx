@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Navbar_Landingpage.css';
 import { useNavigate } from 'react-router-dom';
 import company_logo from '../../images/company_logo.jpeg';
@@ -6,6 +6,8 @@ import company_logo from '../../images/company_logo.jpeg';
 const Navbar_Landingpage = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [popupModal, setPopupModal] = useState(false);
+  const modalRef = useRef();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -16,13 +18,33 @@ const Navbar_Landingpage = () => {
     setIsMenuOpen(false);
   };
 
+  const handleClickEnterprise = () => {
+    setPopupModal(!popupModal);
+  };
+
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setPopupModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (popupModal) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [popupModal]);
+
   return (
     <div className="navbarHomepage-container">
       <div className="companyHomepage-logo">
         <img src={company_logo} alt="Company Logo" />
       </div>
       <div className="menu-icon" onClick={toggleMenu}>
-        {/* Hamburger icon */}
         <div className={isMenuOpen ? "bar open" : "bar"}></div>
         <div className={isMenuOpen ? "bar open" : "bar"}></div>
         <div className={isMenuOpen ? "bar open" : "bar"}></div>
@@ -33,16 +55,10 @@ const Navbar_Landingpage = () => {
         }`}
       >
         <span
-          onClick={() => handleNavigation('/course')}
+          onClick={handleClickEnterprise}
           className="loginHomepage-container"
         >
-          Courses
-        </span>
-        <span
-          onClick={() => handleNavigation('/pricing')}
-          className="loginHomepage-container"
-        >
-          Pricing
+          Enterprise
         </span>
         <span
           onClick={() => handleNavigation('/about')}
@@ -69,6 +85,17 @@ const Navbar_Landingpage = () => {
           Request Demo
         </button>
       </div>
+
+      {popupModal && (
+        <div className="popup-modal-overlay">
+          <div className="popup-modal" ref={modalRef}>
+            <ul>
+              <li onClick={() => handleNavigation('/business')}>Business</li>
+              <li onClick={() => handleNavigation('/education')}>Education</li>
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -10,8 +10,8 @@ import ListedReport from "./Components/ListedReports/ListedReport";
 import BotPage from "./Components/BotPage/BotPage";
 import Admin from "./Components/AdminDashboard/Admin";
 import SuperAdmin from "./Components/SuperAdmin/SuperAdmin";
-import CoursesPage from "./Components/Courses/CoursesPage";
 import ContactusPage from "./Components/ContactusPage/ContactusPage";
+import Education from "./Components/Education/Education";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/admin" element={<Admin/>} />
           <Route path="/superadmin" element={<SuperAdmin/>} />
           <Route path="/contactus" element={<ContactusPage/>} />
-          <Route path="/course" element={<CoursesPage/>} />
+          <Route path="/education" element={<Education/>} />
         </Routes>
       </BrowserRouter>
     </>
