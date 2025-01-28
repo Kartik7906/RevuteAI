@@ -1,12 +1,7 @@
-/* LearnMore.css */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-body {
-  font-family: 'Arial', sans-serif;
 }
 
 .learn-more-wrapper {
@@ -98,6 +93,7 @@ body {
 /* Popular Training Scenarios Section */
 .popular-training-section {
   width: 100%;
+  height: 100vh;
   padding: 50px;
   background-color: #9a42f8;
   color: white;
@@ -140,4 +136,151 @@ body {
   color: white;
   border-radius: 50%;
   font-size: 1.5rem;
+}
+
+.thirdSection-learnmorepage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 50px 0;
+  background-color: #f9f9f9;
+}
+
+.aboutlearnmore {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  max-width: 1200px;
+  width: 90%;
+}
+
+.aboutlearnmore-div1,
+.aboutlearnmore-div2,
+.aboutlearnmore-div3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.aboutlearnmore-div2,
+.aboutlearnmore-div3 {
+  flex-direction: row-reverse;
+}
+
+.aboutlearnmore-text {
+  flex: 1;
+  max-width: 500px;
+}
+
+.aboutlearnmore-text h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.aboutlearnmore-text p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.aboutlearnmore-image {
+  flex: 1;
+  max-width: 500px;
+}
+
+.aboutlearnmore-image img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+
+/* Footer Section */
+.Learnpage-footer-homePage {
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: #ffffff;
+  padding: 40px 40px;
+}
+
+.Learnpage-footer-wrapper {
+  color: #ffffff;
+  padding: 40px 40px;
+  font-family: sans-serif;
+}
+
+.Learnpage-footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.Learnpage-footer-column {
+  flex: 1;
+  min-width: 150px;
+}
+
+.Learnpage-footer-column h3 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.Learnpage-footer-column ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.Learnpage-footer-column ul li {
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.Learnpage-footer-column ul li:hover {
+  text-decoration: underline;
+  color: #7bdcb5;
+}
+
+.Learnpage-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 15px;
+}
+
+.Learnpage-footer-company,
+.Learnpage-footer-links {
+  margin: 0;
+}
+
+.Learnpage-footer-social i {
+  margin-left: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.Learnpage-footer-social i:hover {
+  color: #7bdcb5;
+}
+
+@media (max-width: 768px) {
+  .Learnpage-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }

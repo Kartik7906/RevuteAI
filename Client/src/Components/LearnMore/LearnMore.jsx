@@ -80,6 +80,110 @@ const LearnMore = () => {
           </div>
         </div>
       </section>
+
+      {/* create new section here: as  */}
+      <div className="thirdSection-learnmorepage">
+        <div className="aboutlearnmore">
+          {/* Div1 */}
+          <div className="aboutlearnmore-div1">
+            <div className="aboutlearnmore-text">
+              <h2>AI-powered feedback</h2>
+              <p>
+              Get feedback on what you say and any areas you need to improve with our generative AI solution.
+              </p>
+            </div>
+            <div className="aboutlearnmore-image">
+              <img src={simulationImage} alt="AI-powered feedback" />
+            </div>
+          </div>
+
+          {/* Div2 */}
+          <div className="aboutlearnmore-div2">
+            <div className="aboutlearnmore-image">
+              <img src={personalizationImage} alt="Practice in different languages" />
+            </div>
+            <div className="aboutlearnmore-text">
+              <h2>Practice in more than 10 Indic languages.</h2>
+              <p>
+              Practice interviews, difficult conversations, networking, communication, and other skills in different languages.
+              </p>
+            </div>
+          </div>
+
+          {/* Div3 */}
+          <div className="aboutlearnmore-div3">
+            <div className="aboutlearnmore-image">
+              <img src={insightsImage} alt="Customize with Roleplay Studio" />
+            </div>
+            <div className="aboutlearnmore-text">
+              <h2>Customize with various products.</h2>
+              <p>
+              Add any number of products and scenarios for your employees to practice.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Section */}
+      <div className="Learnpage-footer-homePage">
+        <div className="Learnpage-footer-wrapper">
+          <div className="Learnpage-footer-top">
+            <div className="Learnpage-footer-column">
+              <h3>PLATFORM</h3>
+              <ul>
+                <li>AI Roleplays</li>
+                <li>Roleplay Studio</li>
+                <li>All Practice Exercises</li>
+                <li>Pricing</li>
+                <li>Skill Assessment</li>
+              </ul>
+            </div>
+            <div className="Learnpage-footer-column">
+              <h3>RESOURCES</h3>
+              <ul>
+                <li>Blog</li>
+                <li>Case Studies</li>
+                <li>Webinars</li>
+              </ul>
+            </div>
+            <div className="Learnpage-footer-column">
+              <h3>LINKS</h3>
+              <ul>
+                <li>Contact</li>
+                <li>About Us</li>
+                <li>Affiliates</li>
+                <li>Referral Scheme</li>
+                <li>Newsletter</li>
+              </ul>
+            </div>
+            <div className="Learnpage-footer-column">
+              <h3>SUPPORT</h3>
+              <ul>
+                <li>Help Center</li>
+                <li>Platform Video Tour</li>
+                <li>VR Features</li>
+                <li>VR App Guide</li>
+                <li>Supported VR Headsets</li>
+              </ul>
+            </div>
+          </div>
+          <div className="Learnpage-footer-bottom">
+            <p className="Learnpage-footer-company">2025 RevuteAI Ltd.</p>
+            <p className="Learnpage-footer-links">
+              Terms | Privacy | Accessibility
+            </p>
+            <div className="Learnpage-footer-social">
+              <i className="fab fa-facebook-f">F</i>
+              <i className="fab fa-x-twitter">X</i>
+              <i className="fab fa-youtube">Y</i>
+              <i className="fab fa-linkedin-in">in</i>
+              <i className="fab fa-tiktok">T</i>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };
