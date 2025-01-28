@@ -98,21 +98,11 @@ const HomePage = () => {
           <h2>Why RevuteAI?</h2>
           <div className="homepage-reasons">
             <div className="homepage-reason">
-              <FaLightbulb className="homepage-icon" />
-              <h3>Proven Success</h3>
-              <span className="homepage-horizontal"></span>
-              <p>
-                Join over 550,000 people across 130+ countries using
-                VirtualSpeech to upskill themselves.
-              </p>
-            </div>
-            <div className="homepage-reason">
               <FaBookOpen className="homepage-icon" />
               <h3>Learn by Doing</h3>
               <span className="homepage-horizontal"></span>
               <p>
-                With over 55 hands-on practice exercises, you'll improve your
-                skills up to 4x faster.
+              With over 100+ real-time scenarios, you will improve your skills up to 4x faster.
               </p>
             </div>
             <div className="homepage-reason">
@@ -126,11 +116,10 @@ const HomePage = () => {
             </div>
             <div className="homepage-reason">
               <IoStatsChartSharp className="homepage-icon" />
-              <h3>Boost Your Career</h3>
+              <h3>Multilingual</h3>
               <span className="homepage-horizontal"></span>
               <p>
-                Our accredited courses help you get a promotion and progress as
-                a manager.
+               Practice in various Indian languages.
               </p>
             </div>
           </div>
@@ -150,30 +139,27 @@ const HomePage = () => {
               <div className="homepage-circular-image-div">
                 <img src={workplaceimg} alt="Workplace Skills" />
               </div>
-              <h3>Sales Mastery in BFSI</h3>
+              <h3>Learn workplace skills</h3>
               <p>
-                Learn effective sales strategies tailored for the Banking,
-                Financial Services, and Insurance sectors.
+               Learn soft skills, communication, product knowledge and effective sales strategies.
               </p>
             </div>
             <div className="homepage-learningPath-card">
               <div className="homepage-circular-image-div">
                 <img src={practiceing} alt="Practice Learning" />
               </div>
-              <h3>BFSI Domain Knowledge</h3>
+              <h3>Practice what you learn</h3>
               <p>
-                Gain in-depth understanding of banking products, insurance, and
-                financial services workflows.
+              Apply your learning with AI Agents for practice exercises
               </p>
             </div>
             <div className="homepage-learningPath-card">
               <div className="homepage-circular-image-div">
                 <img src={feedbackimg} alt="Instant Feedback" />
               </div>
-              <h3>Placement Assistance Program</h3>
+              <h3>Get instant feedback</h3>
               <p>
-                Receive resume-building guidance, interview preparation, and
-                placement support with top BFSI companies.
+              Receive instant feedback after each practice session so you can easily identify areas to improve.
               </p>
             </div>
           </div>
