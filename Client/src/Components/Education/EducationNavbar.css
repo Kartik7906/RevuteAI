@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1a202c;
+  background-color: #ffffff;
   padding: 15px 30px;
-  color: #ffffff;
+  color: #1a202c;
   position: fixed;
   width: 100%;
   top: 0;
@@ -12,11 +12,8 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-left h1 {
+.navbar-left{
   margin-left: 40px;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #ffffff;
 }
 
 .navbar-right {
@@ -29,12 +26,12 @@
   position: relative;
   cursor: pointer;
   font-size: 1.4rem;
-  color: #ffffff;
+  color: #1a202c;
   transition: color 0.3s ease;
 }
 
 .notifications:hover {
-  color: #63b3ed; /* Light blue on hover */
+  color: #3182ce; /* Light blue on hover */
 }
 
 .notification-count {
@@ -56,12 +53,12 @@
 
 .profile-icon {
   font-size: 1.8rem;
-  color: #ffffff;
+  color: #1a202c;
   transition: color 0.3s ease;
 }
 
 .profile-dropdown:hover .profile-icon {
-  color: #63b3ed; /* Light blue on hover */
+  color: #3182ce; /* Light blue on hover */
 }
 
 .dropdown-content {
@@ -70,7 +67,7 @@
   right: 0;
   top: 45px;
   background-color: #ffffff;
-  color: #2d3748;
+  color: #1a202c;
   border-radius: 8px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   overflow: hidden;
@@ -84,7 +81,7 @@
 }
 
 .dropdown-content a {
-  color: #2d3748;
+  color: #1a202c;
   padding: 12px 20px;
   text-decoration: none;
   font-size: 0.95rem;
@@ -93,7 +90,7 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #edf2f7; /* Light gray on hover */
+  background-color: #e2e8f0; /* Light gray on hover */
   color: #1a202c;
 }
 
@@ -151,3 +148,8 @@
     font-size: 0.85rem;
   }
 }
+
+.companyHomepage-logo img {
+  height: 40px;
+  width: auto;
+} 

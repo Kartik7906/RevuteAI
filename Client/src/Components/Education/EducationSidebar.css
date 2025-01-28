@@ -1,18 +1,21 @@
-/* src/components/Education/EducationSidebar.css */
-
 .education-sidebar {
   position: fixed;
   top: 60px; /* Height of the navbar */
   left: 0;
   width: 260px;
   height: calc(100% - 60px);
-  background-color: #2c3e50; /* Dark slate */
-  color: #ecf0f1; /* Light text */
+  background-color: #f0f8ff; /* Light blue background */
+  color: #333;
   padding: 20px 15px;
   transition: transform 0.3s ease-in-out;
   overflow-y: auto;
   z-index: 999;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  scrollbar-width: none; /* Hide scrollbar */
+}
+
+.education-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .education-sidebar.closed {
@@ -24,22 +27,20 @@
   top: 15px;
   left: 15px;
   font-size: 1.5rem;
-  color: #2c3e50;
-  background-color: #ecf0f1;
+  color: #3498db;
+  background-color: transparent;
   border: none;
-  border-radius: 50%;
   padding: 8px;
   cursor: pointer;
   z-index: 1001;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .sidebar-toggle:hover {
-  background-color: #bdc3c7;
-  color: #2c3e50;
+  color: #2980b9;
 }
 
 .sidebar-title {
@@ -47,7 +48,7 @@
   font-weight: 600;
   margin-bottom: 25px;
   text-align: center;
-  border-bottom: 1px solid #7f8c8d;
+  border-bottom: 1px solid #d6e9f8;
   padding-bottom: 10px;
 }
 
@@ -61,24 +62,21 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: #ecf0f1;
+  color: #333;
   padding: 10px;
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .day-link:hover {
-  background-color: #34495e;
+  background-color: #d6e9f8;
   transform: translateX(5px);
 }
 
 .day-link.active {
-  background-color: #1abc9c; /* Turquoise for active */
-  box-shadow: inset 5px 0 0 #16a085;
-}
-
-.day-link.completed .progressbar-container {
-  opacity: 0.7;
+  background-color: #3498db; /* Professional blue for active */
+  color: #ffffff;
+  box-shadow: inset 5px 0 0 #2980b9;
 }
 
 .progressbar-container {
@@ -93,46 +91,7 @@
 }
 
 .badges-section {
-  margin-top: 30px;
-}
-
-.badges-section h4 {
-  font-size: 1.1rem;
-  margin-bottom: 15px;
-  text-align: center;
-  border-bottom: 1px solid #7f8c8d;
-  padding-bottom: 8px;
-}
-
-.badge-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #34495e;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-}
-
-.badge:hover {
-  background-color: #1abc9c;
-}
-
-.badge img {
-  width: 24px;
-  height: 24px;
-}
-
-.badge span {
-  font-size: 0.9rem;
-  font-weight: 500;
+  display: none;
 }
 
 /* Responsive Design */
@@ -166,20 +125,6 @@
   .day-title {
     font-size: 0.95rem;
   }
-
-  .badges-section h4 {
-    font-size: 1rem;
-    margin-bottom: 12px;
-  }
-
-  .badge img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .badge span {
-    font-size: 0.85rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -210,19 +155,5 @@
 
   .day-title {
     font-size: 0.9rem;
-  }
-
-  .badges-section h4 {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
-  }
-
-  .badge img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .badge span {
-    font-size: 0.8rem;
   }
 }

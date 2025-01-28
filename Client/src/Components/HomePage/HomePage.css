@@ -1,11 +1,15 @@
+/* src/components/HomePage/HomePage.css */
+
+/* Global Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+/* Main Container */
 .homepage-main-container {
   width: 100%;
   min-height: 100vh;
@@ -13,6 +17,7 @@
   flex-direction: column;
 }
 
+/* Main Content Section */
 .homepage-main-content {
   width: 100%;
   min-height: 100vh;
@@ -20,7 +25,6 @@
   justify-content: center;
   align-items: center;
   padding: 5%;
-  /* background: linear-gradient(135deg, #1e3c72, #2a5298); */
   background: linear-gradient(135deg, #141e30, #243b55);
   position: relative;
   flex-direction: column;
@@ -37,8 +41,8 @@
   gap: 30px;
 }
 
-.homepage-overlayer-text-left h2 {
-  font-size: 2.5rem;
+.homepage-overlayer-text-left h2.main-heading {
+  font-size: 3.5rem; 
   font-weight: 700;
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -67,60 +71,75 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 1024px) {
-  .homepage-main-content {
-    padding: 8%;
-  }
-
-  .homepage-overlayer-text-left h2 {
-    font-size: 2rem;
-  }
-
-  .homepage-overlayer-text p {
-    font-size: 1.1rem;
-  }
+/* Roleplay Section */
+.homepage-roleplay-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2.5rem;
+  min-height: 100vh;
+  background-color: #f9f9f9;
 }
 
-@media (max-width: 768px) {
-  .homepage-main-content {
-    padding: 10%;
-  }
-
-  .homepage-overlayer-text-left h2 {
-    font-size: 1.8rem;
-  }
-
-  .homepage-overlayer-text p {
-    font-size: 1rem;
-  }
-
-  .homepage-overlayer-text button {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
+.homepage-roleplay-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-@media (max-width: 480px) {
-  .homepage-main-content {
-    padding: 12%;
-  }
-
-  .homepage-overlayer-text-left h2 {
-    font-size: 1.5rem;
-  }
-
-  .homepage-overlayer-text p {
-    font-size: 0.9rem;
-  }
-
-  .homepage-overlayer-text button {
-    font-size: 0.9rem;
-    padding: 8px 16px;
-  }
+.homepage-roleplay-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
+.homepage-roleplay-image img:hover {
+  transform: scale(1.05);
+}
+
+.homepage-roleplay-text {
+  flex: 1;
+}
+
+.homepage-roleplay-text h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.homepage-roleplay-text p {
+  color: #666;
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.homepage-learn-more-btn {
+  background-color: #7b3fe4;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.homepage-learn-more-btn:hover {
+  background-color: #692fd8;
+  transform: translateY(-2px);
+}
+
+/* Choose Us Section */
 .homepage-choose-us-container {
-  background: linear-gradient(135deg, #4f00bd, #36a3f5);
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Updated Gradient */
   width: 100%;
   color: #ffffff;
   padding: 140px 20px;
@@ -189,115 +208,22 @@
   margin: 15px 0;
 }
 
-.homepage-reason svg {
+.homepage-reason .homepage-icon {
   font-size: 3.5rem;
   color: #43d787;
   margin-bottom: 15px;
+  transition: transform 0.3s ease;
 }
 
-@media (max-width: 1024px) {
-  .homepage-choose-us-reason h2 {
-    font-size: 2.25rem;
-    margin-bottom: 30px;
-  }
-  .homepage-reason h3 {
-    font-size: 1.5rem;
-  }
-  .homepage-reason svg {
-    font-size: 3rem;
-  }
+.homepage-reason .homepage-icon:hover {
+  transform: scale(1.1);
 }
 
-@media (max-width: 768px) {
-  .homepage-choose-us-reason h2 {
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-  .homepage-reasons {
-    gap: 20px;
-  }
-  .homepage-reason {
-    padding: 15px;
-  }
-  .homepage-reason h3 {
-    font-size: 1.25rem;
-    margin: 15px 0 8px 0;
-  }
-  .homepage-reason p {
-    max-width: 100%;
-  }
-  .homepage-horizontal {
-    width: 40px;
-    height: 3px;
-    margin: 10px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .homepage-choose-us-container {
-    padding: 40px 15px;
-  }
-  .homepage-choose-us-reason h2 {
-    font-size: 1.75rem;
-    margin-bottom: 20px;
-  }
-  .homepage-reason {
-    padding: 10px;
-  }
-  .homepage-reason svg {
-    font-size: 2.5rem;
-  }
-  .homepage-reason h3 {
-    font-size: 1.1rem;
-  }
-  .homepage-horizontal {
-    width: 30px;
-    height: 2px;
-    margin: 8px 0;
-  }
-}
-
-.homepage-IntroWhyUs {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.homepage-IntroWhyUs img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(30%);
-}
-
-.homepage-Overlayer2-toWhyUs {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-}
-
-.homepage-Overlayer2-toWhyUs h2 {
-  font-size: 2.5rem;
-  color: white;
-  margin-bottom: 1.7rem;
-  font-family: "Times New Roman", Times, serif;
-}
-
-.homepage-Overlayer2-toWhyUs p {
-  font-size: 1.6rem;
-  line-height: 1.2;
-  font-family: "Times New Roman", Times, serif;
-}
-
+/* Learning Path Section */
 .homepage-learningPath {
-  background: linear-gradient(180deg, #5a4fee 0%, #b54cea 100%);
   padding: 60px 20px;
-  color: #fff;
+  perspective: 1000px; 
+  margin-bottom: 50px;
 }
 
 .homepage-learningPath-container {
@@ -311,8 +237,9 @@
 }
 
 .homepage-learningPath-title h2 {
-  font-size: 2.2rem;
+  font-size: 2.5rem; /* Increased font size */
   margin-bottom: 10px;
+  color: #333; /* Dark text */
 }
 
 .homepage-learningPath-title p {
@@ -320,6 +247,7 @@
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
+  color: #666; /* Darker text for readability */
 }
 
 .homepage-learningPath-cards {
@@ -338,9 +266,18 @@
   flex-direction: column;
   max-width: 350px;
   text-align: center;
+  background-color: #ffffff; /* Changed to white for the white theme */
+  transition: transform 0.6s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
 }
 
-.homepage-cirecular-image-div {
+.homepage-learningPath-card:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
+}
+
+.homepage-circular-image-div {
   width: 200px;
   height: 200px;
   margin-bottom: 1rem;
@@ -349,9 +286,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #f0f0f0; /* Light background for contrast */
 }
 
-.homepage-cirecular-image-div img {
+.homepage-circular-image-div img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -360,19 +298,23 @@
 .homepage-learningPath-card h3 {
   margin-bottom: 0.8rem;
   font-size: 1.25rem;
-  color: #fff;
+  color: #333; /* Dark text */
 }
 
 .homepage-learningPath-card p {
   font-size: 1rem;
   line-height: 1.5;
-  color: #f0f0f0;
+  color: #666; /* Darker text for readability */
+}
+
+/* Footer Section */
+.homepage-footer-homePage {
+  background: linear-gradient(135deg, #141e30, #243b55);
+  color: #ffffff;
+  padding: 40px 40px;
 }
 
 .homepage-footer-wrapper {
-  /* background-color: #2c2f33; */
-  background: linear-gradient(135deg, #141e30, #243b55);
-
   color: #ffffff;
   padding: 40px 40px;
   font-family: sans-serif;
@@ -406,10 +348,12 @@
 .homepage-footer-column ul li {
   margin-bottom: 8px;
   cursor: pointer;
+  transition: color 0.3s;
 }
 
 .homepage-footer-column ul li:hover {
   text-decoration: underline;
+  color: #7bdcb5;
 }
 
 .homepage-footer-bottom {
@@ -427,12 +371,13 @@
 
 .homepage-footer-social i {
   margin-left: 10px;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
+  transition: color 0.3s;
 }
 
 .homepage-footer-social i:hover {
-  color: #ccc;
+  color: #7bdcb5;
 }
 
 @media (max-width: 768px) {
@@ -440,5 +385,269 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+  }
+}
+
+/* Media Queries for Mobile Responsiveness */
+
+/* Tablet Devices */
+@media (max-width: 1024px) {
+  .homepage-main-content {
+    padding: 8%;
+  }
+
+  .homepage-overlayer-text-left h2.main-heading {
+    font-size: 2.5rem; /* Slight reduction for tablet */
+  }
+
+  .homepage-overlayer-text p {
+    font-size: 1.1rem;
+  }
+
+  .homepage-choose-us-reason h2 {
+    font-size: 2.25rem;
+    margin-bottom: 30px;
+  }
+
+  .homepage-reason h3 {
+    font-size: 1.5rem;
+  }
+
+  .homepage-reason .homepage-icon {
+    font-size: 3rem;
+  }
+
+  .homepage-learningPath-title h2 {
+    font-size: 2.5rem; /* Increased for consistency */
+  }
+
+  .homepage-learningPath-title p {
+    font-size: 1rem;
+  }
+
+  .homepage-learningPath-cards {
+    gap: 1.5rem;
+  }
+
+  .homepage-learningPath-card {
+    max-width: 100%;
+  }
+
+  .homepage-circular-image-div {
+    width: 150px;
+    height: 150px;
+  }
+
+  .homepage-learningPath-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .homepage-learningPath-card p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+  .homepage-main-content {
+    padding: 10%;
+  }
+
+  .homepage-overlayer-text-left h2.main-heading {
+    font-size: 2.5rem; /* Further adjustments if needed */
+  }
+
+  .homepage-overlayer-text p {
+    font-size: 1rem;
+  }
+
+  .homepage-overlayer-text button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .homepage-roleplay-section {
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+  .homepage-roleplay-image {
+    width: 100%;
+  }
+
+  .homepage-roleplay-text {
+    width: 100%;
+  }
+
+  .homepage-roleplay-text h2 {
+    font-size: 1.75rem;
+  }
+
+  .homepage-roleplay-text p {
+    font-size: 0.95rem;
+  }
+
+  .homepage-learn-more-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .homepage-choose-us-container {
+    padding: 100px 15px;
+  }
+
+  .homepage-reasons {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .homepage-reason {
+    padding: 15px;
+  }
+
+  .homepage-reason h3 {
+    font-size: 1.25rem;
+    margin: 15px 0 8px 0;
+  }
+
+  .homepage-reason p {
+    max-width: 100%;
+  }
+
+  .homepage-horizontal {
+    width: 40px;
+    height: 3px;
+    margin: 10px 0;
+  }
+
+  .homepage-learningPath {
+    padding: 50px 15px;
+  }
+
+  .homepage-learningPath-title h2 {
+    font-size: 2.5rem; /* Consistent with desktop */
+  }
+
+  .homepage-learningPath-title p {
+    font-size: 1rem;
+  }
+
+  .homepage-learningPath-cards {
+    gap: 1.5rem;
+  }
+
+  .homepage-learningPath-card {
+    padding: 15px;
+  }
+
+  .homepage-circular-image-div {
+    width: 120px;
+    height: 120px;
+  }
+
+  .homepage-learningPath-card h3 {
+    font-size: 1rem;
+  }
+
+  .homepage-learningPath-card p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile Devices (Extra Small) */
+@media (max-width: 480px) {
+  .homepage-main-content {
+    padding: 12%;
+  }
+
+  .homepage-overlayer-text-left h2.main-heading {
+    font-size: 2.5rem; /* Further increase if needed */
+  }
+
+  .homepage-overlayer-text p {
+    font-size: 0.9rem;
+  }
+
+  .homepage-overlayer-text button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .homepage-roleplay-section {
+    padding: 1.5rem;
+  }
+
+  .homepage-roleplay-image img {
+    max-width: 100%;
+  }
+
+  .homepage-roleplay-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .homepage-roleplay-text p {
+    font-size: 0.85rem;
+  }
+
+  .homepage-learn-more-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .homepage-choose-us-container {
+    padding: 80px 15px;
+  }
+
+  .homepage-reasons {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .homepage-reason {
+    padding: 10px;
+  }
+
+  .homepage-reason h3 {
+    font-size: 1rem;
+    margin: 10px 0 5px 0;
+  }
+
+  .homepage-horizontal {
+    width: 30px;
+    height: 2px;
+    margin: 8px 0;
+  }
+
+  .homepage-learningPath {
+    padding: 40px 15px;
+  }
+
+  .homepage-learningPath-title h2 {
+    font-size: 1.75rem;
+  }
+
+  .homepage-learningPath-title p {
+    font-size: 0.95rem;
+  }
+
+  .homepage-learningPath-cards {
+    gap: 1rem;
+  }
+
+  .homepage-learningPath-card {
+    padding: 10px;
+  }
+
+  .homepage-circular-image-div {
+    width: 100px;
+    height: 100px;
+  }
+
+  .homepage-learningPath-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .homepage-learningPath-card p {
+    font-size: 0.8rem;
   }
 }

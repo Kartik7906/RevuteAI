@@ -18,12 +18,48 @@
   margin-left: 0;
 }
 
-.main-heading {
+/* Interactive Banner */
+.interactive-banner {
+  background-color: #1abc9c; /* Turquoise */
+  color: #ffffff;
+  padding: 40px 20px;
+  border-radius: 10px;
   text-align: center;
   margin-bottom: 40px;
-  color: #2c3e50;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.interactive-banner h1 {
   font-size: 2rem;
-  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.interactive-banner p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.unlock-button {
+  padding: 12px 30px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  color: #1abc9c;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+.unlock-button:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-2px);
+  color: #16a085;
+}
+
+/* 7-Day Learning Journey */
+.main-heading {
+  display: none; /* Removed as per requirement 1 */
 }
 
 .education-days-container {
@@ -36,9 +72,10 @@
   background-color: #ffffff;
   border: 1px solid #dee2e6;
   border-radius: 10px;
-  padding: 20px 25px;
+  padding: 0; /* Adjusted for collapsible content */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: border-color 0.3s, background-color 0.3s;
+  overflow: hidden; /* Hide content when collapsed */
 }
 
 .education-day-section.education-active {
@@ -60,7 +97,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 20px 25px;
+  cursor: pointer;
+}
+
+.education-day-header.clickable:hover {
+  background-color: #f1f1f1;
 }
 
 .education-day-header h2 {
@@ -74,8 +116,20 @@
   height: 60px;
 }
 
+.collapsible-content {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.collapsible-content.open {
+  max-height: 1000px; /* Arbitrary large value to accommodate content */
+  opacity: 1;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
 .education-content-section {
-  margin-top: 10px;
+  padding: 20px 25px;
 }
 
 .education-article {
@@ -154,8 +208,49 @@
   color: #7f8c8d;
   font-size: 1rem;
   text-align: center;
+  padding: 20px 25px;
 }
 
+/* Completion Section */
+.completion-section {
+  background-color: #28a745; /* Green */
+  color: #ffffff;
+  padding: 40px 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.completion-section h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.completion-section p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.cta-button {
+  padding: 12px 30px;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  color: #28a745;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-2px);
+  color: #1e7e34;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 1200px) {
   .education-content {
     margin-left: 220px; /* Adjusted sidebar width */
@@ -169,6 +264,19 @@
 
   .education-day-header h2 {
     font-size: 1.6rem;
+  }
+
+  .interactive-banner h1 {
+    font-size: 1.8rem;
+  }
+
+  .interactive-banner p {
+    font-size: 1rem;
+  }
+
+  .unlock-button {
+    padding: 10px 25px;
+    font-size: 0.95rem;
   }
 }
 
@@ -186,8 +294,12 @@
 }
 
 @media (max-width: 768px) {
-  .main-heading {
+  .interactive-banner h1 {
     font-size: 1.6rem;
+  }
+
+  .interactive-banner p {
+    font-size: 1rem;
   }
 
   .education-day-header h2 {
@@ -207,11 +319,28 @@
     width: 100%;
     padding: 10px 0;
   }
+
+  .completion-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .completion-section p {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 10px 25px;
+    font-size: 0.95rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .main-heading {
+  .interactive-banner h1 {
     font-size: 1.4rem;
+  }
+
+  .interactive-banner p {
+    font-size: 0.95rem;
   }
 
   .education-day-header h2 {
@@ -228,7 +357,20 @@
   }
 
   .education-submit-button {
+    font-size: 0.9rem;
+    padding: 8px 0;
+  }
+
+  .completion-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .completion-section p {
     font-size: 0.95rem;
+  }
+
+  .cta-button {
+    font-size: 0.9rem;
     padding: 8px 0;
   }
 }

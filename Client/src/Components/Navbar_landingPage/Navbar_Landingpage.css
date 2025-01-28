@@ -1,3 +1,5 @@
+/* src/components/Navbar_Landingpage.css */
+
 * {
   margin: 0;
   padding: 0;
@@ -37,11 +39,47 @@
   font-weight: 800;
   color: #333333;
   cursor: pointer;
+  position: relative; /* For dropdown positioning */
   transition: color 0.3s;
 }
 
 .loginHomepage-container:hover {
   color: #8b37f6;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position below the parent */
+  left: 0;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  z-index: 1000;
+  list-style: none;
+  padding: 10px 0;
+}
+
+.dropdown-content li {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-content li:hover {
+  background-color: #f1f1f1;
+  color: #8b37f6;
+}
+
+/* Show the dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 .demoHomepage-container {
@@ -86,53 +124,6 @@
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Modal styles */
-.popup-modal-overlay {
-  position: fixed;
-  top: 25px;
-  left: 0;
-  width: auto;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-}
-
-.popup-modal {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  max-width: 300px;
-  width: 90%;
-}
-
-.popup-modal h3 {
-  margin-bottom: 20px;
-  font-size: 20px;
-  color: #333333;
-}
-
-.popup-modal ul {
-  list-style: none;
-  padding: 0;
-}
-
-.popup-modal li {
-  margin: 10px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #0A2463;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.popup-modal li:hover {
-  color: #8b37f6;
-}
-
 /* Responsive styles */
 @media (max-width: 768px) {
   .menu-icon {
@@ -157,5 +148,37 @@
 
   .userHomepage-navigator-div.menu-active {
     right: 0;
+  }
+
+  /* Adjust dropdown for mobile */
+  .dropdown-content {
+    position: static;
+    box-shadow: none;
+    background-color: #f9f9f9;
+    padding: 0;
+    min-width: 100%;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: none; /* Disable hover for mobile */
+  }
+
+  .dropdown .dropdown-content {
+    display: none;
+  }
+
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
+
+  /* Toggle dropdown on click for mobile */
+  .dropdown .loginHomepage-container {
+    width: 100%;
+    text-align: center;
+  }
+
+  .dropdown .dropdown-content li {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
   }
 }

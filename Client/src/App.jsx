@@ -12,6 +12,7 @@ import Admin from "./Components/AdminDashboard/Admin";
 import SuperAdmin from "./Components/SuperAdmin/SuperAdmin";
 import ContactusPage from "./Components/ContactusPage/ContactusPage";
 import Education from "./Components/Education/Education";
+import LearnMore from "./Components/LearnMore/LearnMore";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/superadmin" element={<SuperAdmin/>} />
           <Route path="/contactus" element={<ContactusPage/>} />
           <Route path="/education" element={<Education/>} />
+          <Route path="/learnmore" element={<LearnMore/>} />
         </Routes>
       </BrowserRouter>
     </>

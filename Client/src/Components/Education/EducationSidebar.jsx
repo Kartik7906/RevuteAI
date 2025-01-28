@@ -1,4 +1,3 @@
-// src/components/Education/EducationSidebar.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./EducationSidebar.css";
@@ -38,15 +37,12 @@ const EducationSidebar = ({ scores, currentDay }) => {
           {days.map((dayObj) => {
             const score = scores[dayObj.day - 1];
             const isActive = currentDay === dayObj.day;
-            const isCompleted = score >= 80;
 
             return (
               <Link
                 key={dayObj.day}
                 to={`#day${dayObj.day}`}
-                className={`day-link ${isActive ? "active" : ""} ${
-                  isCompleted ? "completed" : ""
-                }`}
+                className={`day-link ${isActive ? "active" : ""}`}
                 aria-current={isActive ? "page" : undefined}
               >
                 <div className="progressbar-container">
@@ -55,9 +51,9 @@ const EducationSidebar = ({ scores, currentDay }) => {
                     text={`${score}%`}
                     styles={buildStyles({
                       textSize: "24px",
-                      pathColor: isCompleted ? "#28a745" : "#dc3545",
-                      textColor: "#fff",
-                      trailColor: "#6c757d",
+                      pathColor: "#3498db",
+                      textColor: "#3498db",
+                      trailColor: "#d6e9f8",
                     })}
                   />
                 </div>
@@ -66,17 +62,6 @@ const EducationSidebar = ({ scores, currentDay }) => {
             );
           })}
         </nav>
-        <section className="badges-section">
-          <h4>Badges</h4>
-          <div className="badge-list">
-            {/* Future dynamic badges will be mapped here */}
-            {/* Example Badge */}
-            {/* <div className="badge">
-              <img src="/path-to-badge.png" alt="Badge Name" />
-              <span>Quiz Master</span>
-            </div> */}
-          </div>
-        </section>
       </aside>
     </>
   );

@@ -1,21 +1,19 @@
 import React from "react";
 import "./EducationNavbar.css";
 import { FaUserCircle, FaBell } from "react-icons/fa";
+import company_logo from '../../images/company_logo.jpeg';
+import { useNavigate } from "react-router-dom";
 
 const EducationNavbar = () => {
+  const navigate = useNavigate();
   return (
     <nav className="education-navbar">
-      <div className="navbar-left">
-        <h1>BFSI Education</h1>
+      <div className="navbar-left companyHomepage-logo">
+        <img src={company_logo} alt="" />
       </div>
-      <div className="navbar-right">
+      <div className="navbar-right" onClick={() => {navigate('/profile')}}>
         <div className="profile-dropdown">
           <FaUserCircle className="profile-icon" aria-label="User Profile" role="button" tabIndex={0} />
-          <div className="dropdown-content">
-            <a href="/profile">View Profile</a>
-            <a href="/settings">Settings</a>
-            <a href="/logout">Logout</a>
-          </div>
         </div>
       </div>
     </nav>
