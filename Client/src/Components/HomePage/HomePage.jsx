@@ -20,7 +20,7 @@ const HomePage = () => {
   const texts = ["Product Knowledge", "Soft Skills"];
 
   const handleCoursesNavigation = () => {
-    navigate("/demo");
+    navigate("/requestdemo");
   };
 
   useEffect(() => {
@@ -72,10 +72,9 @@ const HomePage = () => {
       </div>
 
       <div className="homepage-roleplay-section">
-        {/* Left Side - Image */}
         <div className="homepage-roleplay-image">
           <img
-            src={thumbnail_img} // Ensure this path is correct
+            src={thumbnail_img} 
             alt="AI-Powered Roleplays"
           />
         </div>

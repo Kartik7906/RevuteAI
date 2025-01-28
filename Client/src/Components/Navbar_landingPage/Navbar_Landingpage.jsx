@@ -66,7 +66,7 @@ const Navbar_Landingpage = () => {
         </span>
         <button
           className="demoHomepage-container"
-          onClick={() => handleNavigation('/contactus')}
+          onClick={() => handleNavigation('/requestdemo')}
         >
           Request Demo
         </button>

@@ -13,6 +13,7 @@ import SuperAdmin from "./Components/SuperAdmin/SuperAdmin";
 import ContactusPage from "./Components/ContactusPage/ContactusPage";
 import Education from "./Components/Education/Education";
 import LearnMore from "./Components/LearnMore/LearnMore";
+import RequestDemo from "./Components/RequestDemo/RequestDemo";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/contactus" element={<ContactusPage/>} />
           <Route path="/education" element={<Education/>} />
           <Route path="/learnmore" element={<LearnMore/>} />
+          <Route path="/requestdemo" element={<RequestDemo/>} />
         </Routes>
       </BrowserRouter>
     </>
