@@ -1,4 +1,3 @@
-// src/components/Navbar_Landingpage.jsx
 import React, { useState } from 'react';
 import './Navbar_Landingpage.css';
 import { useNavigate } from 'react-router-dom';
@@ -32,15 +31,21 @@ const Navbar_Landingpage = () => {
           isMenuOpen ? "menu-active" : ""
         }`}
       >
-        <div className="dropdown">
           <span className="loginHomepage-container">
             Enterprise
           </span>
-          <ul className="dropdown-content">
-            <li onClick={() => handleNavigation('/business')}>Business</li>
-            <li onClick={() => handleNavigation('/education')}>Education</li>
-          </ul>
-        </div>
+        <span
+          onClick={() => handleNavigation('/business')}
+          className="loginHomepage-container"
+        >
+          Business
+        </span>
+        <span
+          onClick={() => handleNavigation('/education')}
+          className="loginHomepage-container"
+        >
+          Education
+        </span>
         <span
           onClick={() => handleNavigation('/about')}
           className="loginHomepage-container"
