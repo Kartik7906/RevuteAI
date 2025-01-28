@@ -1,0 +1,56 @@
+.listedreportpage {
+    padding: 16px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .section {
+    margin-bottom: 16px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .icon {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    flex-grow: 1;
+  }
+  
+  .toggle-icon {
+    font-size: 16px;
+  }
+  
+  .content {
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 4px;
+    margin-top: 8px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+  
+  .content::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .content {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }

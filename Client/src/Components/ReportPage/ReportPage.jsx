@@ -153,17 +153,29 @@ const ReportPage = () => {
   };
 
   const downloadJSON = () => {
+    const userId = localStorage.getItem("userId"); 
+
     if (reportData) {
-      const reportJson = JSON.stringify(reportData, null, 2);
-      const blob = new Blob([reportJson], { type: "application/json" });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `assessment-report-${new Date().toISOString()}.json`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      fetch("http://localhost:8000/api/report/saveReport", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          reportData, 
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to save the report.");
+          }
+          alert("Report saved successfully.");
+        })
+        .catch((error) => {
+          console.error("Error saving report:", error);
+          alert("An error occurred while saving the report.");
+        });
     }
   };
 
@@ -441,7 +453,7 @@ const ReportPage = () => {
           <FontAwesomeIcon icon={faDownload} /> Download PDF
         </button>
         <button className="download-button" onClick={downloadJSON}>
-          <FontAwesomeIcon icon={faFileCode} /> Download Raw Data
+          <FontAwesomeIcon icon={faFileCode} /> Save File
         </button>
       </div>
     </div>

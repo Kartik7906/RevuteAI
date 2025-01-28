@@ -26,7 +26,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/report" element={<ReportPage/>} />
           <Route path="/task1" element={<Task1/>} />
-          <Route path="/reportlist" element={<ListedReport/>} />
+          <Route path="/reportlist/:userId" element={<ListedReport/>} />
           <Route path="/botpage" element={<BotPage/>} />
           <Route path="/admin" element={<Admin/>} />
           <Route path="/superadmin" element={<SuperAdmin/>} />

@@ -23,22 +23,23 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
 app.use(express.static(path.join(__dirname)));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes from original code, convert all the routes in this way to follow industry level code:
 app.use("/api/users", require("./Routes/UserRoute"));
+app.use("/api/report", require("./Routes/ReportRoute"));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 // put privatekey of google generative AI here: only 2 line of code:
+
 
 // ends here:
 

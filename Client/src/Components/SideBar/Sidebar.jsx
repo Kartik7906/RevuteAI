@@ -14,6 +14,17 @@ const Sidebar = ({ setSection }) => {
     navigate('/task1');
   };
 
+  const handleReportListNavigation = () => {
+    const userId = localStorage.getItem('userId'); // Ensure userId exists in localStorage
+    if (userId) {
+      setSection('reportlist');
+      navigate(`/reportlist/${userId}`); // Navigate to reportlist with userId
+    } else {
+      alert("User ID not found in localStorage");
+    }
+  };
+  
+
   return (
     <nav className="sidebar">
       <ul>
@@ -21,7 +32,7 @@ const Sidebar = ({ setSection }) => {
         <li onClick={() => setSection('announcements')}><GrAnnounce size={20}/> Announcements</li>
         <li onClick={handleIntroNavigation}><MdOutlineTaskAlt size={20}/> Self Intro Pitch</li>
         <li onClick={() => setSection('task2')}><MdOutlineTaskAlt size={20}/> Bot Mock Pitch</li>
-        <li onClick={() => setSection('reportlist')}><TbReportSearch size={20}/> Report</li>
+        <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
       </ul>
     </nav>
   );

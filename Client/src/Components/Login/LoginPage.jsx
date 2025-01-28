@@ -15,7 +15,6 @@ const LoginPage = () => {
 
   const validate = () => {
     const errors = {};
-    // Simple email regex for validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email) {
@@ -53,6 +52,7 @@ const LoginPage = () => {
         console.log("Login response:", data);
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
+        localStorage.setItem("userId", data.userId);
         navigate("/landingpage");
       }
     } catch (error) {

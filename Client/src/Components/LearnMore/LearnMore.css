@@ -1,113 +1,143 @@
+/* LearnMore.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.learn-more-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.learn-more-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 50vh;
+  background-color: #9a42f8;
+  color: white;
+  padding: 20px;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+/* Why Use AI Section */
 .learn-more-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px 20px;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    color: #ffffff;
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  .learn-more-heading {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 40px;
-    text-align: center;
-  }
-  
-  .learn-more-content {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    width: 100%;
-    max-width: 1200px;
-    flex-wrap: wrap;
-    opacity: 0;
-    transform: scale(0.9);
-    animation: fadeIn 1s forwards;
-  }
-  
-  .learn-more-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 30px 20px;
-    flex: 1 1 300px;
-    max-width: 350px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .learn-more-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .learn-more-image {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 20px;
-  }
-  
-  .learn-more-card-title {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-  }
-  
-  .learn-more-card-description {
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-  
-  /* Animation Keyframes */
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  /* Responsiveness */
-  @media (max-width: 1024px) {
-    .learn-more-content {
-      gap: 20px;
-    }
-  
-    .learn-more-card {
-      flex: 1 1 45%;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .learn-more-heading {
-      font-size: 2rem;
-    }
-  
-    .learn-more-card {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .learn-more-heading {
-      font-size: 1.8rem;
-    }
-  
-    .learn-more-image {
-      width: 80px;
-      height: 80px;
-      margin-bottom: 15px;
-    }
-  
-    .learn-more-card-title {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-    }
-  
-    .learn-more-card-description {
-      font-size: 0.95rem;
-    }
-  }
-  
+  text-align: center;
+  padding-top: 50px;
+  background-color: #f9f9f9;
+}
+
+.learn-more-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.learn-more-content {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.learn-more-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  max-width: 300px;
+  flex: 1 1 300px;
+}
+
+.learn-more-image-container {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.learn-more-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.learn-more-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.learn-more-card-description {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Popular Training Scenarios Section */
+.popular-training-section {
+  width: 100%;
+  padding: 50px;
+  background-color: #9a42f8;
+  color: white;
+  text-align: center;
+
+}
+
+.popular-training-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.popular-training-description {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.popular-training-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.training-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.icon-circle {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2575fc;
+  color: white;
+  border-radius: 50%;
+  font-size: 1.5rem;
+}
