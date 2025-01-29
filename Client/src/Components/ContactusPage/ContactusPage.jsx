@@ -47,7 +47,6 @@ const ContactusPage = () => {
       </p>
 
       <div className="contact-content">
-        {/* Left: Contact Info */}
         <div className="contact-info">
           <h2 className="info-title">Contact Information</h2>
           <p className="info-text">
@@ -62,10 +61,9 @@ const ContactusPage = () => {
           </ul>
         </div>
 
-        {/* Right: Form */}
         <div className="contact-form-section">
           <form className="contact-form" onSubmit={handleSubmit}>
-            <label htmlFor="name" className="input-label">Your Name</label>
+            <label htmlFor="name" className="input-label">Name</label>
             <input
               type="text"
               id="name"
@@ -76,7 +74,7 @@ const ContactusPage = () => {
               required
             />
 
-            <label htmlFor="email" className="input-label">Your Email</label>
+            <label htmlFor="email" className="input-label">Email</label>
             <input
               type="email"
               id="email"
@@ -87,7 +85,7 @@ const ContactusPage = () => {
               required
             />
 
-            <label htmlFor="subject" className="input-label">Your Subject</label>
+            <label htmlFor="subject" className="input-label">Subject</label>
             <input
               type="text"
               id="subject"
