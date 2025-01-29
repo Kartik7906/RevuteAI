@@ -153,7 +153,8 @@ const ReportPage = () => {
   };
 
   const downloadJSON = () => {
-    const userId = localStorage.getItem("userId"); 
+    const userId = localStorage.getItem("userId");
+    const transcript = localStorage.getItem("transcript");
 
     if (reportData) {
       fetch("http://localhost:8000/api/report/saveReport", {
@@ -163,7 +164,8 @@ const ReportPage = () => {
         },
         body: JSON.stringify({
           userId,
-          reportData, 
+          reportData,
+          transcript,
         }),
       })
         .then((response) => {
@@ -183,8 +185,17 @@ const ReportPage = () => {
     reportData && Array.isArray(reportData.emotionTimeline)
       ? {
           labels: reportData.emotionTimeline.map((entry) => {
-            const date = new Date(entry.timestamp);
-            return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+            const storedTime = localStorage.getItem("time");
+            const date = storedTime
+              ? new Date(storedTime)
+              : new Date(entry.timestamp);
+            return `${date.getHours().toString().padStart(2, "0")}:${date
+              .getMinutes()
+              .toString()
+              .padStart(2, "0")}:${date
+              .getSeconds()
+              .toString()
+              .padStart(2, "0")}`;
           }),
           datasets: [
             {
@@ -293,7 +304,9 @@ const ReportPage = () => {
             {reportData ? reportData.summary?.wordsPerMinute || 0 : 0}
           </div>
           <p className="text-muted">
-            {getWpmRating(reportData ? reportData.summary?.wordsPerMinute || 0 : 0)}
+            {getWpmRating(
+              reportData ? reportData.summary?.wordsPerMinute || 0 : 0
+            )}
           </p>
         </div>
         <div className="score-card">

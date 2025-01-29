@@ -15,15 +15,15 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 50vh;
-  background-color: #9a42f8;
+  height: 60vh;
+  background-color: #1B48DA;
   color: white;
   padding: 20px;
 }
 
 .hero-title {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: bold;
+  font-size: 3.5rem;
+  font-weight: 800;
   margin-bottom: 10px;
 }
 
@@ -36,7 +36,7 @@
 /* Why Use AI Section */
 .learn-more-container {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 100px;
   background-color: #f9f9f9;
 }
 
@@ -51,7 +51,7 @@
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 }
 
 .learn-more-card {
@@ -90,20 +90,25 @@
   line-height: 1.4;
 }
 
-/* Popular Training Scenarios Section */
 .popular-training-section {
   width: 100%;
   height: 100vh;
   padding: 50px;
-  background-color: #9a42f8;
+  background-color: #1B48DA;
   color: white;
-  text-align: center;
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+}
 
+.populat-training-section-centerpart {
+  text-align: center;
+  max-width: 900px;
 }
 
 .popular-training-heading {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 2.8rem;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 
@@ -117,6 +122,7 @@
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
+  /* background-color: yellow; */
 }
 
 .training-item {
@@ -137,6 +143,7 @@
   border-radius: 50%;
   font-size: 1.5rem;
 }
+
 
 .thirdSection-learnmorepage {
   display: flex;
@@ -163,10 +170,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 30px;
-  background: white;
+  /* background: white; */
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .aboutlearnmore-div2,
