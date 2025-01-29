@@ -1,26 +1,27 @@
-/* src/components/Education/Education.css */
-
 .education-page {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .education-content {
-  margin-top: 60px; /* Height of the navbar */
-  margin-left: 260px; /* Width of the sidebar */
+  margin-top: 60px; 
+  margin-left: 260px; 
   padding: 25px 30px;
   transition: margin-left 0.3s ease-in-out;
-  background-color: #f8f9fa; /* Light background for contrast */
+  background-color: #f8f9fa;
   min-height: calc(100vh - 60px);
+  overflow-y: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; 
 }
 
 .education-sidebar.closed ~ .education-content {
   margin-left: 0;
 }
 
-/* Interactive Banner */
 .interactive-banner {
-  background-color: #1abc9c; /* Turquoise */
+  background-color: #1B48DA; 
   color: #ffffff;
   padding: 40px 20px;
   border-radius: 10px;
@@ -44,7 +45,7 @@
   background-color: #ffffff;
   border: none;
   border-radius: 25px;
-  color: #1abc9c;
+  color: black;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
@@ -54,12 +55,12 @@
 .unlock-button:hover {
   background-color: #f1f1f1;
   transform: translateY(-2px);
-  color: #16a085;
+  color: #527BF2;
 }
 
-/* 7-Day Learning Journey */
+
 .main-heading {
-  display: none; /* Removed as per requirement 1 */
+  display: none;
 }
 
 .education-days-container {
@@ -72,25 +73,25 @@
   background-color: #ffffff;
   border: 1px solid #dee2e6;
   border-radius: 10px;
-  padding: 0; /* Adjusted for collapsible content */
+  padding: 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   transition: border-color 0.3s, background-color 0.3s;
-  overflow: hidden; /* Hide content when collapsed */
+  overflow: hidden; 
 }
 
 .education-day-section.education-active {
-  border-color: #1abc9c; /* Turquoise */
-  background-color: #e6fffa; /* Light turquoise background */
+  border-color: #1B48DA; 
+  background-color: #e6fffa; 
 }
 
 .education-day-section.education-completed {
-  border-color: #28a745; /* Green */
-  background-color: #e9f7ef; /* Light green background */
+  border-color: #1B48DA; 
+  background-color: #e9f7ef; 
 }
 
 .education-day-section.education-locked {
-  border-color: #dc3545; /* Red */
-  background-color: #fdecea; /* Light red background */
+  border-color: #527BF2; 
+  background-color: #fdecea; 
 }
 
 .education-day-header {
@@ -123,13 +124,14 @@
 }
 
 .collapsible-content.open {
-  max-height: 1000px; /* Arbitrary large value to accommodate content */
+  max-height: 1000px;
   opacity: 1;
   transition: max-height 0.5s ease, opacity 0.5s ease;
 }
 
 .education-content-section {
   padding: 20px 25px;
+  overflow: hidden;
 }
 
 .education-article {
@@ -141,6 +143,7 @@
 
 .education-quiz-section {
   margin-top: 20px;
+  overflow: hidden;
 }
 
 .quiz-heading {
@@ -151,6 +154,7 @@
 
 .education-quiz-question {
   margin-bottom: 25px;
+  overflow: hidden;
 }
 
 .quiz-question {
@@ -163,6 +167,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow: hidden;
 }
 
 .education-option-label {
@@ -180,14 +185,14 @@
 }
 
 .education-option-label input {
-  accent-color: #1abc9c; /* Turquoise */
+  accent-color: #1abc9c; 
   width: 16px;
   height: 16px;
 }
 
 .education-submit-button {
   padding: 12px 30px;
-  background-color: #1abc9c; /* Turquoise */
+  background-color: #1B48DA; 
   border: none;
   border-radius: 25px;
   color: #ffffff;
@@ -199,7 +204,7 @@
 }
 
 .education-submit-button:hover {
-  background-color: #16a085;
+  background-color: #527BF2;
   transform: translateY(-2px);
 }
 
@@ -211,9 +216,8 @@
   padding: 20px 25px;
 }
 
-/* Completion Section */
 .completion-section {
-  background-color: #28a745; /* Green */
+  background-color: #1B48DA; 
   color: #ffffff;
   padding: 40px 20px;
   border-radius: 10px;
@@ -237,7 +241,7 @@
   background-color: #ffffff;
   border: none;
   border-radius: 25px;
-  color: #28a745;
+  color: #527BF2;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;

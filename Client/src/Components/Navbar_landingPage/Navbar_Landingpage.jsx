@@ -18,7 +18,7 @@ const Navbar_Landingpage = () => {
 
   return (
     <div className="navbarHomepage-container">
-      <div className="companyHomepage-logo">
+      <div className="companyHomepage-logo"  onClick={() => handleNavigation('/')}>
         <img src={company_logo} alt="Company Logo" />
       </div>
       <div className="menu-icon" onClick={toggleMenu} aria-label="Toggle Menu">
