@@ -51,6 +51,35 @@
   }
   
   .content {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
   }
+
+
+  /* report css here that are fetched from backend: */
+  .report-item {
+    background-color: #e6f7ff; /* Light background color */
+    border: 1px solid #b3e5fc; /* Soft border */
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+  
+  .report-item:hover {
+    background-color: #cceeff; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .report-item p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    font-weight: 500;
+    word-break: break-word;
+  }
+  

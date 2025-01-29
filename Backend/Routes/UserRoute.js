@@ -10,7 +10,6 @@ dotenv.config();
 router.post('/register', async (req, res) => {
   const { username, email, password, confirmPassword, role } = req.body;
 
-  // Basic validations
   if (!username || !email || !password || !confirmPassword) {
     return res.status(400).json({ message: 'All fields are required' });
   }

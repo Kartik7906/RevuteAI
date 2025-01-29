@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       {/* Logo Section */}
-      <div className="navbar__logo">
+      <div className="navbar__logo" onClick={() => navigate('/')}>
         <img src={companyLogo} alt="Company Logo" />
       </div>
 

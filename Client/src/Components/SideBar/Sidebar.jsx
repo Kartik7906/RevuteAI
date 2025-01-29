@@ -28,7 +28,7 @@ const Sidebar = ({ setSection }) => {
       setSection('reportlist');
       navigate(`/reportlist/${userId}`); 
     } else {
-      alert("User ID not found in localStorage");
+      alert("Please Login First");
     }
   };
   

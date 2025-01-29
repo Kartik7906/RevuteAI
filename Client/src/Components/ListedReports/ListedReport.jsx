@@ -27,6 +27,23 @@ const ListedReport = () => {
     fetchReports();
   }, [userId]); 
 
+  const HandleReportNavigation = (reportId) => async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/report/${userId}/${reportId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch report");
+      }
+      const data = await response.json();
+      localStorage.setItem("reportData", JSON.stringify(data.reportData));
+      localStorage.setItem("transcript", data.transcript);
+      localStorage.setItem("time", data.createdAt);
+      navigate(`/report`);
+    } catch (error) {
+      console.error("Error fetching report:", error);
+    }
+  };
+  
+
   return (
     <div className="listedreportpage">
       <h1 className="title">Listed Reports</h1>
@@ -47,7 +64,7 @@ const ListedReport = () => {
                 <div
                   key={report._id || index}
                   className="report-item"
-                  onClick={() => navigate(`/report`)} 
+                  onClick={HandleReportNavigation(report._id)} 
                 >
                   <p>Report {index + 1}: {report.reportData.title || "Untitled Report"}</p>
                   {}
