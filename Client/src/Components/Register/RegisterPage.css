@@ -32,8 +32,8 @@ body {
   text-align: center;
 }
 .register-logo img {
-  width: 250px;
-  height: 100px;
+  width: 300px;
+  height: auto;
 }
 
 /* Register Header */

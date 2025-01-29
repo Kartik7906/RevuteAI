@@ -39,6 +39,7 @@
 @media (max-width: 992px) {
   .sidebar {
     width: 100%;
+    height: 100vh;
     min-width: auto;
     box-shadow: none;
     border-right: none;

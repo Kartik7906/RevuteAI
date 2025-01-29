@@ -23,4 +23,16 @@
   }
 }
 
+@media (max-width: 992px) {
+  .announcement-sidebar {
+    display: none;
+  }
+
+  .center-content {
+    display: none;
+  }
+}
+
+
+
 

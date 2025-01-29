@@ -1,56 +1,115 @@
 .request-demo-container {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  max-width: 90%;
+  width: 450px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+}
+
+.request-demo-heading {
+  font-size: 22px;
+  color: #1B48DA;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.request-demo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s ease-in-out;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #1B48DA;
+}
+
+.submit-button {
+  padding: 12px;
+  background-color: #1B48DA;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #153A96;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .request-demo-container {
+    width: 95%;
+    padding: 15px;
+    margin-top: 100px;
   }
-  
+
   .request-demo-heading {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 20px;
   }
-  
-  .request-demo-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
+
   .form-group input,
   .form-group select {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
   }
-  
+
   .submit-button {
     padding: 10px;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
+    font-size: 14px;
   }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
+}
+
+@media (max-width: 480px) {
+  .request-demo-container {
+    width: 100%;
+    margin: 30px auto;
+    padding: 15px;
+    margin-top: 100px;
   }
-  
+
+  .request-demo-heading {
+    font-size: 18px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .submit-button {
+    padding: 8px;
+    font-size: 14px;
+  }
+}

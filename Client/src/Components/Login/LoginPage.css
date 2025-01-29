@@ -10,7 +10,6 @@ body {
   color: #333333;
 }
 
-/* Main Container */
 .main-login-container {
   display: flex;
   flex-direction: column;
@@ -54,7 +53,7 @@ body {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 28px;
   font-weight: 600;
-  color: #6a0dad;
+  color: #1B48DA;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -118,7 +117,7 @@ body {
 .forgot-button {
   background: none;
   border: none;
-  color: #6a0dad;
+  color: #1B48DA;
   cursor: pointer;
   font-size: 14px;
   text-decoration: underline;
@@ -161,7 +160,7 @@ body {
 .signup-button {
   background: none;
   border: none;
-  color: #6a0dad;
+  color: #1B48DA;
   cursor: pointer;
   font-weight: 500;
   text-decoration: underline;

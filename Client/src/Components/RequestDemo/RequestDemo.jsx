@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./RequestDemo.css";
-
+import Navbar_Landingpage from "../Navbar_landingPage/Navbar_Landingpage";
 const RequestDemo = () => {
   const [formData, setFormData] = useState({
     companyName: "",
@@ -20,6 +20,8 @@ const RequestDemo = () => {
   };
 
   return (
+    <>
+    <Navbar_Landingpage />
     <div className="request-demo-container">
       <h2 className="request-demo-heading">Request a Demo</h2>
       <form className="request-demo-form" onSubmit={handleSubmit}>
@@ -64,7 +66,9 @@ const RequestDemo = () => {
             onChange={handleChange}
             required
           >
-            <option value="" disabled>Select Sales Team Size</option>
+            <option value="" disabled>
+              Select Sales Team Size
+            </option>
             <option value="less than 100">Less than 100</option>
             <option value="100-500">100-500</option>
             <option value="greater than 500">Greater than 500</option>
@@ -74,6 +78,7 @@ const RequestDemo = () => {
         <button type="submit" className="submit-button">Submit</button>
       </form>
     </div>
+    </>
   );
 };
 

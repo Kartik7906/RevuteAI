@@ -124,7 +124,7 @@ const ReportPage = () => {
         text: "No assessment report found. Please complete an assessment first.",
         icon: "warning",
       }).then(() => {
-        window.location.href = "/";
+        window.location.href = "/landingpage";
       });
     }
   }, []);

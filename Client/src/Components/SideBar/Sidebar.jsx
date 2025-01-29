@@ -14,11 +14,19 @@ const Sidebar = ({ setSection }) => {
     navigate('/task1');
   };
 
+  const isMobile = window.innerWidth <= 992;
+  const handleNavigationformobile = (section, route) => {
+    setSection(section);
+    if (isMobile) {
+      navigate(route);
+    }
+  };
+
   const handleReportListNavigation = () => {
-    const userId = localStorage.getItem('userId'); // Ensure userId exists in localStorage
+    const userId = localStorage.getItem('userId');
     if (userId) {
       setSection('reportlist');
-      navigate(`/reportlist/${userId}`); // Navigate to reportlist with userId
+      navigate(`/reportlist/${userId}`); 
     } else {
       alert("User ID not found in localStorage");
     }
@@ -28,8 +36,8 @@ const Sidebar = ({ setSection }) => {
   return (
     <nav className="sidebar">
       <ul>
-        <li onClick={() => setSection('dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
-        <li onClick={() => setSection('announcements')}><GrAnnounce size={20}/> Announcements</li>
+        <li onClick={() => handleNavigationformobile('dashboard', '/dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
+        <li onClick={() => handleNavigationformobile('announcements', '/announcement')}><GrAnnounce size={20}/> Announcements</li>
         <li onClick={handleIntroNavigation}><MdOutlineTaskAlt size={20}/> Self Intro Pitch</li>
         <li onClick={() => setSection('task2')}><MdOutlineTaskAlt size={20}/> Bot Mock Pitch</li>
         <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
