@@ -65,16 +65,20 @@ const Education = () => {
         },
         {
           question: "Which service is included in BFSI?",
-          options: ["Asset Management", "Agricultural Equipment", "Food Delivery"],
+          options: [
+            "Asset Management",
+            "Agricultural Equipment",
+            "Food Delivery",
+          ],
           answer: 0,
         },
         {
           question: "Why is BFSI important for the economy?",
           options: [
-                "It regulates agricultural production",
-                "It supports financial growth and stability",
-                "It manages transportation services",
-              ],
+            "It regulates agricultural production",
+            "It supports financial growth and stability",
+            "It manages transportation services",
+          ],
           answer: 1,
         },
       ],
@@ -95,7 +99,8 @@ const Education = () => {
           answer: 1,
         },
         {
-          question: "Which of the following is a common product offered by retail banks?",
+          question:
+            "Which of the following is a common product offered by retail banks?",
           options: [
             "Mergers and acquisitions",
             "Commercial real estate loans",
@@ -105,7 +110,8 @@ const Education = () => {
           answer: 2,
         },
         {
-          question: "Retail banks typically serve which of the following clients?",
+          question:
+            "Retail banks typically serve which of the following clients?",
           options: [
             "Large corporations",
             "Government agencies",
@@ -151,12 +157,19 @@ const Education = () => {
           answer: 1,
         },
         {
-          question: "Investment banks assist companies in raising capital through:",
-          options: ["Retail banking services", "Securities underwriting", "Insurance underwriting", "Retail loans"],
+          question:
+            "Investment banks assist companies in raising capital through:",
+          options: [
+            "Retail banking services",
+            "Securities underwriting",
+            "Insurance underwriting",
+            "Retail loans",
+          ],
           answer: 1,
         },
         {
-          question: "Which of the following is a service typically offered by investment banks?",
+          question:
+            "Which of the following is a service typically offered by investment banks?",
           options: [
             "Personal checking accounts",
             "Mergers and acquisitions advisory",
@@ -166,8 +179,14 @@ const Education = () => {
           answer: 1,
         },
         {
-          question: "Investment banks often engage in which of the following activities?",
-          options: ["Providing consumer credit", "Market-making and trading", "Issuing debit cards", "Offering personal insurance"],
+          question:
+            "Investment banks often engage in which of the following activities?",
+          options: [
+            "Providing consumer credit",
+            "Market-making and trading",
+            "Issuing debit cards",
+            "Offering personal insurance",
+          ],
           answer: 1,
         },
         {
@@ -198,22 +217,43 @@ const Education = () => {
         },
         {
           question: "Which type of insurance covers damage to property?",
-          options: ["Life insurance", "Health insurance", "Property insurance", "Liability insurance"],
+          options: [
+            "Life insurance",
+            "Health insurance",
+            "Property insurance",
+            "Liability insurance",
+          ],
           answer: 2,
         },
         {
           question: "Health insurance primarily covers:",
-          options: ["Vehicle accidents", "Medical expenses", "Home repairs", "Business liabilities"],
+          options: [
+            "Vehicle accidents",
+            "Medical expenses",
+            "Home repairs",
+            "Business liabilities",
+          ],
           answer: 1,
         },
         {
-          question: "Life insurance provides financial protection in the event of:",
-          options: ["Property damage", "Medical emergencies", "Death of the insured", "Job loss"],
+          question:
+            "Life insurance provides financial protection in the event of:",
+          options: [
+            "Property damage",
+            "Medical emergencies",
+            "Death of the insured",
+            "Job loss",
+          ],
           answer: 2,
         },
         {
           question: "Casualty insurance typically covers:",
-          options: ["Life events", "Personal injuries and liability", "Property theft", "Investment losses"],
+          options: [
+            "Life events",
+            "Personal injuries and liability",
+            "Property theft",
+            "Investment losses",
+          ],
           answer: 1,
         },
       ],
@@ -244,8 +284,14 @@ const Education = () => {
           answer: 1,
         },
         {
-          question: "Which of the following is an example of an investment vehicle used in asset management?",
-          options: ["Savings accounts", "Mutual funds", "Personal loans", "Insurance policies"],
+          question:
+            "Which of the following is an example of an investment vehicle used in asset management?",
+          options: [
+            "Savings accounts",
+            "Mutual funds",
+            "Personal loans",
+            "Insurance policies",
+          ],
           answer: 1,
         },
         {
@@ -277,22 +323,42 @@ const Education = () => {
       quiz: [
         {
           question: "What does FinTech stand for?",
-          options: ["Financial Technology", "Finance and Technology", "Financial Techniques", "Financing Technology"],
+          options: [
+            "Financial Technology",
+            "Finance and Technology",
+            "Financial Techniques",
+            "Financing Technology",
+          ],
           answer: 0,
         },
         {
           question: "Which of the following is a FinTech innovation?",
-          options: ["Traditional savings accounts", "Mobile payment apps", "Physical bank branches", "Paper checks"],
+          options: [
+            "Traditional savings accounts",
+            "Mobile payment apps",
+            "Physical bank branches",
+            "Paper checks",
+          ],
           answer: 1,
         },
         {
           question: "Blockchain technology is primarily associated with:",
-          options: ["Insurance underwriting", "Cryptocurrencies", "Retail banking", "Personal loans"],
+          options: [
+            "Insurance underwriting",
+            "Cryptocurrencies",
+            "Retail banking",
+            "Personal loans",
+          ],
           answer: 1,
         },
         {
           question: "Automated investment platforms are also known as:",
-          options: ["Robo-advisors", "Human advisors", "Bank tellers", "Insurance agents"],
+          options: [
+            "Robo-advisors",
+            "Human advisors",
+            "Bank tellers",
+            "Insurance agents",
+          ],
           answer: 0,
         },
         {
@@ -324,7 +390,12 @@ const Education = () => {
         },
         {
           question: "Which of the following is a type of financial risk?",
-          options: ["Market risk", "Customer service", "Product development", "Marketing risk"],
+          options: [
+            "Market risk",
+            "Customer service",
+            "Product development",
+            "Marketing risk",
+          ],
           answer: 0,
         },
         {
@@ -360,7 +431,6 @@ const Education = () => {
       ],
     },
   ];
-  
 
   const handleQuizSubmission = (day, selectedAnswers) => {
     const quiz = content[day - 1].quiz;
@@ -376,7 +446,9 @@ const Education = () => {
     const scorePercentage = Math.round((correctCount / quiz.length) * 100);
 
     if (scorePercentage >= 80) {
-      alert(`🎉 Congratulations! You scored ${scorePercentage}%. You passed Day ${day} quiz.`);
+      alert(
+        `🎉 Congratulations! You scored ${scorePercentage}%. You passed Day ${day} quiz.`
+      );
       const newScores = [...scores];
       newScores[day - 1] = scorePercentage;
       setScores(newScores);
@@ -387,7 +459,9 @@ const Education = () => {
         return updated;
       });
     } else {
-      alert(`❌ You scored ${scorePercentage}%. You need at least 80% to pass. Please try again.`);
+      alert(
+        `❌ You scored ${scorePercentage}%. You need at least 80% to pass. Please try again.`
+      );
     }
   };
 
@@ -411,15 +485,20 @@ const Education = () => {
         {/* Interactive Banner */}
         <section className="interactive-banner">
           <h1>Welcome to Your BFSI Learning Journey</h1>
-          <p>Unlock each step by completing daily tasks and quizzes to advance your professional knowledge.</p>
+          <p>
+            Unlock each step by completing daily tasks and quizzes to advance
+            your professional knowledge.
+          </p>
           {currentDay === 1 && (
             <button
               className="unlock-button"
-              onClick={() => setOpenDays((prev) => {
-                const updated = [...prev];
-                updated[0] = true;
-                return updated;
-              })}
+              onClick={() =>
+                setOpenDays((prev) => {
+                  const updated = [...prev];
+                  updated[0] = true;
+                  return updated;
+                })
+              }
             >
               Unlock Your First Step
             </button>
@@ -455,7 +534,7 @@ const Education = () => {
                   role="button"
                   tabIndex={0}
                   onKeyPress={(e) => {
-                    if (e.key === 'Enter') toggleDay(day);
+                    if (e.key === "Enter") toggleDay(day);
                   }}
                   aria-expanded={isOpen}
                   aria-controls={`day${day}-content`}
@@ -467,7 +546,12 @@ const Education = () => {
                       text={`${score}%`}
                       styles={buildStyles({
                         textColor: "#2c3e50",
-                        pathColor: score >= 80 ? "#28a745" : score > 0 ? "#dc3545" : "#007bff",
+                        pathColor:
+                          score >= 80
+                            ? "#28a745"
+                            : score > 0
+                            ? "#dc3545"
+                            : "#007bff",
                         trailColor: "#d6d6d6",
                       })}
                       aria-label={`Progress: ${score}%`}
@@ -480,7 +564,9 @@ const Education = () => {
                 >
                   {isActive ? (
                     <div className="education-content-section">
-                      <article className="education-article">{dayContent.article}</article>
+                      <article className="education-article">
+                        {dayContent.article}
+                      </article>
                       <div className="education-quiz-section">
                         <h3 className="quiz-heading">Quiz</h3>
                         {dayContent.quiz.map((q, idx) => (
@@ -508,18 +594,24 @@ const Education = () => {
                         <button
                           className="education-submit-button"
                           onClick={() => {
-                            const selectedAnswers = dayContent.quiz.map((_, idx) => {
-                              const radios = document.getElementsByName(`day${day}-q${idx}`);
-                              let selectedValue = null;
-                              radios.forEach((radio) => {
-                                if (radio.checked) selectedValue = parseInt(radio.value);
-                              });
-                              return selectedValue;
-                            });
+                            const selectedAnswers = dayContent.quiz.map(
+                              (_, idx) => {
+                                const radios = document.getElementsByName(
+                                  `day${day}-q${idx}`
+                                );
+                                let selectedValue = null;
+                                radios.forEach((radio) => {
+                                  if (radio.checked)
+                                    selectedValue = parseInt(radio.value);
+                                });
+                                return selectedValue;
+                              }
+                            );
 
-                            // Check if all questions are answered
                             if (selectedAnswers.some((ans) => ans === null)) {
-                              alert("Please answer all questions before submitting.");
+                              alert(
+                                "Please answer all questions before submitting."
+                              );
                               return;
                             }
 
@@ -533,7 +625,7 @@ const Education = () => {
                   ) : (
                     <p className="education-status-message">
                       {isCompleted
-                        ? "✅ Completed"
+                        ? "✅ Great job! Quiz completed successfully."
                         : isLocked
                         ? "🔒 Locked until previous quiz is passed."
                         : "🔓 Click to open."}
@@ -549,11 +641,11 @@ const Education = () => {
         {allDaysCompleted && (
           <section className="completion-section">
             <h2>Congratulations! You’ve unlocked a new feature.</h2>
-            <p>Now you are ready to introduce yourself. If you're ready, click below to proceed.</p>
-            <button
-              className="cta-button"
-              onClick={() => navigate("/task1")}
-            >
+            <p>
+              Now you are ready to introduce yourself. If you're ready, click
+              below to proceed.
+            </p>
+            <button className="cta-button" onClick={() => navigate("/task1")}>
               Proceed to Task 1
             </button>
           </section>
@@ -564,20 +656,3 @@ const Education = () => {
 };
 
 export default Education;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

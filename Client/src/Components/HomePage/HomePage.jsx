@@ -5,7 +5,8 @@ import bgImage from "../../images/backgroundForintro.jpg";
 import feedbackimg from "../../images/feedback.jpg";
 import practiceing from "../../images/Practice.jpg";
 import workplaceimg from "../../images/workplace.jpg";
-import thumbnail_img from "../../images/7536311.jpg";
+// import thumbnail_img from "../../images/7536311.jpg";
+import videoclip from "../../images/videoclip.gif";
 import "./HomePage.css";
 import { FaLightbulb, FaBookOpen } from "react-icons/fa";
 import { RiRobot3Fill } from "react-icons/ri";
@@ -74,7 +75,7 @@ const HomePage = () => {
       <div className="homepage-roleplay-section">
         <div className="homepage-roleplay-image">
           <img
-            src={thumbnail_img} 
+            src={videoclip} 
             alt="AI-Powered Roleplays"
           />
         </div>

@@ -8,7 +8,9 @@ const EducationNavbar = () => {
   const navigate = useNavigate();
   return (
     <nav className="education-navbar">
-      <div className="navbar-left companyHomepage-logo">
+      <div className="navbar-left companyHomepage-logo" onClick={
+        () => {navigate('/')}
+      }>
         <img src={company_logo} alt="" />
       </div>
       <div className="navbar-right" onClick={() => {navigate('/profile')}}>

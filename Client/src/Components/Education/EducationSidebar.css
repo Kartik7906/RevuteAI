@@ -1,17 +1,17 @@
 .education-sidebar {
   position: fixed;
-  top: 60px; /* Height of the navbar */
+  top: 60px; 
   left: 0;
   width: 260px;
   height: calc(100% - 60px);
-  background-color: #f0f8ff; /* Light blue background */
+  background-color: #f0f8ff; 
   color: #333;
   padding: 20px 15px;
   transition: transform 0.3s ease-in-out;
   overflow-y: auto;
   z-index: 999;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  scrollbar-width: none; /* Hide scrollbar */
+  scrollbar-width: none; 
 }
 
 .education-sidebar::-webkit-scrollbar {
@@ -27,7 +27,7 @@
   top: 15px;
   left: 15px;
   font-size: 1.5rem;
-  color: #3498db;
+  color: #1B48DA;
   background-color: transparent;
   border: none;
   padding: 8px;
@@ -40,7 +40,7 @@
 }
 
 .sidebar-toggle:hover {
-  color: #2980b9;
+  color: #527BF2;
 }
 
 .sidebar-title {
@@ -65,16 +65,16 @@
   color: #333;
   padding: 10px;
   border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  /* transition: background-color 0.3s ease, transform 0.2s ease; */
 }
 
 .day-link:hover {
   background-color: #d6e9f8;
-  transform: translateX(5px);
+  /* transform: translateX(5px); */
 }
 
 .day-link.active {
-  background-color: #3498db; /* Professional blue for active */
+  background-color: #527BF2; 
   color: #ffffff;
   box-shadow: inset 5px 0 0 #2980b9;
 }
