@@ -125,7 +125,7 @@ const RegisterPage = () => {
     <div className="register-container">
       <div className="register-box">
         <div className="register-header">
-          <div className="register-logo">
+          <div className="register-logo" onClick={() => navigate("/")}>
               <img src={companylogo} alt="" />
           </div>
           <p>New User! Kindly Sign Up to proceed</p>

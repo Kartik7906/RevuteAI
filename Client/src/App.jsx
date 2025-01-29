@@ -14,6 +14,7 @@ import ContactusPage from "./Components/ContactusPage/ContactusPage";
 import Education from "./Components/Education/Education";
 import LearnMore from "./Components/LearnMore/LearnMore";
 import RequestDemo from "./Components/RequestDemo/RequestDemo";
+import Announcement from "./Components/Announcement/Announcement";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>} />
           <Route path="/register" element={<RegisterPage/>} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/announcement" element={<Announcement/>} />
           <Route path="/report" element={<ReportPage/>} />
           <Route path="/task1" element={<Task1/>} />
           <Route path="/reportlist/:userId" element={<ListedReport/>} />

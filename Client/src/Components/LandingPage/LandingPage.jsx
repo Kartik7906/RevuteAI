@@ -36,7 +36,7 @@ const LandingPage = () => {
       <div className="main-body">
         <Sidebar setSection={setSection} />
         <div className="center-content">{renderSection()}</div>
-        <AnnouncementSidebar setSection={setSection}/>
+        <AnnouncementSidebar setSection={setSection} className="announcement-sidebar" />
       </div>
     </div>
   );

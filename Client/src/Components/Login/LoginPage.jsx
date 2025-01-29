@@ -75,7 +75,7 @@ const LoginPage = () => {
     <div className="main-login-container">
       {/* Branding Icon */}
       {/* Branding Icon */}
-      <div className="login-logo">
+      <div className="login-logo" onClick={() => navigate("/")}>
         <img src={companylogo} alt="" />
       </div>
 
