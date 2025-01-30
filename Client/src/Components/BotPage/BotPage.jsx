@@ -8,17 +8,20 @@ const url = "http://localhost:8000/api";
 const BotPage = () => {
   const navigate = useNavigate();
 
-  // put keys from .env file here 
+  // Access environment variables
+  const azureOpenAIEndpoint = import.meta.env.VITE_AZURE_OPENAI_ENDPOINT;
+  const azureOpenAIApiKey = import.meta.env.VITE_AZURE_OPENAI_API_KEY;
+  const azureOpenAIDeploymentName = import.meta.env
+    .VITE_AZURE_OPENAI_DEPLOYMENT_NAME;
+  const cogSvcRegion = import.meta.env.VITE_COG_SVC_REGION;
+  const cogSvcSubKey = import.meta.env.VITE_COG_SVC_SUB_KEY;
 
-
-
-
-  
   // put keys from .env file here
 
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [isNotificationDropdownVisible, setIsNotificationDropdownVisible] = useState(false);
+  const [isNotificationDropdownVisible, setIsNotificationDropdownVisible] =
+    useState(false);
   const [scenarios, setScenarios] = useState([]);
   const [selectedScenario, setSelectedScenario] = useState("");
   const [language, setLanguage] = useState("en-IN");
