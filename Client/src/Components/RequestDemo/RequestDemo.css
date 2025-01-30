@@ -1,45 +1,49 @@
-.request-demo-container {
-  max-width: 90%;
-  width: 450px;
-  margin: 50px auto;
+
+.request-demo-wrapper {
   padding: 20px;
+  background: linear-gradient(135deg, #f9f9f9, #ffffff);
+  min-height: 100vh;
+}
+
+.request-demo-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
   background: #ffffff;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  margin-top: 100px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .request-demo-heading {
-  font-size: 22px;
-  color: #1B48DA;
-  margin-bottom: 15px;
+  font-size: 1.8rem;
+  color: #1b48da;
+  text-align: center;
   font-weight: bold;
+  margin-top: 40px;
 }
 
 .request-demo-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  text-align: left;
 }
 
 .form-group label {
-  font-weight: 500;
-  margin-bottom: 5px;
+  font-weight: 600;
+  margin-bottom: 8px;
   color: #333;
 }
 
 .form-group input,
 .form-group select {
-  padding: 12px;
+  padding: 14px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   outline: none;
   transition: border 0.3s ease-in-out;
@@ -47,69 +51,52 @@
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #1B48DA;
+  border-color: #1b48da;
 }
 
 .submit-button {
-  padding: 12px;
-  background-color: #1B48DA;
+  padding: 14px;
+  background-color: #1b48da;
   color: white;
   font-size: 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s ease-in-out;
 }
 
 .submit-button:hover {
-  background-color: #153A96;
+  background-color: #153a96;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
   .request-demo-container {
-    width: 95%;
-    padding: 15px;
-    margin-top: 100px;
+    width: 90%;
+    padding: 20px;
   }
 
   .request-demo-heading {
-    font-size: 20px;
+    font-size: 1.5rem;
   }
 
   .form-group input,
   .form-group select {
-    padding: 10px;
-    font-size: 14px;
+    padding: 12px;
   }
 
   .submit-button {
-    padding: 10px;
-    font-size: 14px;
+    padding: 12px;
   }
 }
 
 @media (max-width: 480px) {
   .request-demo-container {
     width: 100%;
-    margin: 30px auto;
     padding: 15px;
-    margin-top: 100px;
   }
 
   .request-demo-heading {
-    font-size: 18px;
-  }
-
-  .form-group input,
-  .form-group select {
-    padding: 8px;
-    font-size: 14px;
-  }
-
-  .submit-button {
-    padding: 8px;
-    font-size: 14px;
+    font-size: 1.3rem;
   }
 }

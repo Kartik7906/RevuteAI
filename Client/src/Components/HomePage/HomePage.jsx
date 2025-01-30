@@ -9,11 +9,52 @@ import { FaLightbulb, FaBookOpen } from "react-icons/fa";
 import { RiRobot3Fill } from "react-icons/ri";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import emailjs from "emailjs-com";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const texts = ["Product Knowledge", "Soft Skills", "Lead Conversion Strategies"];
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const serviceId = "service_e3wphqs";
+    const templateId = "template_m8ao98k";
+    const userId = "7YcnQZuizCdA4HVeN";
+
+    emailjs
+      .send(serviceId, templateId, formData, userId)
+      .then(() => {
+        alert("Your message has been sent successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to send the message", error);
+        alert("Failed to send the message. Please try again.");
+      });
+  };
+
+  const texts = [
+    "Product Knowledge",
+    "Soft Skills",
+    "Lead Conversion Strategies",
+  ];
   const [index, setIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -43,10 +84,16 @@ const HomePage = () => {
           return;
         }
       }
-      typingTimer = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+      typingTimer = setTimeout(
+        handleTyping,
+        isDeleting ? deletingSpeed : typingSpeed
+      );
     };
 
-    typingTimer = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+    typingTimer = setTimeout(
+      handleTyping,
+      isDeleting ? deletingSpeed : typingSpeed
+    );
 
     return () => clearTimeout(typingTimer);
   }, [displayText, isDeleting, texts, index]);
@@ -54,33 +101,39 @@ const HomePage = () => {
   const handleLearnmore = () => {
     navigate("/learnmore");
   };
-  
+
+  useEffect(() => {
+    if (location.hash === '#footer') {
+      const footerElement = document.getElementById('footer');
+      if (footerElement) {
+        footerElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+
   return (
     <div className="homepage-main-container">
       <Navbar_Landingpage />
       <div className="homepage-main-content">
-          <div className="homepage-overlayer-text-left">
-            <h2>
-              Elevate Your Sales Team Performance with{" "}
-              <span className="animated-text">{displayText}</span>
-              <span className="cursor">|</span>
-            </h2>
-          </div>
-          <div className="homepage-overlayer-text-right">
-            <p>
-              Boost your lead conversion rate with AI-powered training and
-              achieve 3x higher close rates.
-            </p>
-            <button onClick={handleCoursesNavigation}>Book a Demo</button>
-          </div>
+        <div className="homepage-overlayer-text-left">
+          <h2>
+            Elevate Your Sales Team Performance with{" "}
+            <span className="animated-text">{displayText}</span>
+            <span className="cursor">|</span>
+          </h2>
+        </div>
+        <div className="homepage-overlayer-text-right">
+          <p>
+            Boost your lead conversion rate with AI-powered training and achieve
+            3x higher close rates.
+          </p>
+          <button onClick={handleCoursesNavigation}>Book a Demo</button>
+        </div>
       </div>
 
       <div className="homepage-roleplay-section">
         <div className="homepage-roleplay-image">
-          <img
-            src={videoclip} 
-            alt="AI-Powered Roleplays"
-          />
+          <img src={videoclip} alt="AI-Powered Roleplays" />
         </div>
 
         {/* Right Side - Text */}
@@ -105,7 +158,8 @@ const HomePage = () => {
               <h3>Learn by Doing</h3>
               <span className="homepage-horizontal"></span>
               <p>
-              With over 100+ real-time scenarios, accelerate your skills 4x faster.
+                With over 100+ real-time scenarios, accelerate your skilling 4x
+                faster.
               </p>
             </div>
             <div className="homepage-reason">
@@ -113,7 +167,7 @@ const HomePage = () => {
               <h3>AI Feedback</h3>
               <span className="homepage-horizontal"></span>
               <p>
-                After each practice session, you'll get AI-powered feedback on
+                After each practice session, Get AI-powered feedback on
                 areas you need to practice.
               </p>
             </div>
@@ -121,9 +175,7 @@ const HomePage = () => {
               <IoStatsChartSharp className="homepage-icon" />
               <h3>Multilingual</h3>
               <span className="homepage-horizontal"></span>
-              <p>
-               Practice in 12+ Indian languages.
-              </p>
+              <p>Practice in 12+ Indian languages.</p>
             </div>
           </div>
         </div>
@@ -142,9 +194,10 @@ const HomePage = () => {
               <div className="homepage-circular-image-div">
                 <img src={workplaceimg} alt="Workplace Skills" />
               </div>
-              <h3>Learn workplace skills</h3>
+              <h3>Learn On demand skills</h3>
               <p>
-               Learn soft skills, communication, product knowledge and effective sales strategies.
+                Learn soft skills, communication, product knowledge and
+                effective sales strategies.
               </p>
             </div>
             <div className="homepage-learningPath-card">
@@ -152,9 +205,7 @@ const HomePage = () => {
                 <img src={practiceing} alt="Practice Learning" />
               </div>
               <h3>Practice what you learn</h3>
-              <p>
-              Apply your learning with AI Agents for practice exercises
-              </p>
+              <p>Apply your learning with AI Agents for practice exercises</p>
             </div>
             <div className="homepage-learningPath-card">
               <div className="homepage-circular-image-div">
@@ -162,70 +213,93 @@ const HomePage = () => {
               </div>
               <h3>Get instant feedback</h3>
               <p>
-              Receive instant feedback after each practice session so you can easily identify areas to improve.
+                Receive instant feedback after each practice session so you can
+                easily identify areas of improvement.
               </p>
             </div>
           </div>
         </div>
       </div>
 
+      {/* footer start from here: */}
       <div className="homepage-footer-homePage">
-        <div className="homepage-footer-wrapper">
-          <div className="homepage-footer-top">
-            <div className="homepage-footer-column">
-              <h3>PLATFORM</h3>
-              <ul>
-                <li>AI Roleplays</li>
-                <li>Roleplay Studio</li>
-                <li>All Practice Exercises</li>
-                <li>Pricing</li>
-                <li>Skill Assessment</li>
-              </ul>
-            </div>
-            <div className="homepage-footer-column">
-              <h3>RESOURCES</h3>
-              <ul>
-                <li>Blog</li>
-                <li>Case Studies</li>
-                <li>Webinars</li>
-              </ul>
-            </div>
-            <div className="homepage-footer-column">
-              <h3>LINKS</h3>
-              <ul>
-                <li>Contact</li>
-                <li>About Us</li>
-                <li>Affiliates</li>
-                <li>Referral Scheme</li>
-                <li>Newsletter</li>
-              </ul>
-            </div>
-            <div className="homepage-footer-column">
-              <h3>SUPPORT</h3>
-              <ul>
-                <li>Help Center</li>
-                <li>Platform Video Tour</li>
-                <li>VR Features</li>
-                <li>VR App Guide</li>
-                <li>Supported VR Headsets</li>
-              </ul>
-            </div>
-          </div>
-          <div className="homepage-footer-bottom">
-            <p className="homepage-footer-company">2025 RevuteAI Ltd.</p>
-            <p className="homepage-footer-links">
-              Terms | Privacy | Accessibility
-            </p>
-            <div className="homepage-footer-social">
-              <i className="fab fa-facebook-f">F</i>
-              <i className="fab fa-x-twitter">X</i>
-              <i className="fab fa-youtube">Y</i>
-              <i className="fab fa-linkedin-in">in</i>
-              <i className="fab fa-tiktok">T</i>
-            </div>
-          </div>
-        </div>
+  <div className="homepage-footer-wrapper">
+    <div className="homepage-footer-top">
+      <div className="homepage-footer-column">
+        <h3>PLATFORM</h3>
+        <ul>
+        <li>Enterprise</li>
+          <li>AI Roleplays</li>
+          <li>Book a demo</li>
+        </ul>
       </div>
+      <div className="homepage-footer-column">
+        <h3>RESOURCES</h3>
+        <ul>
+          <li>Blog</li>
+          <li>Case Studies</li>
+          <li>Webinars</li>
+        </ul>
+      </div>
+      <div className="contact-form-section" id="footer">
+        <h3>Contact Us</h3>
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter Your Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter Your Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Write your message here"
+              value={formData.message}
+              onChange={handleChange}
+              required
+              rows="4"
+            ></textarea>
+          </div>
+
+          <button type="submit" className="submit-btn">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+    <div className="homepage-footer-bottom">
+      <p className="homepage-footer-company">2025 RevuteAI Ltd.</p>
+      <p className="homepage-footer-links">
+        Terms | Privacy | Accessibility
+      </p>
+      <div className="homepage-footer-social">
+          contact@revuteai.com
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      {/* footer ends here */}
     </div>
   );
 };

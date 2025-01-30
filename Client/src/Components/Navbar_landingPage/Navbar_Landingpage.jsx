@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Navbar_Landingpage.css';
-import { useNavigate } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import company_logo from '../../images/company_logo.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar_Landingpage = () => {
   const navigate = useNavigate();
@@ -11,15 +12,12 @@ const Navbar_Landingpage = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleNavigation = (path) => {
-    navigate(path);
-    setIsMenuOpen(false);
-  };
-
   return (
     <div className="navbarHomepage-container">
-      <div className="companyHomepage-logo"  onClick={() => handleNavigation('/')}>
-        <img src={company_logo} alt="Company Logo" />
+      <div className="companyHomepage-logo">
+        <HashLink to="/" className="logo-link">
+          <img src={company_logo} alt="Company Logo" />
+        </HashLink>
       </div>
       <div className="menu-icon" onClick={toggleMenu} aria-label="Toggle Menu">
         <div className={isMenuOpen ? "bar open" : "bar"}></div>
@@ -31,42 +29,27 @@ const Navbar_Landingpage = () => {
           isMenuOpen ? "menu-active" : ""
         }`}
       >
-          <span className="loginHomepage-container">
-            Enterprise
-          </span>
-        <span
-          onClick={() => handleNavigation('/business')}
-          className="loginHomepage-container"
-        >
-          Business
+        <span className="loginHomepage-container">
+          Enterprise
         </span>
         <span
-          onClick={() => handleNavigation('/education')}
+          onClick={() => navigate('/roleplays')}
           className="loginHomepage-container"
         >
-          Education
+          RolePlays
         </span>
-        <span
-          onClick={() => handleNavigation('/about')}
-          className="loginHomepage-container"
-        >
-          About Us
-        </span>
-        <span
-          onClick={() => handleNavigation('/contactus')}
-          className="loginHomepage-container"
-        >
+        <HashLink to="/#footer" className="loginHomepage-container" onClick={() => setIsMenuOpen(false)}>
           Contact Us
-        </span>
+        </HashLink>
         <span
-          onClick={() => handleNavigation('/login')}
+          onClick={() => navigate('/login')}
           className="loginHomepage-container"
         >
           Log In
         </span>
         <button
           className="demoHomepage-container"
-          onClick={() => handleNavigation('/requestdemo')}
+          onClick={() => navigate('/requestdemo')}
         >
           Request Demo
         </button>
