@@ -5,8 +5,14 @@ import Navbar from "../Navbar/Navbar";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as faceapi from "face-api.js";
 
-// also paste these 2 lines of code here , go to .env file----
 
+// Access environment variables
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const modelName = import.meta.env.VITE_GEMINI_MODEL;
+
+// Initialize Google Generative AI
+const genAI = new GoogleGenerativeAI(apiKey);
+const model = genAI.getGenerativeModel({ model: modelName });
 
 // ends here--------
 
@@ -198,7 +204,7 @@ const Task1 = () => {
     if (videoRef.current) {
       detectionInterval = setInterval(async () => {
         if (
-          videoRef.current.readyState === 4 && // means video is playing
+          videoRef.current.readyState === 4 && 
           faceapi.nets.tinyFaceDetector.isLoaded
         ) {
           const detection = await faceapi.detectAllFaces(
@@ -393,7 +399,6 @@ const Task1 = () => {
   };
 
   const startEmotionTracking = () => {
-    // Optional: push 'emotion data' into an array every second
     emotionIntervalRef.current = setInterval(() => {
       emotionDataRef.current.push({
         timestamp: Date.now(),

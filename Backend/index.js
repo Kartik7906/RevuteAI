@@ -38,10 +38,14 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// put privatekey of google generative AI here: only 2 line of code:
 
+// Access environment variables
+const apiKey = process.env.GEMINI_API_KEY;
+const modelName = process.env.GEMINI_MODEL;
 
-// ends here:
+// Initialize Google Generative AI
+const genAI = new GoogleGenerativeAI(apiKey);
+const model = genAI.getGenerativeModel({ model: modelName });
 
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
