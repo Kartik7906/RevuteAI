@@ -1,35 +1,55 @@
-// src/components/HomePage/HomePage.jsx
 import React, { useEffect, useState } from "react";
 import Navbar_Landingpage from "../Navbar_landingPage/Navbar_Landingpage";
-import bgImage from "../../images/backgroundForintro.jpg";
 import feedbackimg from "../../images/feedback.jpg";
 import practiceing from "../../images/Practice.jpg";
 import workplaceimg from "../../images/workplace.jpg";
-// import thumbnail_img from "../../images/7536311.jpg";
-import videoclip from "../../images/videoclip.gif";
+import videoclip from "../../images/videoClip.gif";
 import "./HomePage.css";
 import { FaLightbulb, FaBookOpen } from "react-icons/fa";
 import { RiRobot3Fill } from "react-icons/ri";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
+  const texts = ["Product Knowledge", "Soft Skills", "Lead Conversion Strategies"];
   const [index, setIndex] = useState(0);
-  const texts = ["Product Knowledge", "Soft Skills"];
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const typingSpeed = 150;
+  const deletingSpeed = 100;
+  const pauseTime = 2000;
 
   const handleCoursesNavigation = () => {
     navigate("/requestdemo");
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % texts.length);
-    }, 3000); // Change text every 3 seconds
-    return () => clearInterval(interval);
-  }, [texts.length]);
+    let typingTimer;
+
+    const handleTyping = () => {
+      const currentText = texts[index];
+      if (isDeleting) {
+        setDisplayText(currentText.substring(0, displayText.length - 1));
+        if (displayText.length === 0) {
+          setIsDeleting(false);
+          setIndex((prevIndex) => (prevIndex + 1) % texts.length);
+        }
+      } else {
+        setDisplayText(currentText.substring(0, displayText.length + 1));
+        if (displayText.length === currentText.length) {
+          typingTimer = setTimeout(() => setIsDeleting(true), pauseTime);
+          return;
+        }
+      }
+      typingTimer = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+    };
+
+    typingTimer = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+
+    return () => clearTimeout(typingTimer);
+  }, [displayText, isDeleting, texts, index]);
 
   const handleLearnmore = () => {
     navigate("/learnmore");
@@ -39,27 +59,11 @@ const HomePage = () => {
     <div className="homepage-main-container">
       <Navbar_Landingpage />
       <div className="homepage-main-content">
-        <motion.div
-          className="homepage-overlayer-text"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
           <div className="homepage-overlayer-text-left">
             <h2>
-              Elevate Your Sales Performance with{" "}
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={texts[index]}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.8 }}
-                  className="animated-text"
-                >
-                  {texts[index]}
-                </motion.span>
-              </AnimatePresence>
+              Elevate Your Sales Team Performance with{" "}
+              <span className="animated-text">{displayText}</span>
+              <span className="cursor">|</span>
             </h2>
           </div>
           <div className="homepage-overlayer-text-right">
@@ -69,7 +73,6 @@ const HomePage = () => {
             </p>
             <button onClick={handleCoursesNavigation}>Book a Demo</button>
           </div>
-        </motion.div>
       </div>
 
       <div className="homepage-roleplay-section">
@@ -84,8 +87,8 @@ const HomePage = () => {
         <div className="homepage-roleplay-text">
           <h2>AI-Powered Roleplays</h2>
           <p>
-            Enable your team to practice every sales blocker scenario,
-            rejection, and negotiation with our AI Agent.
+            Enable your team to practice every sales blocker scenarios,
+            Objection handling, and negotiation with our AI Agent.
           </p>
           <button onClick={handleLearnmore} className="homepage-learn-more-btn">
             Learn More
@@ -102,7 +105,7 @@ const HomePage = () => {
               <h3>Learn by Doing</h3>
               <span className="homepage-horizontal"></span>
               <p>
-              With over 100+ real-time scenarios, you will improve your skills up to 4x faster.
+              With over 100+ real-time scenarios, accelerate your skills 4x faster.
               </p>
             </div>
             <div className="homepage-reason">
@@ -119,7 +122,7 @@ const HomePage = () => {
               <h3>Multilingual</h3>
               <span className="homepage-horizontal"></span>
               <p>
-               Practice in various Indian languages.
+               Practice in 12+ Indian languages.
               </p>
             </div>
           </div>
