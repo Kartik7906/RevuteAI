@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
-import { FaBrain } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../Services/apiConnection";
 import companylogo from "../../images/company_logo.jpeg";
@@ -12,6 +11,18 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // **Added: Admin and SuperAdmin credentials**
+  const adminCredentials = {
+    email: "kartik@revute.ai",
+    password: "revute@790",
+  };
+
+  const superAdminCredentials = {
+    email: "nayanshree@revute.ai",
+    password: "revute@790",
+  };
+  // **End of Added Credentials**
 
   const validate = () => {
     const errors = {};
@@ -39,6 +50,19 @@ const LoginPage = () => {
     if (!validate()) {
       return;
     }
+
+    // **Added: Check for Admin credentials**
+    if (email === adminCredentials.email && password === adminCredentials.password) {
+      navigate("/admin"); // Navigate to Admin component
+      return;
+    }
+
+    // **Added: Check for SuperAdmin credentials**
+    if (email === superAdminCredentials.email && password === superAdminCredentials.password) {
+      navigate("/superadmin"); // Navigate to SuperAdmin component
+      return;
+    }
+    // **End of Admin/SuperAdmin Check**
 
     setIsSubmitting(true);
 
@@ -73,17 +97,13 @@ const LoginPage = () => {
 
   return (
     <div className="main-login-container">
-      {/* Branding Icon */}
-      {/* Branding Icon */}
       <div className="login-logo" onClick={() => navigate("/")}>
         <img src={companylogo} alt="" />
       </div>
 
-      {/* Login Form */}
       <form className="login-form" onSubmit={handleLogin} noValidate>
         <h2 className="form-title">Get Started</h2>
 
-        {/* Email Input */}
         <div className="input-group">
           <input
             type="email"
@@ -99,7 +119,6 @@ const LoginPage = () => {
           )}
         </div>
 
-        {/* Password Input */}
         <div className="input-group">
           <input
             type="password"
@@ -115,10 +134,8 @@ const LoginPage = () => {
           )}
         </div>
 
-        {/* API Error */}
         {errors.apiError && <div className="api-error">{errors.apiError}</div>}
 
-        {/* Forgot Password */}
         <div className="forgot-password">
           <button
             type="button"
@@ -129,12 +146,10 @@ const LoginPage = () => {
           </button>
         </div>
 
-        {/* Submit Button */}
         <button type="submit" className="submit-button" disabled={isSubmitting}>
           {isSubmitting ? "Logging in..." : "SUBMIT"}
         </button>
 
-        {/* Signup Link */}
         <div className="signup-link">
           <span>New User! Create Account - </span>
           <button

@@ -280,7 +280,7 @@ const HomePage = () => {
             ></textarea>
           </div>
 
-          <button type="submit" className="submit-btn">
+          <button type="submit" className="homepage-submit-btn">
             Send Message
           </button>
         </form>

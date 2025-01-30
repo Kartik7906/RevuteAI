@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./RegisterPage.css";
-import { FaBrain, FaEye, FaEyeSlash } from "react-icons/fa6"; // Import eye icons for password toggle
+import { FaBrain, FaEye, FaEyeSlash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../Services/apiConnection";
 import companylogo from '../../images/company_logo.jpeg'
@@ -18,26 +18,20 @@ const RegisterPage = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Controls visibility of the role selection popup
   const [showRolePopup, setShowRolePopup] = useState(false);
 
-  // Stores the selected role
-  const [role, setRole] = useState("user"); // default role can be "user"
+  const [role, setRole] = useState("user"); 
 
-  // Controls password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Remove error message upon input change
     setErrors({ ...errors, [name]: "" });
   };
 
-  // Validation function
   const validate = () => {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,34 +62,21 @@ const RegisterPage = () => {
 
     setErrors(errors);
 
-    // Return true if no errors
     return Object.keys(errors).length === 0;
   };
 
-  // Handle initial form submission
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    if (validate()) {
-      setShowRolePopup(true);
-    }
-  };
-
-  // Handle role selection and final registration
-  const handleRoleSubmit = async (e) => {
-    e.preventDefault();
-
     setIsSubmitting(true);
     setErrors({});
 
     try {
-      // Call the register API
       const response = await register({
         email: formData.email,
         username: formData.username,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
-        role,
+        role: "user",
       });
 
       const data = await response.json();
@@ -103,7 +84,6 @@ const RegisterPage = () => {
       if (!response.ok) {
         setErrors({ apiError: data.message || "Registration failed." });
       } else {
-        // Success
         alert("User registered successfully!");
         navigate("/login");
       }
@@ -114,9 +94,9 @@ const RegisterPage = () => {
       setIsSubmitting(false);
       setShowRolePopup(false);
     }
+
   };
 
-  // Handle navigation to login page
   const handleSignIn = () => {
     navigate("/login");
   };
@@ -131,7 +111,6 @@ const RegisterPage = () => {
           <p>New User! Kindly Sign Up to proceed</p>
         </div>
 
-        {/* Registration Form */}
         <form className="register-form" onSubmit={handleFormSubmit} noValidate>
           {/* Email Input */}
           <div className="input-group">
@@ -230,57 +209,6 @@ const RegisterPage = () => {
           </span>
         </p>
       </div>
-
-      {/* Role Selection Popup */}
-      {showRolePopup && (
-        <div
-          className="popup-overlay-modal"
-          onClick={() => setShowRolePopup(false)} // Close on overlay click
-        >
-          <div
-            className="popup-content-modal"
-            onClick={(e) => e.stopPropagation()} // Prevent close if clicked inside
-          >
-            <h2>Choose Your Role</h2>
-            <form onSubmit={handleRoleSubmit}>
-              <label>
-                <input
-                  type="radio"
-                  name="role"
-                  value="user"
-                  checked={role === "user"}
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <span>User</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="role"
-                  value="admin"
-                  checked={role === "admin"}
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <span>Admin</span>
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="role"
-                  value="superadmin"
-                  checked={role === "superadmin"}
-                  onChange={(e) => setRole(e.target.value)}
-                />
-                <span>Super Admin</span>
-              </label>
-
-              <button type="submit" className="submit-btn-modal" disabled={isSubmitting}>
-                {isSubmitting ? "Confirming..." : "Confirm"}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
