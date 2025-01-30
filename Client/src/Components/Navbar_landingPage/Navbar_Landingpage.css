@@ -37,6 +37,7 @@
   cursor: pointer;
   position: relative; 
   transition: color 0.3s;
+  text-decoration: none;
 }
 
 .loginHomepage-container:hover {

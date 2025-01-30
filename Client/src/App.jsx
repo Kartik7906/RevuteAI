@@ -10,7 +10,6 @@ import ListedReport from "./Components/ListedReports/ListedReport";
 import BotPage from "./Components/BotPage/BotPage";
 import Admin from "./Components/AdminDashboard/Admin";
 import SuperAdmin from "./Components/SuperAdmin/SuperAdmin";
-import ContactusPage from "./Components/ContactusPage/ContactusPage";
 import Education from "./Components/Education/Education";
 import LearnMore from "./Components/LearnMore/LearnMore";
 import RequestDemo from "./Components/RequestDemo/RequestDemo";
@@ -33,7 +32,6 @@ function App() {
           <Route path="/botpage" element={<BotPage/>} />
           <Route path="/admin" element={<Admin/>} />
           <Route path="/superadmin" element={<SuperAdmin/>} />
-          <Route path="/contactus" element={<ContactusPage/>} />
           <Route path="/education" element={<Education/>} />
           <Route path="/learnmore" element={<LearnMore/>} />
           <Route path="/requestdemo" element={<RequestDemo/>} />
