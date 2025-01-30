@@ -6,11 +6,6 @@
   font-family: "Roboto", sans-serif;
 }
 
-body {
-  background-color: #ffffff;
-  color: #333333;
-}
-
 /* Register Container */
 .register-container {
   display: flex;
@@ -27,8 +22,6 @@ body {
   max-width: 400px;
   padding: 30px;
   border-radius: 8px;
-  /* background-color: #ffffff; */
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   text-align: center;
 }
 .register-logo img {
@@ -150,7 +143,7 @@ body {
 .submit-btn {
   width: 100%;
   padding: 12px;
-  background-color: #6a0dad;
+  background-color: #1B48DA;
   color: #ffffff;
   border: none;
   border-radius: 25px;
@@ -160,12 +153,12 @@ body {
 }
 
 .submit-btn:disabled {
-  background-color: #a08fd1;
+  background-color: #1B48DA;
   cursor: not-allowed;
 }
 
 .submit-btn:hover:not(:disabled) {
-  background-color: #4b0082;
+  background-color: #1B48DA;
 }
 
 /* Existing Account Text */
@@ -179,11 +172,11 @@ body {
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
-  color: #6a0dad;
+  color: #1B48DA;
 }
 
 .login-link:hover {
-  color: #4b0082;
+  color: #1B48DA;
 }
 
 /* Popup Overlay Modal */

@@ -403,7 +403,7 @@
   border: 1px solid #7bdcb5;
 }
 
-.submit-btn {
+.homepage-submit-btn {
   padding: 12px 20px;
   background-color: #7bdcb5;
   border: none;
@@ -415,7 +415,7 @@
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.submit-btn:hover {
+.homepage-submit-btn:hover {
   background-color: #6acaa0;
   transform: translateY(-2px);
 }

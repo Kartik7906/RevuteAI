@@ -687,12 +687,6 @@ const BotPage = () => {
       <div className="header-container">
         <h1 className="header-title">Talking Avatar</h1>
         <div className="header-right">
-          <nav>
-            <ul className="nav-links">
-              <li onClick={() => navigate("/superadmin")}>Super Admin</li>
-              <li onClick={() => navigate("/admin")}>Admin</li>
-            </ul>
-          </nav>
           <div
             className="notification-bell-container"
             onClick={toggleNotificationDropdown}
