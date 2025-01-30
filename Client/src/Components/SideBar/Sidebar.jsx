@@ -5,6 +5,9 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { GrAnnounce } from "react-icons/gr";
 import { MdOutlineTaskAlt } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
+import { MdCastForEducation } from "react-icons/md";
+import { TbVocabulary } from "react-icons/tb";
+import { LuBot } from "react-icons/lu";
 
 const Sidebar = ({ setSection }) => {
   const navigate = useNavigate();
@@ -31,6 +34,11 @@ const Sidebar = ({ setSection }) => {
       alert("Please Login First");
     }
   };
+
+  const handleEducationNavigation = () => {
+    setSection('education');
+    navigate('/education');
+  };
   
 
   return (
@@ -38,8 +46,9 @@ const Sidebar = ({ setSection }) => {
       <ul>
         <li onClick={() => handleNavigationformobile('dashboard', '/dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
         <li onClick={() => handleNavigationformobile('announcements', '/announcement')}><GrAnnounce size={20}/> Announcements</li>
-        <li onClick={handleIntroNavigation}><MdOutlineTaskAlt size={20}/> Self Intro Pitch</li>
-        <li onClick={() => setSection('task2')}><MdOutlineTaskAlt size={20}/> Bot Mock Pitch</li>
+        <li onClick={handleEducationNavigation}><MdCastForEducation size={20}/> Education</li>
+        <li onClick={handleIntroNavigation}><TbVocabulary size={20}/> Self Intro Pitch</li>
+        <li onClick={() => setSection('task2')}><LuBot size={20}/> Bot Mock Pitch</li>
         <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
       </ul>
     </nav>

@@ -233,3 +233,77 @@ body {
   font-weight: bold;
   color: #333;
 }
+
+
+/* new added css make sure to take care of overwrite csss: */
+/* Add these rules below your existing .recommendation-item styles */
+
+.recommendation-item {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.recommendation-item:hover {
+  background: rgba(67, 97, 238, 0.05);
+  transform: translateX(5px);
+}
+
+.recommendation-item::before {
+  content: "▶";
+  color: var(--primary);
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.recommendation-item:hover::before {
+  left: -10px;
+  opacity: 1;
+}
+
+.suggestion-category {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75em;
+  font-weight: 600;
+  margin-left: 10px;
+  vertical-align: middle;
+  background: rgba(67, 97, 238, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(67, 97, 238, 0.2);
+}
+
+/* Category-specific styles using your existing color variables */
+.suggestion-category.grammar {
+  background: rgba(33, 150, 243, 0.1);
+  color: var(--info);
+  border-color: rgba(33, 150, 243, 0.2);
+}
+
+.suggestion-category.fluency {
+  background: rgba(255, 152, 0, 0.1);
+  color: var(--warning);
+  border-color: rgba(255, 152, 0, 0.2);
+}
+
+.suggestion-category.content {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--success);
+  border-color: rgba(76, 175, 80, 0.2);
+}
+
+.suggestion-category.coherence {
+  background: rgba(63, 55, 201, 0.1);
+  color: var(--secondary);
+  border-color: rgba(63, 55, 201, 0.2);
+}
+
+.suggestion-category.general {
+  background: rgba(67, 97, 238, 0.1);
+  color: var(--primary);
+  border-color: rgba(67, 97, 238, 0.2);
+}

@@ -98,52 +98,51 @@ function analyzeEmotions(emotionData) {
 app.post("/api/gemini", async (req, res) => {
   try {
     const { transcript } = req.body;
-    let suggestions = [];
+    
+    const prompt = `
+    Analyze this self-introduction transcript: "${transcript}"
+    
+    As a professional speech coach AI, provide:
+    1. Grammar corrections (highlight and fix errors)
+    2. Fluency improvements (remove filler words, improve flow)
+    3. Coherence suggestions (better structure/logical flow)
+    4. Content enhancements (missing key elements)
+    
+    Format requirements:
+    - Numbered list (3-5 items max)
+    - Each point concise (max 20 words)
+    - Start with imperative verb
+    - Include specific examples from transcript
+    - Use this format:
+      1. "Instead of X, try Y for Z reason"
+      2. "Add [specific element] to highlight [quality]"
+      3. "Remove [filler/weak phrase] to sound more confident"
 
-    if (!transcript.toLowerCase().includes("project")) {
-      suggestions.push(
-        "Mention the projects you've worked on to showcase your experience."
-      );
-    }
+    Example:
+    1. "Replace 'I done projects' with 'I completed 3 projects' for proper verb tense"
+    2. "Add mention of your Python certification to showcase technical skills"
+    3. "Remove 'um' between sentences for smoother delivery"`;
 
-    if (!transcript.toLowerCase().includes("goal")) {
-      suggestions.push(
-        "Add a clear statement of your career goals or future aspirations."
-      );
-    }
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
 
-    if (!transcript.toLowerCase().includes("leadership")) {
-      suggestions.push(
-        "Highlight any leadership roles or team experiences you've had."
-      );
-    }
+    // Parse Gemini's response into array
+    const suggestions = text.split(/\n+/)
+      .filter(line => /^\d+\.\s+".+"/.test(line))
+      .map(line => line.replace(/^\d+\.\s+"/, '').replace(/"$/, ''))
+      .slice(0, 5);
 
-    if (!transcript.toLowerCase().includes("belong")) {
-      suggestions.push(
-        "Include a brief note about where you are from or your cultural background."
-      );
-    }
-
-    if (!transcript.toLowerCase().includes("currently")) {
-      suggestions.push(
-        "Mention what you're currently doing (e.g., your job, studies, or side projects)."
-      );
-    }
-
+    // Fallback if Gemini returns too few
     while (suggestions.length < 3) {
-      suggestions.push(
-        "Provide more detailed examples to make your introduction stand out."
-      );
-    }
-
-    if (suggestions.length > 5) {
-      suggestions = suggestions.slice(0, 5);
+      suggestions.push("Review sentence structure for clearer communication");
     }
 
     res.json({ suggestions });
+    
   } catch (error) {
-    console.error("Gemini suggestions error:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Gemini error:", error);
+    res.status(500).json({ suggestions: ["Couldn't generate suggestions. Please check your input."] });
   }
 });
 

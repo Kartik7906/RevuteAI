@@ -275,6 +275,17 @@ const ReportPage = () => {
   const hasFillerWords =
     reportData && typeof reportData.fillerWords === "number";
 
+
+
+    const categorizeSuggestion = (suggestion) => {
+      const lower = suggestion.toLowerCase();
+      if (lower.includes('replace') || lower.includes('grammar')) return 'Grammar';
+      if (lower.includes('remove') || lower.includes('filler')) return 'Fluency';
+      if (lower.includes('add') || lower.includes('mention')) return 'Content';
+      if (lower.includes('combine') || lower.includes('flow')) return 'Coherence';
+      return 'General';
+    };
+
   return (
     <div className="report-container" ref={reportRef}>
       <div className="report-header">
@@ -348,32 +359,48 @@ const ReportPage = () => {
       </div>
       <div className="analysis-section">
         <div className="detailed-analysis">
-          <h3>Grammar Analysis</h3>
-          <div className="grammar-scores">
-            <p>
-              <strong>Score:</strong>{" "}
-              {reportData ? reportData.grammarAnalysis?.score : 0}/10
-            </p>
-            <p>
-              <strong>Feedback:</strong>{" "}
-              {reportData ? reportData.grammarAnalysis?.feedback : "N/A"}
-            </p>
-          </div>
-          <h4>Recommendations:</h4>
+          <h3>Personalized Recommendations</h3>
+          <p className="text-muted" style={{ marginBottom: "1.5rem" }}>
+            AI-powered suggestions to improve your communication:
+          </p>
           <ul className="recommendation-list">
-            {reportData &&
-            reportData.professionalAnalysis?.recommendations &&
-            reportData.professionalAnalysis.recommendations.length > 0 ? (
-              reportData.professionalAnalysis.recommendations.map(
-                (rec, index) => (
-                  <li key={index} className="recommendation-item">
-                    {rec}
+            {geminiRecommendations.length > 0 ? (
+              geminiRecommendations.map((suggestion, idx) => {
+                // Determine suggestion category
+                const category =
+                  suggestion.includes("Replace") ||
+                  suggestion.includes("grammar")
+                    ? "Grammar"
+                    : suggestion.includes("Remove") ||
+                      suggestion.includes("filler")
+                    ? "Fluency"
+                    : suggestion.includes("Add") ||
+                      suggestion.includes("mention")
+                    ? "Content"
+                    : suggestion.includes("Combine")
+                    ? "Coherence"
+                    : "General";
+
+                return (
+                  <li key={idx} className="recommendation-item">
+                    <div>
+                      {suggestion.replace(/"/g, "")}
+                      <span
+                        className={`suggestion-category ${category.toLowerCase()}`}
+                      >
+                        {category}
+                      </span>
+                    </div>
                   </li>
-                )
-              )
+                );
+              })
             ) : (
               <li className="recommendation-item">
-                No Recommendations Available
+                <div>
+                  No specific suggestions found. Your speech met most of our
+                  criteria!
+                  <span className="suggestion-category general">General</span>
+                </div>
               </li>
             )}
           </ul>
