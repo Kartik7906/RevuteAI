@@ -42,19 +42,21 @@
 }
 
 .homepage-overlayer-text-left h2 {
-  font-size: 4rem; 
+  font-size: 3.7rem; 
   font-weight: 800;
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.homepage-overlayer-text p {
+.homepage-overlayer-text-right p {
   font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 30px;
+  color: white;
+  margin-top: 30px;
 }
 
-.homepage-overlayer-text button {
+.homepage-overlayer-text-right button {
   padding: 12px 24px;
   background-color: #fff;
   color: #000;
