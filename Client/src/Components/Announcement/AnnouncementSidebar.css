@@ -2,26 +2,29 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Arial", sans-serif;
+  /* font-family: "Arial", sans-serif; */
 }
 
 .announcement-sidebar {
   width: 300px;
-  background-color: #f9fafc;
+  background-color: #E8F9FF;
   border-left: 1px solid #e2e8f0;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.1);
+  /* border: none; */
+  /* background-color: yellow; */
 }
 
 .announcement-section,
 .new-updates-section {
-  background-color: #ffffff;
+  background-color: #FBFBFB;
   border-radius: 10px;
   padding: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  /* background-color: red; */
 }
 
 .announcement-section h3,
@@ -42,15 +45,18 @@
 .announcement-sidebar li {
   font-size: 16px;
   padding: 0.5rem 0;
-  border-left: 3px solid #92a4ff;
   padding-left: 10px;
   margin-bottom: 0.5rem;
   color: #444;
-  transition: background-color 0.2s ease-in-out;
 }
 
 .announcement-sidebar li:hover {
   background-color: #e0f0ff;
+  border-right: 2px solid #1B48DA;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 8px;
+
+
 }
 
 .view-all-text {

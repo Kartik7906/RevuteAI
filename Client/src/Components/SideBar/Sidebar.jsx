@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './SideBar.css';
 import { MdOutlineDashboard } from "react-icons/md";
 import { GrAnnounce } from "react-icons/gr";
-import { MdOutlineTaskAlt } from "react-icons/md";
+// import { MdOutlineTaskAlt } from "react-icons/md";
 import { TbReportSearch } from "react-icons/tb";
 import { MdCastForEducation } from "react-icons/md";
 import { TbVocabulary } from "react-icons/tb";

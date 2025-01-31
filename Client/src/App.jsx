@@ -14,6 +14,7 @@ import Education from "./Components/Education/Education";
 import LearnMore from "./Components/LearnMore/LearnMore";
 import RequestDemo from "./Components/RequestDemo/RequestDemo";
 import Announcement from "./Components/Announcement/Announcement";
+import ProfilePage from "./Components/ProfilePage/ProfilePage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/education" element={<Education/>} />
           <Route path="/learnmore" element={<LearnMore/>} />
           <Route path="/requestdemo" element={<RequestDemo/>} />
+          <Route path="/profile" element={<ProfilePage/>} />
         </Routes>
       </BrowserRouter>
     </>
