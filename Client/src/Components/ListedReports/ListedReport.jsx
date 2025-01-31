@@ -33,15 +33,19 @@ const ListedReport = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch report");
       }
-      const data = await response.json();
-      localStorage.setItem("reportData", JSON.stringify(data.reportData));
-      localStorage.setItem("transcript", data.transcript);
-      localStorage.setItem("time", data.createdAt);
-      navigate(`/report`);
+      // Convert the response to a Blob
+      const blob = await response.blob();
+      // Create a local URL from that blob
+      const imageURL = URL.createObjectURL(blob);
+  
+      // Open the raw image in a new tab/window
+      window.open(imageURL, "_blank");
     } catch (error) {
       console.error("Error fetching report:", error);
     }
   };
+  
+  
   
 
   return (

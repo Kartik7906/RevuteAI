@@ -152,32 +152,59 @@ const ReportPage = () => {
     }
   };
 
-  const downloadJSON = () => {
-    const userId = localStorage.getItem("userId");
-    const transcript = localStorage.getItem("transcript");
+  // Add this modified function in your ReportPage component
+  const saveScreenshotToDB = () => {
+    const userId = localStorage.getItem("userId"); 
 
-    if (reportData) {
-      fetch("http://localhost:8000/api/report/saveReport", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          reportData,
-          transcript,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to save the report.");
+    if (!userId) {
+      Swal.fire({
+        title: "Authentication Required",
+        text: "Please login to save your report",
+        icon: "warning",
+      });
+      return;
+    }
+
+    if (reportRef.current) {
+      html2canvas(reportRef.current).then(async (canvas) => {
+        try {
+          // Convert canvas to Blob
+          const blob = await new Promise((resolve) =>
+            canvas.toBlob(resolve, "image/png")
+          );
+
+          // Prepare form data
+          const formData = new FormData();
+          formData.append("screenshot", blob, "report-screenshot.png");
+          formData.append("userId", userId);
+
+          // Send to backend
+          const response = await fetch(
+            "http://localhost:8000/api/report/save-screenshot",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+
+          if (response.ok) {
+            Swal.fire({
+              title: "Success!",
+              text: "Screenshot saved successfully",
+              icon: "success",
+            });
+          } else {
+            throw new Error("Server responded with error");
           }
-          alert("Report saved successfully.");
-        })
-        .catch((error) => {
-          console.error("Error saving report:", error);
-          alert("An error occurred while saving the report.");
-        });
+        } catch (error) {
+          console.error("Save error:", error);
+          Swal.fire({
+            title: "Save Failed",
+            text: "Could not save screenshot",
+            icon: "error",
+          });
+        }
+      });
     }
   };
 
@@ -275,16 +302,15 @@ const ReportPage = () => {
   const hasFillerWords =
     reportData && typeof reportData.fillerWords === "number";
 
-
-
-    const categorizeSuggestion = (suggestion) => {
-      const lower = suggestion.toLowerCase();
-      if (lower.includes('replace') || lower.includes('grammar')) return 'Grammar';
-      if (lower.includes('remove') || lower.includes('filler')) return 'Fluency';
-      if (lower.includes('add') || lower.includes('mention')) return 'Content';
-      if (lower.includes('combine') || lower.includes('flow')) return 'Coherence';
-      return 'General';
-    };
+  const categorizeSuggestion = (suggestion) => {
+    const lower = suggestion.toLowerCase();
+    if (lower.includes("replace") || lower.includes("grammar"))
+      return "Grammar";
+    if (lower.includes("remove") || lower.includes("filler")) return "Fluency";
+    if (lower.includes("add") || lower.includes("mention")) return "Content";
+    if (lower.includes("combine") || lower.includes("flow")) return "Coherence";
+    return "General";
+  };
 
   return (
     <div className="report-container" ref={reportRef}>
@@ -492,7 +518,7 @@ const ReportPage = () => {
         <button className="download-button" onClick={downloadPDF}>
           <FontAwesomeIcon icon={faDownload} /> Download PDF
         </button>
-        <button className="download-button" onClick={downloadJSON}>
+        <button className="download-button" onClick={saveScreenshotToDB}>
           <FontAwesomeIcon icon={faFileCode} /> Save File
         </button>
       </div>
