@@ -18,12 +18,10 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      {/* Logo Section */}
       <div className="navbar__logo" onClick={() => navigate('/')}>
         <img src={companyLogo} alt="Company Logo" />
       </div>
 
-      {/* Nav Items */}
       <div className="navbar__menu">
         <div className="navbar__notification" onClick={handleProfile}>
           <FaBell />
@@ -31,6 +29,9 @@ const Navbar = () => {
         <button className="navbar__btn" onClick={handleLogout}>
           Logout
         </button>
+        <div className='profileContainer' onClick={handleProfile}>
+          
+        </div>
       </div>
     </nav>
   );

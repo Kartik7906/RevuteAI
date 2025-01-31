@@ -1,0 +1,120 @@
+.announcement-container {
+    /* padding: 2rem; */
+    max-width: 1000px;
+    margin: 0 auto;
+    /* background-color: yellow; */
+  }
+  
+  .announcement-header {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    /* margin-top: 0px; */
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.8s ease-out;
+    /* background-color: red; */
+  }
+  
+  /* Grid layout */
+  .announcement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    /* background-color: pink; */
+  }
+  
+  /* Card styles */
+  .announcement-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .announcement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .announcement-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: #007bff;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .announcement-card:hover::before {
+    transform: scaleY(1);
+  }
+  
+  /* Card content */
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .card-header h3 {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .announcement-date {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+  
+  .announcement-description {
+    color: #34495e;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes borderSlide {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .announcement-container {
+      padding: 1rem;
+    }
+    
+    .announcement-header {
+      font-size: 2rem;
+    }
+    
+    .announcement-grid {
+      grid-template-columns: 1fr;
+    }
+  }
