@@ -1,264 +1,199 @@
-/* --------------------- Global Reset/Overrides --------------------- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ProfilePage.css */
+.profile-page-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f8f9fa;
+}
+
+.profile-Info-title {
+  font-size: 2.5rem;
+  color: #2d3436;
+  text-align: center;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.profile-image-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  background: linear-gradient(
+    135deg,
+    #344CB7 0%,
+    #4A6DE5 50%,
+    #6B46C1 100%
+  );
+  box-shadow: 0 4px 15px rgba(52, 76, 183, 0.3);
+  padding-top: 30px;
+}
+
+.profile-upload-section {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.profile-image-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: white;
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.UserName-section {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin-top: 1.5rem;
+}
+
+.profile-elements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.profile-userInput, .profile-userBio {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.profile-field {
+  margin-bottom: 1.5rem;
+}
+
+.profile-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #636e72;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.profile-input.view-mode, .profile-textarea.view-mode {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 1rem;
+  color: #2d3436;
+  cursor: default;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.profile-input:focus {
+  border-color: #74b9ff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(116,185,255,0.1);
+}
+
+.profile-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 0.8rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.EditProfileInfo {
+  background: #74b9ff;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.EditProfileInfo:hover {
+  background: #3498db;
+}
+
+.ChanepasswordContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.password-title {
+  font-size: 1.8rem;
+  color: #2d3436;
+  margin-bottom: 1.5rem;
+}
+
+.password-fields {
+  display: grid;
+  gap: 1rem;
+}
+
+.profile-button {
+  background: #00b894;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+.profile-button:hover {
+  background: #00a383;
+}
+
+@media (max-width: 768px) {
+  .profile-elements {
+    grid-template-columns: 1fr;
+    padding: 1rem;
   }
   
-  /* --------------------- Container --------------------- */
-  .profile-container {
-    max-width: 900px;
-    margin: 3rem auto;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  .profile-Info-title {
+    font-size: 2rem;
+    padding: 1rem 0;
   }
   
-  .profile-heading {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #2c3e50;
-    position: relative;
+  .UserName-section {
+    font-size: 1.5rem;
   }
-  
-  .profile-heading::after {
-    content: "";
-    display: block;
-    width: 50px;
-    height: 3px;
-    background-color: #3498db;
-    margin: 0.75rem auto 0;
-    border-radius: 2px;
-  }
-  
-  /* --------------------- Profile Card Layout --------------------- */
-  .profile-card {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    align-items: flex-start;
-  }
-  
-  /* --------------------- Photo Section --------------------- */
-  .profile-photo-section {
-    flex: 1;
-    text-align: center;
-    position: relative;
-  }
-  
-  .profile-photo {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #3498db;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .profile-photo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
-  }
-  
-  /* --------------------- Info Section --------------------- */
-  .profile-info-section {
-    flex: 2;
-  }
-  
-  /* --------------------- Info Items --------------------- */
-  .profile-info-item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
-  }
-  
-  .profile-info-item.bio {
-    flex-direction: column;
-    margin-bottom: 2rem;
-  }
-  
-  .profile-icon {
-    margin-right: 1rem;
-    font-size: 1.4rem;
-    color: #3498db;
-  }
-  
-  .profile-info-text h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
-  }
-  
-  .profile-info-text p,
-  .profile-info-text a {
-    margin-top: 0.25rem;
-    font-size: 0.95rem;
-    color: #555;
-  }
-  
-  .profile-link {
-    color: #3498db;
-    text-decoration: none;
-  }
-  
-  .profile-link:hover {
-    text-decoration: underline;
-  }
-  
-  /* --------------------- Profile Buttons --------------------- */
-  .profile-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    padding: 0.65rem 1rem;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
-    text-decoration: none;
-  }
-  
-  /* Primary Button */
-  .profile-btn-primary {
-    background-color: #3498db;
-    color: #fff;
-  }
-  
-  .profile-btn-primary:hover {
-    background-color: #2980b9;
-  }
-  
-  /* Secondary Button */
-  .profile-btn-secondary {
-    background-color: #95a5a6;
-    color: #fff;
-  }
-  
-  .profile-btn-secondary:hover {
-    background-color: #7f8c8d;
-  }
-  
-  /* Danger Button */
-  .profile-btn-danger {
-    background-color: #e74c3c;
-    color: #fff;
-  }
-  
-  .profile-btn-danger:hover {
-    background-color: #c0392b;
-  }
-  
-  /* Edit Profile Button */
-  .profile-btn-edit-profile {
-    background-color: #2ecc71;
-    color: #fff;
-  }
-  
-  .profile-btn-edit-profile:hover {
-    background-color: #27ae60;
-  }
-  
-  /* Upload Button Variation */
-  .profile-btn-upload {
-    margin-top: 1rem;
-  }
-  
-  /* --------------------- Edit Form --------------------- */
-  .profile-edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .profile-form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .profile-form-group label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-    color: #555;
-  }
-  
-  .profile-input,
-  .profile-textarea {
-    padding: 0.65rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 0.9rem;
-    font-family: inherit;
-  }
-  
-  .profile-textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-  
-  .profile-form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
-  
-  /* --------------------- Responsive Design --------------------- */
-  @media (max-width: 768px) {
-    .profile-card {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .profile-photo {
-      width: 150px;
-      height: 150px;
-    }
-  
-    .profile-info-item {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .profile-icon {
-      margin-bottom: 0.5rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .profile-container {
-      margin: 1rem;
-      padding: 1.5rem;
-    }
-  
-    .profile-heading {
-      font-size: 1.5rem;
-    }
-  
-    .profile-photo {
-      width: 120px;
-      height: 120px;
-    }
-  
-    .profile-info-text h3 {
-      font-size: 0.95rem;
-    }
-  
-    .profile-info-text p,
-    .profile-info-text a,
-    .profile-form-group label {
-      font-size: 0.85rem;
-    }
-  
-    .profile-btn {
-      font-size: 0.85rem;
-      padding: 0.5rem 0.8rem;
-    }
-  }
-  
+}
