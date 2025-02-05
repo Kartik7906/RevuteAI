@@ -1,23 +1,47 @@
 import React, { useState } from "react";
 import "./RequestDemo.css";
 import { motion } from "framer-motion";
+import emailjs from "emailjs-com"; 
 
 const RequestDemo = () => {
   const [formData, setFormData] = useState({
-    companyName: "",
+    name: "",           
+    companyName: "",    
     companyEmail: "",
     companyContact: "",
     salesTeamSize: "",
   });
 
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Submitted", formData);
-    alert("Demo request submitted successfully!");
+
+    const serviceId = "service_ln8bn75";
+    const templateId = "template_93zgpkg";
+    const userId = "poMf6cchtrjyXo1ei";
+
+    emailjs
+      .send(serviceId, templateId, formData, userId)
+      .then((response) => {
+        console.log("SUCCESS!", response.status, response.text);
+        alert("Your message has been sent successfully!");
+
+        setFormData({
+          name: "",
+          companyName: "",
+          companyEmail: "",
+          companyContact: "",
+          salesTeamSize: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to send the message:", error);
+        alert("Failed to send the message. Please try again.");
+      });
   };
 
   return (
@@ -36,12 +60,13 @@ const RequestDemo = () => {
         </div>
 
         <form className="requestdemo-form" onSubmit={handleSubmit}>
+          {/* 1. Name Field */}
           <div className="requestdemo-formgroup">
             <label className="requestdemo-label">Name</label>
             <input
               type="text"
-              name="companyName"
-              value={formData.companyName}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               placeholder="Enter your name"
               className="requestdemo-input"
@@ -49,6 +74,7 @@ const RequestDemo = () => {
             />
           </div>
 
+          {/* 2. Company Name Field */}
           <div className="requestdemo-formgroup">
             <label className="requestdemo-label">Company Name</label>
             <input
@@ -62,6 +88,7 @@ const RequestDemo = () => {
             />
           </div>
 
+          {/* 3. Company Email Field */}
           <div className="requestdemo-formgroup">
             <label className="requestdemo-label">Company Email</label>
             <input
@@ -75,6 +102,7 @@ const RequestDemo = () => {
             />
           </div>
 
+          {/* 4. Contact Field */}
           <div className="requestdemo-formgroup">
             <label className="requestdemo-label">Contact</label>
             <input
@@ -88,6 +116,7 @@ const RequestDemo = () => {
             />
           </div>
 
+          {/* 5. Sales Team Size Select */}
           <div className="requestdemo-formgroup">
             <label className="requestdemo-label">Sales Team Size</label>
             <select
@@ -106,6 +135,7 @@ const RequestDemo = () => {
             </select>
           </div>
 
+          {/* Submit Button */}
           <button type="submit" className="requestdemo-submit">
             Submit
           </button>

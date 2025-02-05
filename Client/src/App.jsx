@@ -15,6 +15,7 @@ import LearnMore from "./Components/LearnMore/LearnMore";
 import RequestDemo from "./Components/RequestDemo/RequestDemo";
 import Announcement from "./Components/Announcement/Announcement";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
+import Credentials from "./Components/CredentialsPage/Credentials";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/learnmore" element={<LearnMore/>} />
           <Route path="/requestdemo" element={<RequestDemo/>} />
           <Route path="/profile" element={<ProfilePage/>} />
+          <Route path="/creditianls" element={<Credentials/>} />
         </Routes>
       </BrowserRouter>
     </>

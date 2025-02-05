@@ -29,9 +29,9 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const serviceId = "service_e3wphqs";
-    const templateId = "template_m8ao98k";
-    const userId = "7YcnQZuizCdA4HVeN";
+    const serviceId = "service_ln8bn75";
+    const templateId = "template_lzk28js";
+    const userId = "poMf6cchtrjyXo1ei";
 
     emailjs
       .send(serviceId, templateId, formData, userId)

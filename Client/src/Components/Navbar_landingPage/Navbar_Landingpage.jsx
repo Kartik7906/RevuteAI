@@ -29,11 +29,8 @@ const Navbar_Landingpage = () => {
           isMenuOpen ? "menu-active" : ""
         }`}
       >
-        <span className="loginHomepage-container">
-          Enterprise
-        </span>
         <span
-          onClick={() => navigate('/roleplays')}
+          onClick={() => navigate('/learnmore')}
           className="loginHomepage-container"
         >
           RolePlays
@@ -42,7 +39,7 @@ const Navbar_Landingpage = () => {
           Contact Us
         </HashLink>
         <span
-          onClick={() => navigate('/login')}
+          onClick={() => navigate('/creditianls')}
           className="loginHomepage-container"
         >
           Log In
