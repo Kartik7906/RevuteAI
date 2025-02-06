@@ -1,0 +1,137 @@
+.ModulePage-MainContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ModulePage-elements {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ModulePage-Navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    height: 60px;
+    padding: 0 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .CompanyLogo-Here img {
+    height: 40px;
+  }
+  
+  .ModulePageNavbar-rightsection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .Logout-btn-design {
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-right: 20px;
+    border-radius: 4px;
+  }
+  
+  .ModulePageNavbar-circulardiv {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+  }
+  
+  .ModulePage-middleSection {
+    display: flex;
+    flex: 1;
+  }
+  
+  .Modulepage-sidebar {
+    width: 250px;
+    background: #f9f9f9;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .Modulepage-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .ModulesSection {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .Modulepage-sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .Modulepage-sidebar li {
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    padding: 10px 0;
+  }
+  
+  .ModuleItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .Modulepage-sidebaritem {
+    font-weight: 500;
+  }
+  
+  .ModuleCompletionIndicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+  
+  .ModuleCompletionIndicator.completed {
+    background: #27ae60;
+  }
+  
+  .ModuleSubItems {
+    list-style: disc;
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .ModulePage-sidebar-visibleArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  
+  .ModulePage-module-contentArea {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    overflow-y: auto;
+    border-radius: 20px;
+    /* background-color: yellow; */
+  }
+  
+  .ModulePage-track-folderStructure {
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #666;
+  }
+  
