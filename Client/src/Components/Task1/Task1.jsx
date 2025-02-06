@@ -5,17 +5,6 @@ import Navbar from "../Navbar/Navbar";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as faceapi from "face-api.js";
 
-
-// Access environment variables
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-const modelName = import.meta.env.VITE_GEMINI_MODEL;
-
-// Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI(apiKey);
-const model = genAI.getGenerativeModel({ model: modelName });
-
-// ends here--------
-
 const templates = {
   software: {
     title: "Software Engineering Introduction",

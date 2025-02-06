@@ -9,6 +9,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const dotenv = require("dotenv");
 const fs = require("fs");
 const fsPromises = fs.promises;
+const axios = require("axios");
 
 const { MongoClient, ObjectId } = require("mongodb");
 
@@ -46,6 +47,9 @@ const modelName = process.env.GEMINI_MODEL;
 // Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: modelName });
+const GEMINI_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" +
+  apiKey;
 
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
@@ -146,6 +150,22 @@ app.post("/api/gemini", async (req, res) => {
   }
 });
 
+
+app.post("/api/chat", async (req, res) => {
+  try {
+      const { userMessage } = req.body;
+
+      const response = await axios.post(GEMINI_URL, {
+          contents: [{ parts: [{ text: userMessage }] }]
+      });
+
+      const botReply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that.";
+      res.json({ botReply });
+  } catch (error) {
+      console.error("Error calling Gemini API:", error);
+      res.status(500).json({ error: "Something went wrong." });
+  }
+});
 // Endpoint to handle uploads
 app.post("/api/upload", (req, res) => {
   console.log("Upload request received");
