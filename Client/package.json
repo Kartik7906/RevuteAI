@@ -18,6 +18,7 @@
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@react-spring/web": "^9.7.5",
     "alertifyjs": "^1.14.0",
+    "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.7",

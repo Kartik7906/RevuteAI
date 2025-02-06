@@ -1,137 +1,326 @@
 .ModulePage-MainContainer {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+.ModulePage-elements {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ModulePage-Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  height: 60px;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.CompanyLogo-Here img {
+  height: 40px;
+}
+
+.ModulePageNavbar-rightsection {
+  display: flex;
+  align-items: center;
+}
+
+.Logout-btn-design {
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-right: 20px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.ModulePageNavbar-circulardiv {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  background-color: #0056b3;
+}
+
+.ModulePage-middleSection {
+  display: flex;
+  flex: 1;
+}
+
+.Modulepage-sidebar {
+  width: 280px;
+  background: #f4f4f4;
+  border-right: 1px solid #e0e0e0;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.Modulepage-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.BackToDashbord-btn{
+  color: gray;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
   
-  .ModulePage-elements {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .ModulePage-Navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    height: 60px;
-    padding: 0 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .CompanyLogo-Here img {
-    height: 40px;
-  }
-  
-  .ModulePageNavbar-rightsection {
-    display: flex;
-    align-items: center;
-  }
-  
-  .Logout-btn-design {
-    background-color: #0056b3;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    margin-right: 20px;
-    border-radius: 4px;
-  }
-  
-  .ModulePageNavbar-circulardiv {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #ccc;
-    cursor: pointer;
-  }
-  
-  .ModulePage-middleSection {
-    display: flex;
-    flex: 1;
-  }
-  
-  .Modulepage-sidebar {
-    width: 250px;
-    background: #f9f9f9;
-    border-right: 1px solid #e0e0e0;
-    padding: 20px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  
-  .Modulepage-sidebar::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .ModulesSection {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .Modulepage-sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .Modulepage-sidebar li {
-    border-bottom: 1px solid #e0e0e0;
-    cursor: pointer;
-    padding: 10px 0;
-  }
-  
-  .ModuleItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .Modulepage-sidebaritem {
-    font-weight: 500;
-  }
-  
-  .ModuleCompletionIndicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ccc;
-  }
-  
-  .ModuleCompletionIndicator.completed {
-    background: #27ae60;
-  }
-  
-  .ModuleSubItems {
-    list-style: disc;
-    margin-top: 10px;
-    padding-left: 20px;
-  }
-  
-  .ModulePage-sidebar-visibleArea {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    overflow-y: auto;
-    scrollbar-width: none;
-  }
-  
-  .ModulePage-module-contentArea {
-    flex: 1;
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    overflow-y: auto;
-    border-radius: 20px;
-    /* background-color: yellow; */
-  }
-  
-  .ModulePage-track-folderStructure {
-    font-weight: 500;
-    margin-bottom: 10px;
-    color: #666;
-  }
-  
+}
+
+.Course-title{
+  color: black;
+  font-weight: 500;
+}
+
+.percentageCompletedSection{
+  color: black;
+  font-weight: 500;
+}
+
+.ModuleTracker-colorbar {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.ModuleTracker-completedSection {
+  height: 100%;
+  background-color: #27ae60;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+.ModulesSection {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.Modulepage-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.Modulepage-sidebar li {
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.ModuleItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.ModuleItem:hover {
+  background-color: #f0f0f0;
+}
+
+.ModuleItem.selected {
+  background-color: rgb(219, 218, 218);
+}
+
+.Modulepage-sidebaritem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.Module-descriptiontext{
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  margin: 0px;
+}
+
+.Module-durationtext{
+  font-size: 0.8rem;
+  color: #333;
+  font-weight: 200;
+  margin: 0px;
+}
+
+.ModuleCompletionIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.ModuleCompletionIndicator.completed {
+  background: #27ae60;
+}
+
+.ModuleSubItems {
+  list-style: disc;
+  margin-top: 10px;
+  margin-left: 20px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #555;
+}
+
+.ModuleSubItems li {
+  padding: 5px 0;
+  transition: color 0.2s ease;
+}
+
+.ModuleSubItems li:hover {
+  background-color: rgb(191, 188, 188);
+}
+
+.ModulePage-sidebar-visibleArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.ModulePage-module-contentArea {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  overflow-y: auto;
+  border-radius: 20px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.ModulePage-track-folderStructure {
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.ModulePagenextStep {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #27ae60;
+  border-radius: 10px;
+  background-color: #e9f7ef;
+  text-align: center;
+}
+
+.ModulePagenextStep h2 {
+  margin-bottom: 10px;
+  color: #27ae60;
+}
+
+.ModulePagenextStep button {
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.ModulePageChatbot-circulardiv {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #0056b3;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Chatbot Styles */
+.ModulePageChatbot-chatbotdiv {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 400px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.Chatbot-messages-container {
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.Chatbot-message {
+  margin-bottom: 5px;
+}
+
+.Chatbot-user-message {
+  text-align: right;
+}
+
+.Chatbot-bot-message {
+  text-align: left;
+}
+
+.Chatbot-message-text {
+  display: inline-block;
+  padding: 8px;
+  border-radius: 5px;
+  max-width: 70%;
+}
+
+.Chatbot-user-message .Chatbot-message-text {
+  background: #007bff;
+  color: white;
+}
+
+.Chatbot-bot-message .Chatbot-message-text {
+  background: #eee;
+  color: black;
+}
+
+.Chatbot-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.Chatbot-input {
+  width: 80%;
+  padding: 8px;
+}
+
+.Chatbot-send-button {
+  padding: 8px;
+  margin-left: 5px;
+}
+
