@@ -37,7 +37,7 @@ const Sidebar = ({ setSection }) => {
 
   const handleEducationNavigation = () => {
     setSection('education');
-    navigate('/education');
+    navigate('/modules');
   };
   
 
