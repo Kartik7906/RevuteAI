@@ -3,16 +3,14 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
-
 .homepage-main-container {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-
 .homepage-main-content {
   width: 100%;
   min-height: 100vh;
@@ -20,13 +18,26 @@
   justify-content: center;
   align-items: center;
   padding: 5%;
-  /* background: linear-gradient(135deg, #141e30, #243b55); */
-  background: linear-gradient(135deg, #1B48DA 10%, #527BF2 90%);
+  background: linear-gradient(135deg, #141e30, #243b55);
+  background: radial-gradient(
+      circle at bottom left,
+      rgba(255, 223, 0, 0.4) 10%,
+      transparent 30%
+    ),
+    linear-gradient(10deg, #141e30, #243b55);
+  background-color: grey;
   position: relative;
-  flex-direction: column;
   text-align: center;
 }
-
+.AvatarImage {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 0;
+  height: 550px;
+}
 .homepage-overlayer-text {
   color: #ffffff;
   max-width: 1200px;
@@ -36,26 +47,35 @@
   flex-direction: column;
   gap: 30px;
 }
-
-.animated-text{
-  color: black;
+.animated-text {
+  color: white;
 }
-
+.HomePage-RightSidivImageSection {
+  width: 50%;
+}
+.HomePage-LeftSidediv {
+  width: 50%;
+}
+.homepage-overlayer-text-left {
+  text-align: left;
+}
 .homepage-overlayer-text-left h2 {
-  font-size: 3.7rem; 
+  font-size: 3rem;
   font-weight: 800;
-  color: #ffffff;
+  color: rgb(247, 247, 76);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
-
 .homepage-overlayer-text-right p {
   font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 30px;
   color: white;
   margin-top: 30px;
+  text-align: left;
 }
-
+.homepage-overlayer-text-right {
+  text-align: left;
+}
 .homepage-overlayer-text-right button {
   padding: 12px 24px;
   background-color: #fff;
@@ -67,13 +87,9 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
 }
-
 .homepage-overlayer-text button:hover {
-  /* background-color: #1B48DA; */
   transform: translateY(-1px);
 }
-
-/* Roleplay Section */
 .homepage-roleplay-section {
   display: flex;
   align-items: center;
@@ -83,7 +99,6 @@
   min-height: 100vh;
   background-color: #f9f9f9;
 }
-
 .homepage-roleplay-image {
   flex: 1;
   display: flex;
@@ -91,7 +106,6 @@
   align-items: center;
   overflow: hidden;
 }
-
 .homepage-roleplay-image img {
   width: 100%;
   max-width: 700px;
@@ -99,29 +113,24 @@
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
-
 .homepage-roleplay-image img:hover {
   transform: scale(1.05);
 }
-
 .homepage-roleplay-text {
   flex: 1;
 }
-
 .homepage-roleplay-text h2 {
   font-size: 2rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 1rem;
 }
-
 .homepage-roleplay-text p {
   color: #666;
   margin-top: 0.75rem;
   font-size: 1rem;
   line-height: 1.6;
 }
-
 .homepage-learn-more-btn {
   background-color: #1B48DA;
   color: white;
@@ -133,20 +142,16 @@
   font-size: 1rem;
   transition: background-color 0.3s, transform 0.3s;
 }
-
 .homepage-learn-more-btn:hover {
   background-color: #692fd8;
   transform: translateY(-2px);
 }
-
-/* Choose Us Section */
 .homepage-choose-us-container {
-  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Updated Gradient */
+  background: linear-gradient(135deg, #141e30, #243b55);
   width: 100%;
   color: #ffffff;
   padding: 140px 20px;
 }
-
 .homepage-choose-us-reason {
   max-width: 1200px;
   width: 100%;
@@ -155,7 +160,6 @@
   flex-direction: column;
   align-items: center;
 }
-
 .homepage-choose-us-reason h2 {
   font-size: 2.5rem;
   margin-bottom: 40px;
@@ -163,15 +167,14 @@
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
-
 .homepage-reasons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
   width: 100%;
 }
-
 .homepage-reason {
+  position: relative;
   background-color: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 10px;
@@ -179,20 +182,42 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 .homepage-reason:hover {
-  transform: translateY(-10px);
+  transform: perspective(1000px) translateY(-10px) rotateX(5deg) rotateY(5deg);
   background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
-
+.homepage-reason::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.2) 100%);
+  transform: skewX(-25deg);
+  transition: left 0.75s ease;
+  z-index: 0;
+}
+.homepage-reason:hover::before {
+  left: 100%;
+}
+.homepage-reason .homepage-icon,
+.homepage-reason h3,
+.homepage-reason p,
+.homepage-horizontal {
+  position: relative;
+  z-index: 1;
+}
 .homepage-reason h3 {
   font-size: 1.75rem;
   margin: 20px 0 10px 0;
   color: #ffffff;
 }
-
 .homepage-reason p {
   font-size: 1rem;
   line-height: 1.6;
@@ -200,7 +225,6 @@
   max-width: 300px;
   margin: 0 auto;
 }
-
 .homepage-horizontal {
   display: block;
   width: 50px;
@@ -209,56 +233,68 @@
   border-radius: 2px;
   margin: 15px 0;
 }
-
 .homepage-reason .homepage-icon {
   font-size: 3.5rem;
   color: #43d787;
   margin-bottom: 15px;
   transition: transform 0.3s ease;
 }
-
 .homepage-reason .homepage-icon:hover {
   transform: scale(1.1);
 }
-
-/* Learning Path Section */
 .homepage-learningPath {
   padding: 60px 20px;
-  perspective: 1000px; 
+  perspective: 1000px;
   margin-bottom: 50px;
 }
-
 .homepage-learningPath-container {
-  max-width: 1200px;
+  width: 50%;
   margin: 0 auto;
+  height: 100vh;
+  overflow: auto;
+  scrollbar-width: none;
 }
-
+.homepage-learningPath-container::-webkit-scrollbar {
+  display: none;
+}
+.HomePage-learningPath-ContainerWithAvatar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+}
+.HomePage-avatar2 {
+  width: 50%;
+  height: 100vh;
+  border-radius: 30px;
+}
+.HomePage-avatar2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .homepage-learningPath-title {
   text-align: center;
   margin-bottom: 40px;
 }
-
 .homepage-learningPath-title h2 {
-  font-size: 2.5rem; /* Increased font size */
+  font-size: 2.5rem;
   margin-bottom: 10px;
-  color: #333; /* Dark text */
+  color: #333;
 }
-
 .homepage-learningPath-title p {
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
-  color: #666; /* Darker text for readability */
+  color: #666;
 }
-
 .homepage-learningPath-cards {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
 }
-
 .homepage-learningPath-card {
   border-radius: 8px;
   padding: 20px;
@@ -268,17 +304,14 @@
   flex-direction: column;
   max-width: 350px;
   text-align: center;
-  background-color: #ffffff; 
+  background-color: #ffffff;
   transition: transform 0.6s ease, box-shadow 0.3s ease;
   transform-style: preserve-3d;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
-
 .homepage-learningPath-card:hover {
-  transform: translateY(-15px) scale(1.05);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
-
 .homepage-circular-image-div {
   width: 200px;
   height: 200px;
@@ -288,39 +321,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; 
+  background-color: #f0f0f0;
 }
-
 .homepage-circular-image-div img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
 .homepage-learningPath-card h3 {
   margin-bottom: 0.8rem;
   font-size: 1.25rem;
-  color: #333; 
+  color: #333;
 }
-
 .homepage-learningPath-card p {
   font-size: 1rem;
   line-height: 1.5;
-  color: #666; 
+  color: #666;
 }
-/* Footer Section */
 .homepage-footer-homePage {
   background: linear-gradient(135deg, #141e30, #243b55);
   color: #ffffff;
   padding: 40px 40px;
 }
-
 .homepage-footer-wrapper {
   color: #ffffff;
   padding: 40px 40px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 .homepage-footer-top {
   display: flex;
   flex-wrap: wrap;
@@ -328,55 +355,45 @@
   margin-bottom: 50px;
   margin-top: 50px;
 }
-
 .homepage-footer-column {
   flex: 1;
   min-width: 150px;
 }
-
 .homepage-footer-column h3 {
   margin-bottom: 10px;
   font-size: 1.2rem;
   font-weight: 700;
 }
-
 .homepage-footer-column ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
-
 .homepage-footer-column ul li {
   margin-bottom: 8px;
   cursor: pointer;
   transition: color 0.3s;
 }
-
 .homepage-footer-column ul li:hover {
   text-decoration: underline;
   color: #7bdcb5;
 }
-
 .contact-form-section {
   flex: 1;
   min-width: 250px;
 }
-
 .contact-form-section h3 {
   margin-bottom: 15px;
   font-size: 1.2rem;
   font-weight: 700;
 }
-
 .contact-form {
   display: flex;
   flex-direction: column;
 }
-
 .form-group {
   margin-bottom: 15px;
 }
-
 .input-label {
   display: block;
   margin-bottom: 5px;
@@ -384,7 +401,6 @@
   font-size: 0.95rem;
   color: white;
 }
-
 .contact-form input,
 .contact-form textarea {
   width: 100%;
@@ -395,14 +411,12 @@
   font-size: 0.95rem;
   transition: background-color 0.3s, border 0.3s;
 }
-
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
   background-color: #ffffff;
   border: 1px solid #7bdcb5;
 }
-
 .homepage-submit-btn {
   padding: 12px 20px;
   background-color: #7bdcb5;
@@ -414,12 +428,10 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
-
 .homepage-submit-btn:hover {
   background-color: #6acaa0;
   transform: translateY(-2px);
 }
-
 .homepage-footer-bottom {
   display: flex;
   align-items: center;
@@ -427,310 +439,202 @@
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 15px;
 }
-
 .homepage-footer-company,
 .homepage-footer-links {
   margin: 0;
   font-size: 0.9rem;
 }
-
 .homepage-footer-social {
   display: flex;
   align-items: center;
 }
-
 .homepage-footer-social i {
   margin-left: 15px;
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.3s;
 }
-
 .homepage-footer-social i:first-child {
   margin-left: 0;
 }
-
 .homepage-footer-social i:hover {
   color: #7bdcb5;
 }
-
-@media (max-width: 768px) {
-  .homepage-footer-top {
-    flex-direction: column;
-  }
-
-  .homepage-footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .homepage-footer-social {
-    margin-top: 10px;
-  }
-}
-
-/* Media Queries for Mobile Responsiveness */
-
-/* Tablet Devices */
-@media (max-width: 1024px) {
-  .homepage-main-content {
-    padding: 8%;
-  }
-
-  .homepage-overlayer-text-left h2.main-heading {
-    font-size: 2.3rem; /* Slight reduction for tablet */
-  }
-
-  .homepage-overlayer-text p {
-    font-size: 1.1rem;
-  }
-
-  .homepage-choose-us-reason h2 {
-    font-size: 2.25rem;
-    margin-bottom: 30px;
-  }
-
-  .homepage-reason h3 {
-    font-size: 1.5rem;
-  }
-
-  .homepage-reason .homepage-icon {
-    font-size: 3rem;
-  }
-
-  .homepage-learningPath-title h2 {
-    font-size: 2.5rem; /* Increased for consistency */
-  }
-
-  .homepage-learningPath-title p {
-    font-size: 1rem;
-  }
-
-  .homepage-learningPath-cards {
-    gap: 1.5rem;
-  }
-
-  .homepage-learningPath-card {
-    max-width: 100%;
-  }
-
-  .homepage-circular-image-div {
-    width: 150px;
-    height: 150px;
-  }
-
-  .homepage-learningPath-card h3 {
-    font-size: 1.1rem;
-  }
-
-  .homepage-learningPath-card p {
-    font-size: 0.95rem;
-  }
-}
-
-/* Mobile Devices */
 @media (max-width: 768px) {
   .homepage-main-content {
+    flex-direction: column;
     padding: 10%;
   }
-
-  .homepage-overlayer-text-left h2.main-heading {
-    font-size: 2.3rem; /* Further adjustments if needed */
+  .AvatarImage {
+    position: relative;
+    margin: 0 auto 20px;
+    left: auto;
+    transform: none;
+    height: 300px;
   }
-
-  .homepage-overlayer-text p {
+  .HomePage-RightSidivImageSection,
+  .HomePage-LeftSidediv {
+    width: 100%;
+  }
+  .homepage-overlayer-text-left,
+  .homepage-overlayer-text-right {
+    text-align: center;
+  }
+  .homepage-overlayer-text-left h2 {
+    font-size: 2.3rem;
+  }
+  .homepage-overlayer-text-right p {
     font-size: 1rem;
   }
-
   .homepage-overlayer-text button {
     font-size: 1rem;
     padding: 10px 20px;
   }
-
   .homepage-roleplay-section {
     flex-direction: column;
     padding: 2rem;
   }
-
-  .homepage-roleplay-image {
-    width: 100%;
-  }
-
+  .homepage-roleplay-image,
   .homepage-roleplay-text {
     width: 100%;
   }
-
   .homepage-roleplay-text h2 {
     font-size: 1.75rem;
   }
-
   .homepage-roleplay-text p {
     font-size: 0.95rem;
   }
-
   .homepage-learn-more-btn {
     padding: 0.6rem 1.2rem;
     font-size: 0.95rem;
   }
-
   .homepage-choose-us-container {
     padding: 100px 15px;
   }
-
   .homepage-reasons {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
   }
-
   .homepage-reason {
     padding: 15px;
   }
-
   .homepage-reason h3 {
     font-size: 1.25rem;
     margin: 15px 0 8px 0;
   }
-
-  .homepage-reason p {
-    max-width: 100%;
-  }
-
   .homepage-horizontal {
     width: 40px;
     height: 3px;
     margin: 10px 0;
   }
-
   .homepage-learningPath {
     padding: 50px 15px;
   }
-
   .homepage-learningPath-title h2 {
-    font-size: 2.5rem; /* Consistent with desktop */
+    font-size: 2.5rem;
   }
-
   .homepage-learningPath-title p {
     font-size: 1rem;
   }
-
   .homepage-learningPath-cards {
     gap: 1.5rem;
   }
-
   .homepage-learningPath-card {
     padding: 15px;
   }
-
   .homepage-circular-image-div {
     width: 120px;
     height: 120px;
   }
-
   .homepage-learningPath-card h3 {
     font-size: 1rem;
   }
-
   .homepage-learningPath-card p {
     font-size: 0.85rem;
   }
 }
-
-/* Mobile Devices (Extra Small) */
 @media (max-width: 480px) {
   .homepage-main-content {
     padding: 12%;
   }
-
   .homepage-overlayer-text-left h2 {
     text-align: left;
     font-size: 2.2rem;
   }
-
   .homepage-overlayer-text p {
     font-size: 0.9rem;
   }
-
   .homepage-overlayer-text button {
     font-size: 0.9rem;
     padding: 8px 16px;
   }
-
   .homepage-roleplay-section {
     padding: 1.5rem;
   }
-
   .homepage-roleplay-image img {
     max-width: 100%;
   }
-
   .homepage-roleplay-text h2 {
     font-size: 1.5rem;
   }
-
   .homepage-roleplay-text p {
     font-size: 0.85rem;
   }
-
   .homepage-learn-more-btn {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
   }
-
   .homepage-choose-us-container {
-    padding: 80px 15px;
+    padding: 60px 15px;
   }
-
   .homepage-reasons {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-
   .homepage-reason {
     padding: 10px;
   }
-
   .homepage-reason h3 {
     font-size: 1rem;
     margin: 10px 0 5px 0;
   }
-
   .homepage-horizontal {
     width: 30px;
     height: 2px;
     margin: 8px 0;
   }
-
   .homepage-learningPath {
     padding: 40px 15px;
   }
-
   .homepage-learningPath-title h2 {
     font-size: 1.75rem;
   }
-
   .homepage-learningPath-title p {
     font-size: 0.95rem;
   }
-
+  .HomePage-learningPath-ContainerWithAvatar {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .HomePage-avatar2 {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    margin-bottom: 20px;
+  }
+  .HomePage-avatar2 img {
+    height: auto;
+  }
+  .homepage-learningPath-container {
+    width: 100%;
+  }
   .homepage-learningPath-cards {
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 1rem;
+    padding: 0 10px;
   }
-
   .homepage-learningPath-card {
-    padding: 10px;
-  }
-
-  .homepage-circular-image-div {
-    width: 100px;
-    height: 100px;
-  }
-
-  .homepage-learningPath-card h3 {
-    font-size: 0.9rem;
-  }
-
-  .homepage-learningPath-card p {
-    font-size: 0.8rem;
+    flex: 0 0 auto;
   }
 }

@@ -19,7 +19,7 @@ const LandingPage = () => {
       case "announcements":
         return <Announcement />;
       case `education`:
-        return <Education />;
+        return <Module />;
       case "task1":
         return <Task1 />;
       case "task2":
