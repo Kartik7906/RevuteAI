@@ -27,7 +27,8 @@ app.use(
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
-app.use(express.static(path.join(__dirname)));
+// 1. Serve static files from the React build folder
+app.use(express.static(path.join(__dirname, 'Client/dist')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,8 +36,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", require("./Routes/UserRoute"));
 app.use("/api/report", require("./Routes/ReportRoute"));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+// 3. Catch-all route to send back the React index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Client/dist', 'index.html'));
 });
 
 
