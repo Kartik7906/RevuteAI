@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Navbar_Landingpage from "../Navbar_landingPage/Navbar_Landingpage";
-import feedbackimg from "../../images/feedback.jpg";
-import practiceing from "../../images/Practice.jpg";
-import workplaceimg from "../../images/workplace.jpg";
+import feedbackimg from "../../images/feedback.jpeg";
+import practiceing from "../../images/practice.jpeg";
+import workplaceimg from "../../images/workplace.jpeg";
 import videoclip from "../../images/videoClip.gif";
 import "./HomePage.css";
 import { FaLightbulb, FaBookOpen } from "react-icons/fa";
@@ -10,8 +10,8 @@ import { RiRobot3Fill } from "react-icons/ri";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
-import Avatar from "../../images/HomePageimg.png";
-import Avatar2 from "../../images/Avatar2.svg";
+import Avatar from "../../images/avatar.svg";
+import Avatar2 from "../../images/avatar2.svg";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -51,9 +51,9 @@ const HomePage = () => {
   };
 
   const texts = [
+    "Lead Conversion Strategies",
     "Product Knowledge",
     "Soft Skills",
-    "Lead Conversion Strategies",
   ];
   const [index, setIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -111,10 +111,9 @@ const HomePage = () => {
   return (
     <div className="homepage-main-container">
       <Navbar_Landingpage />
+
+      {/* Hero Section */}
       <div className="homepage-main-content">
-        <div className="HomePage-RightSidivImageSection">
-          <img src={Avatar} alt="" className="AvatarImage" />
-        </div>
         <div className="HomePage-LeftSidediv">
           <div className="homepage-overlayer-text-left">
             <h2>
@@ -128,8 +127,11 @@ const HomePage = () => {
               Boost your lead conversion rate with AI-powered training and
               achieve 3x higher close rates.
             </p>
-            <button onClick={handleCoursesNavigation}>Book a Demo</button>
+            <button onClick={handleCoursesNavigation} className="BookDemo-containerbtn">Book a Demo</button>
           </div>
+        </div>
+        <div className="HomePage-RightSidivImageSection">
+          <img src={Avatar} alt="" className="AvatarImage" />
         </div>
       </div>
       <div className="homepage-roleplay-section">

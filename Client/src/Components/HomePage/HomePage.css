@@ -5,12 +5,14 @@
   font-family: "Roboto", sans-serif;
   overflow-x: hidden;
 }
+
 .homepage-main-container {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
+
 .homepage-main-content {
   width: 100%;
   min-height: 100vh;
@@ -19,25 +21,22 @@
   align-items: center;
   padding: 5%;
   background: linear-gradient(135deg, #141e30, #243b55);
-  background: radial-gradient(
-      circle at bottom left,
-      rgba(255, 223, 0, 0.4) 10%,
-      transparent 30%
-    ),
-    linear-gradient(10deg, #141e30, #243b55);
   background-color: grey;
   position: relative;
   text-align: center;
 }
+
 .AvatarImage {
   position: absolute;
   bottom: 0;
-  left: 20%;
+  left: 75%;
   transform: translateX(-50%);
   margin: 0;
   padding: 0;
   height: 550px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 3));
 }
+
 .homepage-overlayer-text {
   color: #ffffff;
   max-width: 1200px;
@@ -47,35 +46,44 @@
   flex-direction: column;
   gap: 30px;
 }
+
 .animated-text {
   color: white;
 }
+
 .HomePage-RightSidivImageSection {
   width: 50%;
 }
+
 .HomePage-LeftSidediv {
   width: 50%;
 }
+
 .homepage-overlayer-text-left {
   text-align: left;
+  height: 200px;
+  margin-bottom: 0;
 }
+
 .homepage-overlayer-text-left h2 {
   font-size: 3rem;
   font-weight: 800;
   color: rgb(247, 247, 76);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
+
 .homepage-overlayer-text-right p {
   font-size: 1.2rem;
   line-height: 1.6;
-  margin-bottom: 30px;
   color: white;
-  margin-top: 30px;
+  margin-top: 10px;
   text-align: left;
 }
+
 .homepage-overlayer-text-right {
   text-align: left;
 }
+
 .homepage-overlayer-text-right button {
   padding: 12px 24px;
   background-color: #fff;
@@ -87,9 +95,15 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
 }
+
 .homepage-overlayer-text button:hover {
   transform: translateY(-1px);
 }
+
+.BookDemo-containerbtn {
+  cursor: pointer;
+}
+
 .homepage-roleplay-section {
   display: flex;
   align-items: center;
@@ -99,6 +113,7 @@
   min-height: 100vh;
   background-color: #f9f9f9;
 }
+
 .homepage-roleplay-image {
   flex: 1;
   display: flex;
@@ -106,6 +121,7 @@
   align-items: center;
   overflow: hidden;
 }
+
 .homepage-roleplay-image img {
   width: 100%;
   max-width: 700px;
@@ -113,26 +129,31 @@
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
+
 .homepage-roleplay-image img:hover {
   transform: scale(1.05);
 }
+
 .homepage-roleplay-text {
   flex: 1;
 }
+
 .homepage-roleplay-text h2 {
   font-size: 2rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 1rem;
 }
+
 .homepage-roleplay-text p {
   color: #666;
   margin-top: 0.75rem;
   font-size: 1rem;
   line-height: 1.6;
 }
+
 .homepage-learn-more-btn {
-  background-color: #1B48DA;
+  background-color: #1b48da;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -142,16 +163,19 @@
   font-size: 1rem;
   transition: background-color 0.3s, transform 0.3s;
 }
+
 .homepage-learn-more-btn:hover {
   background-color: #692fd8;
   transform: translateY(-2px);
 }
+
 .homepage-choose-us-container {
   background: linear-gradient(135deg, #141e30, #243b55);
   width: 100%;
   color: #ffffff;
   padding: 140px 20px;
 }
+
 .homepage-choose-us-reason {
   max-width: 1200px;
   width: 100%;
@@ -160,6 +184,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .homepage-choose-us-reason h2 {
   font-size: 2.5rem;
   margin-bottom: 40px;
@@ -167,12 +192,14 @@
   text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
+
 .homepage-reasons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
   width: 100%;
 }
+
 .homepage-reason {
   position: relative;
   background-color: rgba(255, 255, 255, 0.1);
@@ -186,11 +213,13 @@
   transform-style: preserve-3d;
   transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 .homepage-reason:hover {
   transform: perspective(1000px) translateY(-10px) rotateX(5deg) rotateY(5deg);
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
+
 .homepage-reason::before {
   content: "";
   position: absolute;
@@ -203,9 +232,11 @@
   transition: left 0.75s ease;
   z-index: 0;
 }
+
 .homepage-reason:hover::before {
   left: 100%;
 }
+
 .homepage-reason .homepage-icon,
 .homepage-reason h3,
 .homepage-reason p,
@@ -213,11 +244,13 @@
   position: relative;
   z-index: 1;
 }
+
 .homepage-reason h3 {
   font-size: 1.75rem;
-  margin: 20px 0 10px 0;
+  margin: 20px 0 10px;
   color: #ffffff;
 }
+
 .homepage-reason p {
   font-size: 1rem;
   line-height: 1.6;
@@ -225,6 +258,7 @@
   max-width: 300px;
   margin: 0 auto;
 }
+
 .homepage-horizontal {
   display: block;
   width: 50px;
@@ -233,55 +267,60 @@
   border-radius: 2px;
   margin: 15px 0;
 }
+
 .homepage-reason .homepage-icon {
   font-size: 3.5rem;
   color: #43d787;
   margin-bottom: 15px;
   transition: transform 0.3s ease;
 }
+
 .homepage-reason .homepage-icon:hover {
   transform: scale(1.1);
 }
+
 .homepage-learningPath {
-  padding: 60px 20px;
+  padding: 0 20px;
   perspective: 1000px;
-  margin-bottom: 50px;
 }
+
 .homepage-learningPath-container {
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
-  height: 100vh;
-  overflow: auto;
-  scrollbar-width: none;
 }
-.homepage-learningPath-container::-webkit-scrollbar {
-  display: none;
-}
+
 .HomePage-learningPath-ContainerWithAvatar {
   display: flex;
   justify-content: flex-end;
+  gap: 20px;
   margin: 0;
   padding: 0;
 }
+
 .HomePage-avatar2 {
   width: 50%;
   height: 100vh;
-  border-radius: 30px;
+  border: none;
 }
+
 .HomePage-avatar2 img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border: none;
 }
+
 .homepage-learningPath-title {
   text-align: center;
-  margin-bottom: 40px;
+  margin: 40px 0;
 }
+
 .homepage-learningPath-title h2 {
   font-size: 2.5rem;
   margin-bottom: 10px;
   color: #333;
 }
+
 .homepage-learningPath-title p {
   font-size: 1.1rem;
   max-width: 600px;
@@ -289,32 +328,59 @@
   line-height: 1.6;
   color: #666;
 }
+
 .homepage-learningPath-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  align-items: center;
   justify-content: center;
+  gap: 1rem;
+  padding: 10px;
 }
+
 .homepage-learningPath-card {
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 30px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-width: 350px;
+  max-width: 300px;
   text-align: center;
-  background-color: #ffffff;
-  transition: transform 0.6s ease, box-shadow 0.3s ease;
-  transform-style: preserve-3d;
+  background-color: lightblue;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
+
+.homepage-learningPath-card:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.homepage-learningPath-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.homepage-learningPath-card:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .homepage-learningPath-card:hover {
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
+
 .homepage-circular-image-div {
-  width: 200px;
-  height: 200px;
+  width: 140px;
+  height: 140px;
   margin-bottom: 1rem;
   border-radius: 50%;
   overflow: hidden;
@@ -322,32 +388,45 @@
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
+  box-shadow: 0 10px 20px rgba(67, 226, 226, 0.8);
+  border-radius: 1px solid rgba(67, 226, 226, 0.8);
+
 }
+
 .homepage-circular-image-div img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .homepage-learningPath-card h3 {
-  margin-bottom: 0.8rem;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   color: #333;
 }
+
 .homepage-learningPath-card p {
-  font-size: 1rem;
+  font-size: 0.8rem;
   line-height: 1.5;
   color: #666;
 }
+
+.Avatar2-container {
+  filter: drop-shadow(0 4px 8px rgba(150, 153, 153, 0.9));
+  border: none;
+}
+
 .homepage-footer-homePage {
   background: linear-gradient(135deg, #141e30, #243b55);
   color: #ffffff;
   padding: 40px 40px;
 }
+
 .homepage-footer-wrapper {
   color: #ffffff;
-  padding: 40px 40px;
+  padding: 40px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .homepage-footer-top {
   display: flex;
   flex-wrap: wrap;
@@ -355,45 +434,55 @@
   margin-bottom: 50px;
   margin-top: 50px;
 }
+
 .homepage-footer-column {
   flex: 1;
   min-width: 150px;
 }
+
 .homepage-footer-column h3 {
   margin-bottom: 10px;
   font-size: 1.2rem;
   font-weight: 700;
 }
+
 .homepage-footer-column ul {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
+
 .homepage-footer-column ul li {
   margin-bottom: 8px;
   cursor: pointer;
   transition: color 0.3s;
 }
+
 .homepage-footer-column ul li:hover {
   text-decoration: underline;
   color: #7bdcb5;
 }
+
 .contact-form-section {
   flex: 1;
   min-width: 250px;
 }
+
 .contact-form-section h3 {
   margin-bottom: 15px;
   font-size: 1.2rem;
   font-weight: 700;
 }
+
 .contact-form {
   display: flex;
   flex-direction: column;
 }
+
 .form-group {
   margin-bottom: 15px;
 }
+
 .input-label {
   display: block;
   margin-bottom: 5px;
@@ -401,6 +490,7 @@
   font-size: 0.95rem;
   color: white;
 }
+
 .contact-form input,
 .contact-form textarea {
   width: 100%;
@@ -411,12 +501,14 @@
   font-size: 0.95rem;
   transition: background-color 0.3s, border 0.3s;
 }
+
 .contact-form input:focus,
 .contact-form textarea:focus {
   outline: none;
   background-color: #ffffff;
   border: 1px solid #7bdcb5;
 }
+
 .homepage-submit-btn {
   padding: 12px 20px;
   background-color: #7bdcb5;
@@ -428,60 +520,106 @@
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
+
 .homepage-submit-btn:hover {
   background-color: #6acaa0;
   transform: translateY(-2px);
 }
+
 .homepage-footer-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 15px;
+  
 }
+
 .homepage-footer-company,
 .homepage-footer-links {
   margin: 0;
   font-size: 0.9rem;
 }
+
 .homepage-footer-social {
   display: flex;
   align-items: center;
 }
+
 .homepage-footer-social i {
   margin-left: 15px;
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.3s;
 }
+
 .homepage-footer-social i:first-child {
   margin-left: 0;
 }
+
 .homepage-footer-social i:hover {
   color: #7bdcb5;
 }
+
+
+@media (max-width: 1024px) {
+  .homepage-main-content {
+    padding: 7%;
+  }
+
+  .homepage-overlayer-text-left h2 {
+    font-size: 2.5rem;
+  }
+
+  .homepage-roleplay-section {
+    flex-direction: column;
+    padding: 4rem;
+  }
+
+  .homepage-reasons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .HomePage-learningPath-ContainerWithAvatar {
+    flex-direction: column;
+  }
+
+  .HomePage-avatar2 {
+    width: 100%;
+    height: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .homepage-main-content {
     flex-direction: column;
-    padding: 10%;
+    padding: 10% 5%;
+    min-height: auto;
   }
   .AvatarImage {
-    position: relative;
-    margin: 0 auto 20px;
-    left: auto;
-    transform: none;
+    position: absolute;
+    /* margin-top: 50px; */
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
     height: 300px;
   }
   .HomePage-RightSidivImageSection,
   .HomePage-LeftSidediv {
     width: 100%;
   }
+
+  .HomePage-LeftSidediv{
+    padding-bottom: 100%;
+  }
   .homepage-overlayer-text-left,
   .homepage-overlayer-text-right {
     text-align: center;
+    margin-top: 30%;
+    height: auto;
   }
   .homepage-overlayer-text-left h2 {
-    font-size: 2.3rem;
+    font-size: 1.5rem;
   }
   .homepage-overlayer-text-right p {
     font-size: 1rem;
@@ -520,7 +658,7 @@
   }
   .homepage-reason h3 {
     font-size: 1.25rem;
-    margin: 15px 0 8px 0;
+    margin: 15px 0 8px;
   }
   .homepage-horizontal {
     width: 40px;
@@ -536,23 +674,21 @@
   .homepage-learningPath-title p {
     font-size: 1rem;
   }
-  .homepage-learningPath-cards {
-    gap: 1.5rem;
+  .HomePage-learningPath-ContainerWithAvatar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
   }
-  .homepage-learningPath-card {
-    padding: 15px;
-  }
-  .homepage-circular-image-div {
-    width: 120px;
-    height: 120px;
-  }
-  .homepage-learningPath-card h3 {
-    font-size: 1rem;
-  }
-  .homepage-learningPath-card p {
-    font-size: 0.85rem;
+
+  .homepage-footer-homePage{
+    display: flex;
+    padding: 40px;
+    width: 100%;
+    height: 100%;
   }
 }
+
 @media (max-width: 480px) {
   .homepage-main-content {
     padding: 12%;
@@ -596,7 +732,7 @@
   }
   .homepage-reason h3 {
     font-size: 1rem;
-    margin: 10px 0 5px 0;
+    margin: 10px 0 5px;
   }
   .homepage-horizontal {
     width: 30px;
@@ -605,6 +741,7 @@
   }
   .homepage-learningPath {
     padding: 40px 15px;
+    padding-bottom: 0;
   }
   .homepage-learningPath-title h2 {
     font-size: 1.75rem;
@@ -613,14 +750,14 @@
     font-size: 0.95rem;
   }
   .HomePage-learningPath-ContainerWithAvatar {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
   }
   .HomePage-avatar2 {
     width: 100%;
-    height: auto;
+    height: 100%;
     border-radius: 0;
-    margin-bottom: 20px;
+    margin-top: 20px;
   }
   .HomePage-avatar2 img {
     height: auto;
@@ -629,12 +766,51 @@
     width: 100%;
   }
   .homepage-learningPath-cards {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 1rem;
-    padding: 0 10px;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 1.5rem;
+    padding: 0;
   }
   .homepage-learningPath-card {
-    flex: 0 0 auto;
+    flex: initial;
+  }
+  .homepage-footer-homePage{
+    display: flex;
+    padding: 40px;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .homepage-footer-top {
+    flex-direction: column;
+  }
+
+  .homepage-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .homepage-footer-social {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 895px) {
+  .homepage-footer-top {
+    flex-direction: column;
+  }
+
+  .homepage-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .homepage-footer-social {
+    margin-top: 10px;
   }
 }

@@ -11,6 +11,9 @@ import "./LearnMore.css";
 import simulationImage from "../../images/simulationimage.webp";
 import personalizationImage from "../../images/personalization.jpg";
 import insightsImage from "../../images/insights.avif";
+import workplace from "../../images/workplace.jpeg";
+import multilingula from "../../images/practice.jpeg"
+import feedback from "../../images/feedback.jpeg"
 import { useEffect } from "react";
 
 const LearnMore = () => {
@@ -128,7 +131,7 @@ const LearnMore = () => {
                 </p>
               </div>
               <div className="aboutlearnmore-image">
-                <img src={insightsImage} alt="Customize with Roleplay Studio" />
+                <img src={workplace} alt="Customize with Roleplay Studio" />
               </div>
             </div>
 
@@ -136,7 +139,7 @@ const LearnMore = () => {
             <div className="aboutlearnmore-div2">
               <div className="aboutlearnmore-image">
                 <img
-                  src={personalizationImage}
+                  src={multilingula}
                   alt="Practice in different languages"
                 />
               </div>
@@ -153,7 +156,7 @@ const LearnMore = () => {
             {/*  */}
             <div className="aboutlearnmore-div1">
               <div className="aboutlearnmore-image">
-                <img src={simulationImage} alt="AI-powered feedback" />
+                <img src={feedback} alt="AI-powered feedback" />
               </div>
               <div className="aboutlearnmore-text">
                 <h2>AI-powered feedback</h2>
