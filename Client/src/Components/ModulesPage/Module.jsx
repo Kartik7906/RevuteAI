@@ -289,7 +289,7 @@ const Module = () => {
                     modules successfully.
                   </h2>
                   <p>Ready to interact with BotAI and take your next step?</p>
-                  <button onClick={() => navigate("/task1")}>Next Step</button>
+                  <button>Next Step</button>
                 </div>
               )}
             </div>

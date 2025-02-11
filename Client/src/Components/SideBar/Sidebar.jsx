@@ -12,10 +12,10 @@ import { LuBot } from "react-icons/lu";
 const Sidebar = ({ setSection }) => {
   const navigate = useNavigate();
 
-  const handleIntroNavigation = () => {
-    setSection('task1');
-    navigate('/task1');
-  };
+  // const handleIntroNavigation = () => {
+  //   setSection('task1');
+  //   navigate('/task1');
+  // };
 
   const isMobile = window.innerWidth <= 992;
   const handleNavigationformobile = (section, route) => {
@@ -40,6 +40,8 @@ const Sidebar = ({ setSection }) => {
     navigate('/modules');
   };
   
+  // onClick={handleIntroNavigation}
+  // onClick={() => setSection('task2')}
 
   return (
     <nav className="sidebar">
@@ -47,8 +49,8 @@ const Sidebar = ({ setSection }) => {
         <li onClick={() => handleNavigationformobile('dashboard', '/dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
         <li onClick={() => handleNavigationformobile('announcements', '/announcement')}><GrAnnounce size={20}/> Announcements</li>
         <li onClick={handleEducationNavigation}><MdCastForEducation size={20}/> Education</li>
-        <li onClick={handleIntroNavigation}><TbVocabulary size={20}/> Self Intro Pitch</li>
-        <li onClick={() => setSection('task2')}><LuBot size={20}/> Bot Mock Pitch</li>
+        <li ><TbVocabulary size={20}/> Self Intro Pitch</li>
+        <li ><LuBot size={20}/> Bot Mock Pitch</li>
         <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
       </ul>
     </nav>
