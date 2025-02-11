@@ -25,6 +25,4 @@ Thumbs.db
 # Coverage directory
 coverage/
 
-# Build directories
-dist/
-build/
+
