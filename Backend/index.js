@@ -36,7 +36,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", require("./Routes/UserRoute"));
 app.use("/api/report", require("./Routes/ReportRoute"));
 
-// 3. Catch-all route to send back the React index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'Client/dist', 'index.html'));
 });
