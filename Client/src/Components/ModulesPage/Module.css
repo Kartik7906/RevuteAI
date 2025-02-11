@@ -1,10 +1,10 @@
 .ModulePage-MainContainer {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f4f4f4;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #f8f9fa;
 }
 
 .ModulePage-elements {
@@ -17,7 +17,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ffffff;
+  background-color: #ffffff;
   height: 60px;
   padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -34,22 +34,26 @@
 
 .Logout-btn-design {
   background-color: #0056b3;
-  color: #fff;
+  color: #ffffff;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
   margin-right: 20px;
   border-radius: 4px;
   font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.Logout-btn-design:hover {
+  background-color: #004a9e;
 }
 
 .ModulePageNavbar-circulardiv {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #ccc;
-  cursor: pointer;
   background-color: #0056b3;
+  cursor: pointer;
 }
 
 .ModulePage-middleSection {
@@ -59,9 +63,9 @@
 
 .Modulepage-sidebar {
   width: 280px;
-  background: #f4f4f4;
+  background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
-  padding: 20px;
+  padding: 10px;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -71,22 +75,37 @@
   display: none;
 }
 
-.BackToDashbord-btn{
-  color: gray;
+.ModulesSection {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.BackToDashbord-btn {
+  color: #555;
   font-weight: 500;
   display: flex;
   align-items: center;
-  
+  cursor: pointer;
+  margin-bottom: 8px;
 }
 
-.Course-title{
-  color: black;
-  font-weight: 500;
+.BackToDashbord-btn:hover {
+  text-decoration: underline;
 }
 
-.percentageCompletedSection{
-  color: black;
+.Course-title {
+  color: #333;
   font-weight: 500;
+  margin: 8px 0;
+}
+
+.percentageCompletedSection {
+  color: #333;
+  font-weight: 500;
+  margin-top: 5px;
 }
 
 .ModuleTracker-colorbar {
@@ -94,7 +113,7 @@
   height: 10px;
   background-color: #e0e0e0;
   border-radius: 5px;
-  margin-bottom: 5px;
+  margin: 10px 0 5px 0;
   overflow: hidden;
 }
 
@@ -105,42 +124,32 @@
   transition: width 0.5s ease;
 }
 
-.ModulesSection {
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
 .Modulepage-sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .Modulepage-sidebar li {
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
-  padding: 10px 0;
 }
 
 .ModuleItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 12px 8px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
 
 .ModuleItem:hover {
-  background-color: #f0f0f0;
+  background-color: #f2f2f2;
 }
 
 .ModuleItem.selected {
-  background-color: rgb(219, 218, 218);
+  background-color: #e9ecef;
 }
 
 .Modulepage-sidebaritem {
@@ -148,22 +157,22 @@
   align-items: center;
   gap: 10px;
   font-weight: 700;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #333;
 }
 
-.Module-descriptiontext{
+.Module-descriptiontext {
   font-size: 1rem;
   color: #333;
   font-weight: 500;
-  margin: 0px;
+  margin: 0;
 }
 
-.Module-durationtext{
-  font-size: 0.8rem;
+.Module-durationtext {
+  font-size: 0.9rem;
   color: #333;
   font-weight: 200;
-  margin: 0px;
+  margin: 0;
 }
 
 .ModuleCompletionIndicator {
@@ -178,47 +187,67 @@
 }
 
 .ModuleSubItems {
-  list-style: disc;
-  margin-top: 10px;
-  margin-left: 20px;
-  font-weight: 500;
-  font-size: 1rem;
-  color: #555;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 5px 20px;
 }
 
 .ModuleSubItems li {
   padding: 5px 0;
-  transition: color 0.2s ease;
+  font-weight: 500;
+  color: #555;
 }
 
-.ModuleSubItems li:hover {
-  background-color: rgb(191, 188, 188);
+.ModuleTopics {
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.selectedTopic {
+  font-weight: 600;
+}
+
+.TopicDoneIndicator {
+  margin-left: 6px;
+  color: #27ae60;
+}
+
+.MarkCompletedBtn {
+  margin-left: 6px;
+  background-color: #27ae60;
+  color: #ffffff;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.MarkCompletedBtn:hover {
+  background-color: #219653;
 }
 
 .ModulePage-sidebar-visibleArea {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 10px 20px;
   overflow-y: auto;
-  scrollbar-width: none;
-}
-
-.ModulePage-module-contentArea {
-  flex: 1;
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-  overflow-y: auto;
-  border-radius: 20px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
 }
 
 .ModulePage-track-folderStructure {
   font-weight: 500;
+  font-size: 0.9rem;
+  color: #111;
   margin-bottom: 10px;
-  color: #666;
+}
+
+.ModulePage-module-contentArea {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
 }
 
 .ModulePagenextStep {
@@ -226,7 +255,7 @@
   padding: 20px;
   border: 1px solid #27ae60;
   border-radius: 10px;
-  background-color: #e9f7ef;
+  background-color: #ebf9f0;
   text-align: center;
 }
 
@@ -237,7 +266,7 @@
 
 .ModulePagenextStep button {
   background-color: #0056b3;
-  color: #fff;
+  color: #ffffff;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
@@ -245,39 +274,45 @@
   font-size: 14px;
 }
 
+.ModulePagenextStep button:hover {
+  background-color: #004a9e;
+}
+
 .ModulePageChatbot-circulardiv {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   background-color: #0056b3;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
   z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
 }
 
-/* Chatbot Styles */
 .ModulePageChatbot-chatbotdiv {
   position: fixed;
-  bottom: 100px;
+  bottom: 90px;
   right: 20px;
-  width: 400px;
-  border: 1px solid #ccc;
+  width: 380px;
+  border: 1px solid #ddd;
   padding: 10px;
   border-radius: 5px;
-  background-color: #fff;
-  z-index: 1000;
+  background-color: #ffffff;
+  z-index: 1001;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
 }
 
 .Chatbot-messages-container {
-  height: 300px;
+  height: 280px;
   overflow-y: auto;
   margin-bottom: 10px;
+  padding-right: 6px;
 }
 
 .Chatbot-message {
@@ -297,16 +332,18 @@
   padding: 8px;
   border-radius: 5px;
   max-width: 70%;
+  font-size: 0.9rem;
+  line-height: 1.4;
 }
 
 .Chatbot-user-message .Chatbot-message-text {
-  background: #007bff;
-  color: white;
+  background-color: #0056b3;
+  color: #ffffff;
 }
 
 .Chatbot-bot-message .Chatbot-message-text {
-  background: #eee;
-  color: black;
+  background-color: #eee;
+  color: #000000;
 }
 
 .Chatbot-input-container {
@@ -315,12 +352,51 @@
 }
 
 .Chatbot-input {
-  width: 80%;
+  width: 85%;
   padding: 8px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .Chatbot-send-button {
   padding: 8px;
-  margin-left: 5px;
+  margin-left: 6px;
+  font-size: 0.9rem;
+  background-color: #0056b3;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+.Chatbot-send-button:hover {
+  background-color: #004a9e;
+}
+
+@media screen and (max-width: 768px) {
+  .ModulePage-middleSection {
+    flex-direction: column;
+  }
+
+  .Modulepage-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 10px;
+  }
+
+  .ModulePage-sidebar-visibleArea {
+    padding: 10px;
+  }
+
+  .ModulePageChatbot-chatbotdiv {
+    width: 90%;
+    bottom: 80px;
+    right: 5%;
+  }
+
+  .Chatbot-messages-container {
+    height: 220px;
+  }
+}

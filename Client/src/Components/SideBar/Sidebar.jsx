@@ -8,6 +8,7 @@ import { TbReportSearch } from "react-icons/tb";
 import { MdCastForEducation } from "react-icons/md";
 import { TbVocabulary } from "react-icons/tb";
 import { LuBot } from "react-icons/lu";
+import { MdLeaderboard } from "react-icons/md";
 
 const Sidebar = ({ setSection }) => {
   const navigate = useNavigate();
@@ -40,6 +41,10 @@ const Sidebar = ({ setSection }) => {
     navigate('/modules');
   };
   
+  const handleLeaderboardNavigation = () =>{
+    navigate("/leaderboard")
+  }
+
   // onClick={handleIntroNavigation}
   // onClick={() => setSection('task2')}
 
@@ -48,7 +53,8 @@ const Sidebar = ({ setSection }) => {
       <ul>
         <li onClick={() => handleNavigationformobile('dashboard', '/dashboard')}><MdOutlineDashboard size={20}/> Home Page</li>
         <li onClick={() => handleNavigationformobile('announcements', '/announcement')}><GrAnnounce size={20}/> Announcements</li>
-        <li onClick={handleEducationNavigation}><MdCastForEducation size={20}/> Education</li>
+        <li onClick={handleEducationNavigation}><MdCastForEducation size={20}/> Courses</li>
+        <li onClick={handleLeaderboardNavigation}><MdLeaderboard size={20}/> Leaderboard</li>
         <li ><TbVocabulary size={20}/> Self Intro Pitch</li>
         <li ><LuBot size={20}/> Bot Mock Pitch</li>
         <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
