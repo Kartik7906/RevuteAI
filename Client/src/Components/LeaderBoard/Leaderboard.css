@@ -1,0 +1,45 @@
+.leaderboard-container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .leaderboard-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .leaderboard-table th, .leaderboard-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .leaderboard-table th {
+    background: #4CAF50;
+    color: white;
+  }
+  
+  .leaderboard-table tr:nth-child(even) {
+    background: #f2f2f2;
+  }
+  
+  .leaderboard-table tr:hover {
+    background: #ddd;
+  }
+  
+  .leaderboard-table td {
+    font-size: 16px;
+  }
+  

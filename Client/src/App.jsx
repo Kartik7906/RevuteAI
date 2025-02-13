@@ -14,6 +14,7 @@ import Announcement from "./Components/Announcement/Announcement";
 import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import Credentials from "./Components/CredentialsPage/Credentials";
 import Module from "./Components/ModulesPage/Module";
+import Leaderboard from "./Components/LeaderBoard/Leaderboard";
 
 function App() {
   return (
@@ -34,7 +35,8 @@ function App() {
           <Route path="/requestdemo" element={<RequestDemo/>} />
           <Route path="/profile" element={<ProfilePage/>} />
           <Route path="/creditianls" element={<Credentials/>} />
-          <Route path="/modules" element={<Module/>}/>
+          <Route path="/modules/:userId" element={<Module/>}/>
+          <Route path="/leaderboard" element={<Leaderboard/>} />
         </Routes>
       </BrowserRouter>
     </>

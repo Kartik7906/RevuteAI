@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbMessageChatbot } from "react-icons/tb";
 import { IoChevronBack } from "react-icons/io5";
@@ -18,63 +18,77 @@ const Module = () => {
   const [completedModules, setCompletedModules] = useState({});
   const [completedSubItems, setCompletedSubItems] = useState({});
   const [completedTopics, setCompletedTopics] = useState({});
+  const [moduleScores, setModuleScores] = useState({});
+  const [backendProgress, setBackendProgress] = useState(0);
   const [isAllModulesCompleted, setIsAllModulesCompleted] = useState(false);
   const [userAnswers, setUserAnswers] = useState({});
   const [currentModuleScore, setCurrentModuleScore] = useState(null);
-  const [moduleScores, setModuleScores] = useState({});
   const [isChatbotActive, setIsChatbotActive] = useState(false);
   const [messages, setMessages] = useState([]);
   const [chatInput, setChatInput] = useState("");
 
-  const totalTopicCount = modulesData.reduce((acc, mod) => {
-    mod.subItems.forEach((sub) => {
-      if (sub.topics) acc += sub.topics.length;
-    });
-    return acc;
-  }, 0);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const username = localStorage.getItem("username");
 
-  const completedTopicCount = Object.values(completedTopics).reduce((acc, subByModule) => {
-    return (
-      acc +
-      Object.values(subByModule).reduce((subAcc, topicsBySub) => {
-        return subAcc + Object.values(topicsBySub).filter(Boolean).length;
-      }, 0)
-    );
-  }, 0);
+  useEffect(() => {
+    if (!userId) {
+      navigate("/");
+      return;
+    }
+    fetchUserProgress();
+  }, [userId, navigate]);
 
-  const progressPercentage = totalTopicCount
-    ? Math.floor((completedTopicCount / totalTopicCount) * 100)
-    : 0;
-
-  const getNextModuleId = () => {
-    const nextModule = modulesData.find((m) => !completedModules[m.id]);
-    return nextModule ? nextModule.id : null;
-  };
-
-  const isSubItemCompleted = (moduleId, subItemName) => {
-    return completedSubItems[moduleId]?.[subItemName] || false;
-  };
-
-  const getSubItemIndex = (moduleData, subItemName) => {
-    return moduleData.subItems.findIndex((s) => s.name === subItemName);
-  };
-
-  const allTopicsCompleted = (moduleId, subItemName) => {
-    const modData = modulesData.find((m) => m.id === moduleId);
-    if (!modData) return false;
-    const subItem = modData.subItems.find((s) => s.name === subItemName);
-    if (!subItem?.topics) return true;
-    const completed = completedTopics[moduleId]?.[subItemName] || {};
-    return subItem.topics.every((t) => completed[t.name]);
+  const fetchUserProgress = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/module/${userId}`, {
+        headers: { "Content-Type": "application/json" },
+      });
+      const userProgress = response.data;
+      if (!userProgress || !userProgress.modules) return;
+      setBackendProgress(userProgress.progress || 0);
+      const newCompletedModules = {};
+      const newCompletedSubItems = {};
+      const newCompletedTopics = {};
+      const newModuleScores = {};
+      userProgress.modules.forEach((mod) => {
+        newCompletedModules[mod.moduleId] = !!mod.completed;
+        if (mod.score !== null && mod.score !== undefined) {
+          newModuleScores[mod.moduleId] = mod.score;
+        }
+        if (mod.subItems && mod.subItems.length > 0) {
+          newCompletedSubItems[mod.moduleId] = {};
+          newCompletedTopics[mod.moduleId] = {};
+          mod.subItems.forEach((sub) => {
+            newCompletedSubItems[mod.moduleId][sub.subItemName] = !!sub.completed;
+            newCompletedTopics[mod.moduleId][sub.subItemName] = {};
+            if (sub.topics && sub.topics.length > 0) {
+              sub.topics.forEach((topic) => {
+                newCompletedTopics[mod.moduleId][sub.subItemName][topic.topicName] =
+                  !!topic.completed;
+              });
+            }
+          });
+        }
+      });
+      setCompletedModules(newCompletedModules);
+      setCompletedSubItems(newCompletedSubItems);
+      setCompletedTopics(newCompletedTopics);
+      setModuleScores(newModuleScores);
+      const allDone = modulesData.every((m) => newCompletedModules[m.id.toString()]);
+      setIsAllModulesCompleted(allDone);
+    } catch (error) {
+      console.error("Error fetching user progress:", error);
+    }
   };
 
   const handleModuleClick = (moduleId) => {
-    const nextModuleId = getNextModuleId();
-    if (!completedModules[moduleId] && nextModuleId !== moduleId) {
+    const nextModule = modulesData.find((m) => !completedModules[m.id.toString()]);
+    if (!completedModules[moduleId.toString()] && nextModule && nextModule.id !== moduleId) {
       alert("Please complete previous modules first.");
       return;
     }
-    setExpandedModuleId((p) => (p === moduleId ? null : moduleId));
+    setExpandedModuleId((prev) => (prev === moduleId ? null : moduleId));
     if (selectedModuleId === moduleId) {
       setSelectedModuleId(null);
       setSelectedSubItemName("");
@@ -91,18 +105,13 @@ const Module = () => {
   const handleSubItemClick = (moduleId, subItemName) => {
     const mData = modulesData.find((m) => m.id === moduleId);
     if (!mData) return;
-    const subIndex = getSubItemIndex(mData, subItemName);
+    const subIndex = mData.subItems.findIndex((s) => s.name === subItemName);
     if (subIndex > 0) {
       const prevSub = mData.subItems[subIndex - 1];
-      if (!isSubItemCompleted(moduleId, prevSub.name)) {
+      if (!completedSubItems[moduleId.toString()]?.[prevSub.name]) {
         alert("Complete the previous section first.");
         return;
       }
-    }
-    const nextModuleId = getNextModuleId();
-    if (!completedModules[moduleId] && nextModuleId !== moduleId) {
-      alert("Please complete previous modules first.");
-      return;
     }
     setExpandedSubItemsMap((prev) => {
       const alreadyExpanded = prev[moduleId] === subItemName;
@@ -128,17 +137,25 @@ const Module = () => {
     setCurrentModuleScore(null);
   };
 
-  const handleMarkTopicCompleted = (moduleId, subItemName, topicName) => {
-    const updated = { ...completedTopics };
-    if (!updated[moduleId]) updated[moduleId] = {};
-    if (!updated[moduleId][subItemName]) updated[moduleId][subItemName] = {};
-    updated[moduleId][subItemName][topicName] = true;
-    setCompletedTopics(updated);
-    if (allTopicsCompleted(moduleId, subItemName)) {
-      const updatedSubItems = { ...completedSubItems };
-      if (!updatedSubItems[moduleId]) updatedSubItems[moduleId] = {};
-      updatedSubItems[moduleId][subItemName] = true;
-      setCompletedSubItems(updatedSubItems);
+  const handleMarkTopicCompleted = async (moduleId, subItemName, topicName) => {
+    try {
+      const key = moduleId.toString();
+      const updatedTopics = { ...completedTopics };
+      if (!updatedTopics[key]) updatedTopics[key] = {};
+      if (!updatedTopics[key][subItemName]) {
+        updatedTopics[key][subItemName] = {};
+      }
+      updatedTopics[key][subItemName][topicName] = true;
+      setCompletedTopics(updatedTopics);
+      await axios.post(
+        `http://localhost:8000/api/module/${userId}/completeTopic`,
+        { moduleId: moduleId.toString(), subItemName, topicName, username },
+        { headers: { "Content-Type": "application/json" } }
+      );
+      fetchUserProgress();
+    } catch (error) {
+      alert("Error marking topic as completed.");
+      console.error(error);
     }
   };
 
@@ -152,9 +169,7 @@ const Module = () => {
   const getDisplayContent = () => {
     if (!currentModuleDataObj) return "";
     if (selectedSubItemName) {
-      const subItem = currentModuleDataObj.subItems.find(
-        (s) => s.name === selectedSubItemName
-      );
+      const subItem = currentModuleDataObj.subItems.find((s) => s.name === selectedSubItemName);
       if (!subItem) return currentModuleDataObj.moduleContent;
       if (selectedTopicName && subItem.topics) {
         const topicObj = subItem.topics.find((t) => t.name === selectedTopicName);
@@ -177,30 +192,49 @@ const Module = () => {
     setUserAnswers({ ...userAnswers, [qIndex]: optIndex });
   };
 
-  const handleSubmitQuiz = () => {
+  const handleSubmitQuiz = async () => {
     const content = getDisplayContent();
     if (!content?.quiz) return;
     const quiz = content.quiz;
     let score = 0;
     quiz.forEach((item, i) => {
-      if (userAnswers[i] === item.answer) score += 1;
+      if (userAnswers[i] === item.answer) {
+        score += 1;
+      }
     });
     const passScore = Math.ceil(quiz.length * 0.8);
     if (score >= passScore) {
-      setCurrentModuleScore(score);
-      setModuleScores({ ...moduleScores, [currentModuleDataObj.id]: score });
-      const updatedMods = { ...completedModules, [currentModuleDataObj.id]: true };
-      setCompletedModules(updatedMods);
-      if (modulesData.every((m) => updatedMods[m.id])) setIsAllModulesCompleted(true);
       alert(`You scored ${score} out of ${quiz.length}. Module passed!`);
-      const nextId = getNextModuleId();
-      if (nextId) {
-        setSelectedModuleId(nextId);
-        setExpandedModuleId(nextId);
-        setSelectedSubItemName("");
-        setSelectedTopicName("");
-        setUserAnswers({});
-        setCurrentModuleScore(null);
+      try {
+        await axios.post(
+          `http://localhost:8000/api/module/${userId}/submitScore`,
+          { moduleId: currentModuleDataObj.id.toString(), score, username },
+          { headers: { "Content-Type": "application/json" } }
+        );
+        setCurrentModuleScore(score);
+        setModuleScores((prev) => ({ ...prev, [currentModuleDataObj.id.toString()]: score }));
+        setCompletedModules((prev) => ({
+          ...prev,
+          [currentModuleDataObj.id.toString()]: true,
+        }));
+        if (modulesData.every((m) => completedModules[m.id.toString()])) {
+          setIsAllModulesCompleted(true);
+        }
+        // Optionally, load the next module
+        const nextModule = modulesData.find((m) => !completedModules[m.id.toString()]);
+        if (nextModule) {
+          setSelectedModuleId(nextModule.id);
+          setExpandedModuleId(nextModule.id);
+          setSelectedSubItemName("");
+          setSelectedTopicName("");
+          setUserAnswers({});
+          setCurrentModuleScore(null);
+        }
+        // Refresh progress bar from backend
+        fetchUserProgress();
+      } catch (error) {
+        alert("Error submitting quiz score.");
+        console.error(error);
       }
     } else {
       alert(`You scored ${score} out of ${quiz.length}, below 80%. Retake the quiz.`);
@@ -217,13 +251,12 @@ const Module = () => {
     const updatedMessages = [...messages, newUserMessage];
     setMessages(updatedMessages);
     try {
-      const response = await axios.post("http://localhost:8000/api/chat", {
-        userMessage: chatInput,
-      });
+      const response = await axios.post("http://localhost:8000/api/chat", { userMessage: chatInput });
       const botReply = { text: response.data.botReply, sender: "bot" };
       setMessages([...updatedMessages, botReply]);
-    } catch {
-      alert("Error sending message.");
+    } catch (error) {
+      alert("Error sending message to chatbot.");
+      console.error(error);
     }
     setChatInput("");
   };
@@ -239,10 +272,7 @@ const Module = () => {
             <button className="Logout-btn-design" onClick={handleLogout}>
               Logout
             </button>
-            <div
-              className="ModulePageNavbar-circulardiv"
-              onClick={() => navigate("/profile")}
-            />
+            <div className="ModulePageNavbar-circulardiv" onClick={() => navigate("/profile")} />
           </div>
         </nav>
         <div className="ModulePage-middleSection">
@@ -252,42 +282,25 @@ const Module = () => {
                 <IoChevronBack /> Go to Dashboard
               </p>
               <p className="Course-title">Placement Guarantee Course - 2025</p>
+              {/* Use backendProgress (0-100) to show the progress bar */}
               <div className="ModuleTracker-colorbar">
-                <div
-                  className="ModuleTracker-completedSection"
-                  style={{ width: `${progressPercentage}%` }}
-                />
+                <div className="ModuleTracker-completedSection" style={{ width: `${backendProgress}%` }} />
               </div>
-              <p className="percentageCompletedSection">
-                {progressPercentage}% complete
-              </p>
+              <p className="percentageCompletedSection">{backendProgress}% complete</p>
             </div>
             <ul>
               {modulesData.map((module) => {
                 const isExpanded = expandedModuleId === module.id;
                 const isSelected = selectedModuleId === module.id;
-                const score = moduleScores[module.id];
+                const score = moduleScores[module.id.toString()];
                 return (
                   <li key={module.id}>
-                    <div
-                      className={`ModuleItem ${isSelected ? "selected" : ""}`}
-                      onClick={() => handleModuleClick(module.id)}
-                    >
-                      <div>
-                        <div className="Modulepage-sidebaritem">
-                          {module.title}
-                          <div
-                            className={
-                              completedModules[module.id]
-                                ? "ModuleCompletionIndicator completed"
-                                : "ModuleCompletionIndicator"
-                            }
-                          />
-                        </div>
-                        {score !== undefined && (
-                          <p className="Module-durationtext">Score: {score}</p>
-                        )}
+                    <div className={`ModuleItem ${isSelected ? "selected" : ""}`} onClick={() => handleModuleClick(module.id)}>
+                      <div className="Modulepage-sidebaritem">
+                        {module.title}
+                        <div className={completedModules[module.id.toString()] ? "ModuleCompletionIndicator completed" : "ModuleCompletionIndicator"} />
                       </div>
+                      {score !== undefined && <p className="Module-durationtext">Score: {score}</p>}
                       <FaChevronDown className={isExpanded ? "rotate-icon" : ""} />
                     </div>
                     {isExpanded && (
@@ -297,10 +310,7 @@ const Module = () => {
                           const isSubSelected = selectedSubItemName === sub.name;
                           return (
                             <li key={i}>
-                              <div
-                                onClick={() => handleSubItemClick(module.id, sub.name)}
-                                className={isSubSelected ? "selectedSubItem" : ""}
-                              >
+                              <div onClick={() => handleSubItemClick(module.id, sub.name)} className={isSubSelected ? "selectedSubItem" : ""}>
                                 {sub.name}
                                 <FaChevronDown className={expandedSub ? "rotate-icon" : ""} />
                               </div>
@@ -308,33 +318,16 @@ const Module = () => {
                                 <ul className="ModuleTopics">
                                   {sub.topics.map((topic, tIndex) => {
                                     const isTopicSelected = selectedTopicName === topic.name;
-                                    const topicDone =
-                                      completedTopics[module.id]?.[sub.name]?.[topic.name];
+                                    const topicDone = completedTopics[module.id.toString()]?.[sub.name]?.[topic.name];
                                     return (
                                       <li key={tIndex}>
-                                        <div
-                                          onClick={() =>
-                                            handleTopicClick(module.id, sub.name, topic.name)
-                                          }
-                                          className={isTopicSelected ? "selectedTopic" : ""}
-                                        >
+                                        <div onClick={() => handleTopicClick(module.id, sub.name, topic.name)} className={isTopicSelected ? "selectedTopic" : ""}>
                                           {topic.name}
-                                          {topicDone && (
-                                            <span className="TopicDoneIndicator">✓</span>
-                                          )}
+                                          {topicDone && <span className="TopicDoneIndicator">✓</span>}
                                         </div>
+                                        {/* Only show the button if the topic is not yet marked completed */}
                                         {!topicDone && (
-                                          <button
-                                            className="MarkCompletedBtn"
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              handleMarkTopicCompleted(
-                                                module.id,
-                                                sub.name,
-                                                topic.name
-                                              );
-                                            }}
-                                          >
+                                          <button className="MarkCompletedBtn" onClick={(e) => { e.stopPropagation(); handleMarkTopicCompleted(module.id, sub.name, topic.name); }}>
                                             Mark as Completed
                                           </button>
                                         )}
@@ -365,9 +358,7 @@ const Module = () => {
                     <div className="QuizSection">
                       {getDisplayContent().quiz.map((q, i) => (
                         <div key={i} className="QuizItem">
-                          <p>
-                            <strong>Q{i + 1}:</strong> {q.question}
-                          </p>
+                          <p><strong>Q{i + 1}:</strong> {q.question}</p>
                           <ul>
                             {q.options.map((opt, idx) => (
                               <li key={idx}>
@@ -389,9 +380,7 @@ const Module = () => {
                       <button onClick={handleSubmitQuiz}>Submit Quiz</button>
                       {currentModuleScore !== null && (
                         <div className="ModulePage-scoreSection">
-                          <p>
-                            Score: {currentModuleScore} out of {getDisplayContent().quiz.length}
-                          </p>
+                          <p>Score: {currentModuleScore} out of {getDisplayContent().quiz.length}</p>
                         </div>
                       )}
                     </div>
@@ -417,14 +406,7 @@ const Module = () => {
         <div className="ModulePageChatbot-chatbotdiv">
           <div className="Chatbot-messages-container">
             {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={
-                  msg.sender === "user"
-                    ? "Chatbot-message Chatbot-user-message"
-                    : "Chatbot-message Chatbot-bot-message"
-                }
-              >
+              <div key={index} className={msg.sender === "user" ? "Chatbot-message Chatbot-user-message" : "Chatbot-message Chatbot-bot-message"}>
                 <p className="Chatbot-message-text">{msg.text}</p>
               </div>
             ))}

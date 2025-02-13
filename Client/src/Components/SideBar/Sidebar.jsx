@@ -37,8 +37,14 @@ const Sidebar = ({ setSection }) => {
   };
 
   const handleEducationNavigation = () => {
-    setSection('education');
-    navigate('/modules');
+    const userId = localStorage.getItem('userId');
+    if(userId){
+      setSection('education');
+      navigate(`/modules/${userId}`);
+    }
+    else{
+      alert("Please Login First");
+    }
   };
   
   const handleLeaderboardNavigation = () =>{
