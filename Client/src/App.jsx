@@ -15,6 +15,7 @@ import ProfilePage from "./Components/ProfilePage/ProfilePage";
 import Credentials from "./Components/CredentialsPage/Credentials";
 import Module from "./Components/ModulesPage/Module";
 import Leaderboard from "./Components/LeaderBoard/Leaderboard";
+import Elearning from "./Components/ElearningPage/Elearning";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/creditianls" element={<Credentials/>} />
           <Route path="/modules/:userId" element={<Module/>}/>
           <Route path="/leaderboard" element={<Leaderboard/>} />
+          <Route path="/elearning" element={<Elearning/>} />
         </Routes>
       </BrowserRouter>
     </>

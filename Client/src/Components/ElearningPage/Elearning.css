@@ -1,0 +1,345 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.learningpage-mainContainer {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.learningPage-Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  height: 60px;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.CompanyLogo-Here img {
+  height: 40px;
+}
+
+.learningPageNavbar-rightsection {
+  display: flex;
+  align-items: center;
+}
+
+.Logout-btn-design {
+  background-color: #0056b3;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-right: 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.Logout-btn-design:hover {
+  background-color: #004a9e;
+}
+
+.learningPageNavbar-circulardiv {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0056b3;
+  cursor: pointer;
+}
+
+.learningpage-contentArea {
+  height: calc(100vh - 60px);
+  width: 100%;
+  background-color: #f9f9f9;
+  position: relative;
+  overflow: auto;
+}
+
+.learningPage-Uppercontent {
+  background-color: #7b5fa6;
+  color: #ffffff;
+  padding: 20px;
+  height: 40%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.learnngPage-Lowercontent {
+  height: 60%;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+  background-color: #d4d2d2;
+}
+
+.learningPage-overFlowcontainer {
+  display: flex;
+  position: absolute;
+  top: 10%;
+  gap: 20px;
+  width: 100%;
+  padding: 20px 40px;
+}
+
+.learningPage-enrollCourseDiv {
+  width: 300px;
+  min-height: 460px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.imagediv-enrollsection {
+  width: 100%;
+  height: 200px;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.imagediv-enrollsection img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.enrolment-details {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.joinCourse-btn {
+  background-color: #7b5fa6;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.joinCourse-btn:hover {
+  opacity: 0.9;
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 4px 0;
+}
+
+.share-link {
+  color: #7b5fa6;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.learningPage-contentSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.learningPage-content-uppersection {
+  background-color: #7b5fa6;
+  color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  height: 40%;
+  margin-bottom: 15px;
+}
+
+.banner-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  height: 100%;
+}
+
+.banner-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.banner-stars span {
+  margin-right: 5px;
+}
+
+.banner-tabs {
+  display: flex;
+  gap: 20px;
+  font-weight: 500;
+}
+
+.banner-tabs span {
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.banner-tabs span:hover {
+  opacity: 0.8;
+}
+
+.learningPage-content-lowersection {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.lessons-info {
+  width: 100%;
+}
+
+.learningPage-CourseTimelineSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lesson-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.lesson-title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.lesson-preview-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-right: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.lesson-preview-btn:hover {
+  background-color: #e2e2e2;
+}
+
+.lesson-xp {
+  background-color: gold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.learningPage-togglelist {
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+}
+
+.learningPage-toggleList-items {
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.learningPage-toggleList-items:hover {
+  opacity: 0.8;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90%;
+  overflow-y: auto;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #7b5fa6;
+}
+
+.modal-body {
+  
+}
+
+.modal-subitem {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.modal-subitem h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #7b5fa6;
+}
+
+.modal-subitem ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.modal-subitem ul li {
+  margin-bottom: 5px;
+  color: #555;
+}

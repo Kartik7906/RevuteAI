@@ -5,7 +5,6 @@ import './Admin.css';
 const URL = "http://localhost:8000";
 
 const Admin = () => {
-  // State Hooks
   const [selectedScenarios, setSelectedScenarios] = useState(new Set());
   const [selectedUserScenarios, setSelectedUserScenarios] = useState(new Set());
   const [scenarios, setScenarios] = useState([]);
@@ -13,7 +12,6 @@ const Admin = () => {
   const [modal, setModal] = useState({ isVisible: false, type: '', data: null });
   const [toast, setToast] = useState({ isVisible: false, message: '', type: '' });
 
-  // Fetch Available Scenarios
   const loadScenarios = async () => {
     try {
       const response = await fetch(`${URL}/admin/scenarios`, {
