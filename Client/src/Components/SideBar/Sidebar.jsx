@@ -62,8 +62,8 @@ const Sidebar = ({ setSection }) => {
         <li onClick={() => handleNavigationformobile('announcements', '/announcement')}><GrAnnounce size={20}/> Announcements</li>
         <li onClick={handleEducationNavigation}><MdCastForEducation size={20}/> Courses</li>
         <li onClick={handleLeaderboardNavigation}><MdLeaderboard size={20}/> Leaderboard</li>
-        <li ><TbVocabulary size={20}/> Self Intro Pitch</li>
-        <li ><LuBot size={20}/> Bot Mock Pitch</li>
+        {/* <li ><TbVocabulary size={20}/> Self Intro Pitch</li> */}
+        {/* <li ><LuBot size={20}/> Bot Mock Pitch</li> */}
         <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
       </ul>
     </nav>
