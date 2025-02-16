@@ -27,7 +27,6 @@ app.use(
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
-// 1. Serve static files from the React build folder
 app.use(express.static(path.join(__dirname, 'Client/dist')));
 
 app.use(express.json());
@@ -43,11 +42,9 @@ app.get('/', (req, res) => {
 });
 
 
-// Access environment variables
 const apiKey = process.env.GEMINI_API_KEY;
 const modelName = process.env.GEMINI_MODEL;
 
-// Initialize Google Generative AI
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: modelName });
 const GEMINI_URL =
@@ -59,7 +56,6 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Multer configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -140,7 +136,6 @@ app.post("/api/gemini", async (req, res) => {
       .map(line => line.replace(/^\d+\.\s+"/, '').replace(/"$/, ''))
       .slice(0, 5);
 
-    // Fallback if Gemini returns too few
     while (suggestions.length < 3) {
       suggestions.push("Review sentence structure for clearer communication");
     }
