@@ -359,7 +359,7 @@ const modulesData = [
   },
   {
     id: 4,
-    title: "BotMock Pitching"
+    title: "Roleplay"
   }
 ];
 export default modulesData;

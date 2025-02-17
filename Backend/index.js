@@ -27,7 +27,7 @@ app.use(
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
-app.use(express.static(path.join(__dirname, 'Client/dist')));
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -38,7 +38,7 @@ app.use("/api/module", require("./Routes/EducationRoute"));
 app.use("/api/rank", require("./Routes/LeaderboardRoute"));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'Client/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
 });
 
 
