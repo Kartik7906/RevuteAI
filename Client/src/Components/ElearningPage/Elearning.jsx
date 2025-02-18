@@ -292,7 +292,7 @@ const Elearning = () => {
                   >
                     Preview
                   </button>
-                  <span className="lesson-xp">60 xp</span>
+                  
                 </div>
                 <div className="lesson-row">
                   <div className="lesson-title">Sales Personal Skills</div>
@@ -302,7 +302,7 @@ const Elearning = () => {
                   >
                     Preview
                   </button>
-                  <span className="lesson-xp">40 xp</span>
+                  
                 </div>
                 <div className="lesson-row">
                   <div className="lesson-title">Product Knowledge</div>
@@ -312,7 +312,6 @@ const Elearning = () => {
                   >
                     Preview
                   </button>
-                  <span className="lesson-xp">40 xp</span>
                 </div>
                 <div className="lesson-row">
                   <div className="lesson-title">Bot Mock Pitch</div>
@@ -322,7 +321,6 @@ const Elearning = () => {
                   >
                     Preview
                   </button>
-                  <span className="lesson-xp">40 xp</span>
                 </div>
               </div>
             )}

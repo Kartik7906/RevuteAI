@@ -115,7 +115,7 @@
 }
 
 .homepage-roleplay-image {
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,7 +125,7 @@
 .homepage-roleplay-image img {
   width: 100%;
   max-width: 700px;
-  border-radius: 10px;
+  border-radius: 50px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
@@ -299,7 +299,7 @@
 
 .HomePage-avatar2 {
   width: 50%;
-  height: 100vh;
+  height: 80vh;
   border: none;
 }
 

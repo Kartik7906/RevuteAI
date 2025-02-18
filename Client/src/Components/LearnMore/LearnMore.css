@@ -191,7 +191,7 @@
 }
 
 .aboutlearnmore-text h2 {
-  font-size: 1.8rem;
+  font-size: 3rem;
   font-weight: bold;
   margin-bottom: 10px;
   color: #333;
@@ -204,8 +204,8 @@
 }
 
 .aboutlearnmore-image {
-  flex: 1;
-  max-width: 500px;
+  /* flex: 1; */
+  max-width: 400px;
 }
 
 .aboutlearnmore-image img {

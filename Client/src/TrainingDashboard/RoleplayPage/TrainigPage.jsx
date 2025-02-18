@@ -31,6 +31,7 @@ const TrainingPage = () => {
     "Product 4",
     "Product 5",
   ];
+
   const scenarioOptions = [
     "Prospect Lead",
     "Non-Prospect Lead",
@@ -38,6 +39,7 @@ const TrainingPage = () => {
     "Happy Customer",
     "Sad Customer",
   ];
+
   const avatarMapping = {
     "Product 1": {
       "Prospect Lead": product1_avatar,
@@ -184,6 +186,63 @@ const TrainingPage = () => {
 
   return (
     <div className="TrainingPage-mainContainer">
+      <div className="TrainingPage-mainContainer-Introsection">
+        <h1 className="intro-title">Welcome to Advanced Telecommunication Training</h1>
+        <p className="intro-subtitle">
+          Enhance your telecalling skills with our interactive role-playing modules.
+          Practice real-life scenarios and improve your communication abilities.
+        </p>
+        <div className="intro-buttons">
+          <button className="btn-general-telecalling">Start General Telecalling Module</button>
+          <button className="btn-product-telecalling">Explore Product-Based Telecalling Module</button>
+        </div>
+      </div>
+
+      <div className="TrainingPage-containerFor-Features">
+        <div className="TrainingPage-FeaturesSection">
+          <div className="TrainingPage-leftFeatureSection">
+            <h2>Interactive Training Modules</h2>
+            <p>
+              Practice telecalling with 26 realistic roleplay scenarios, including
+              different customer types like happy, angry, and sad customers.
+            </p>
+            <h2>Easy Module Selection</h2>
+            <p>
+              Simply click on a module to start training, with clear guidelines
+              provided before beginning.
+            </p>
+            <h2>Call Simulation Experience</h2>
+            <p>
+              The system mimics a real phone call with ringing sounds and a
+              customer avatar appearing on the screen.
+            </p>
+            <h2>Voice-Based Interaction</h2>
+            <p>
+              Speak directly, and the system converts your speech into text,
+              processes it, and provides a voice response.
+            </p>
+            <h2>Realistic Customer Responses</h2>
+            <p>
+              The customer’s voice tone changes dynamically based on their
+              emotions, creating a more immersive experience.
+            </p>
+            <h2>Engaging Visuals & Animations</h2>
+            <p>
+              Avatars and smooth animations make the training feel more real
+              and interactive.
+            </p>
+            <h2>Step-by-Step Guidance</h2>
+            <p>
+              Receive scenario descriptions and guidelines before starting to
+              ensure you know what to do.
+            </p>
+          </div>
+          <div className="TrainingPage-rightFeatureImageSection">
+            <img src={product1_avatar} alt="Training Feature Preview" />
+          </div>
+        </div>
+      </div>
+
       {showSelectionArea && (
         <div className="selectionAreaof-TrainingPage">
           <div className="General-TeleCommunication">
@@ -300,6 +359,7 @@ const TrainingPage = () => {
           </div>
         </div>
       )}
+
       {renderCall && (
         <div className="CallInitation-sectionForTraningpageArea">
           <IoReturnUpBackOutline onClick={handleBackButton} size={30} className="back-button" />

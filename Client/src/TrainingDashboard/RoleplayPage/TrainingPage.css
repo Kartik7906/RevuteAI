@@ -4,6 +4,7 @@
   padding: 20px;
   background-color: #f0f2f5;
 }
+
 .selectionAreaof-TrainingPage {
   display: flex;
   gap: 20px;
@@ -12,6 +13,7 @@
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
 .General-TeleCommunication,
 .ProductBased-TeleCommunication {
   flex: 1;
@@ -20,29 +22,35 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
+
 .General-TeleCommunication h2,
 .ProductBased-TeleCommunication h2 {
   color: #333;
   margin-bottom: 10px;
 }
+
 .scenario-descriptionForGeneral,
 .scenario-descriptionForProductBased {
   margin-bottom: 15px;
 }
+
 .guidelines-generalTeleCommunication ul {
   list-style-type: disc;
   margin-left: 20px;
 }
+
 .acknowledgments-generalTeleCommunication {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 }
+
 .acknowledgments-generalTeleCommunication label {
   margin-right: 15px;
   font-size: 14px;
   margin-bottom: 5px;
 }
+
 #start-practice {
   background-color: rgb(25, 167, 214);
   color: #fff;
@@ -54,18 +62,22 @@
   transition: background-color 0.3s ease;
   margin-top: 10px;
 }
+
 #start-practice:hover {
   background-color: #004494;
 }
+
 #start-practice:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
 .product-list {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
+
 .product-button {
   background-color: #e0e7ff;
   color: #333;
@@ -75,10 +87,12 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .product-button.active,
 .product-button:hover {
   background-color: #c7d2fe;
 }
+
 .scenario-selection select {
   padding: 8px;
   border: 1px solid #cbd5e1;
@@ -86,6 +100,7 @@
   margin-top: 10px;
   font-size: 16px;
 }
+
 .CallInitation-sectionForTraningpageArea {
   background-color: #fff;
   width: 100vw;
@@ -95,6 +110,7 @@
   padding: 20px;
   position: relative;
 }
+
 .back-button {
   position: absolute;
   top: 20px;
@@ -102,12 +118,14 @@
   cursor: pointer;
   color: #333;
 }
+
 .call-container {
   display: flex;
   gap: 20px;
   height: 100%;
   align-items: center;
 }
+
 .call-left {
   flex: 1;
   display: flex;
@@ -115,12 +133,14 @@
   justify-content: space-between;
   height: 80%;
 }
+
 .call-right {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .call-icon-button {
   background-color: #28a745;
   border: none;
@@ -130,12 +150,14 @@
   color: #fff;
   align-self: flex-start;
 }
+
 .avatar-img {
   width: 500px;
   height: 500px;
   object-fit: cover;
   border-radius: 20px;
 }
+
 .containerFor-userandBotConverstation {
   background-color: #f8f9fa;
   border-radius: 8px;
@@ -144,20 +166,24 @@
   overflow-y: auto;
   margin-top: 20px;
 }
+
 .userMessage,
 .botReply {
   padding: 10px;
   border-radius: 4px;
   margin-bottom: 10px;
 }
+
 .userMessage {
   background-color: #e9f7ef;
   color: #155724;
 }
+
 .botReply {
   background-color: #e2e3e5;
   color: #383d41;
 }
+
 .User-microPhone {
   background-color: #dc3545;
   border: none;
@@ -167,6 +193,127 @@
   cursor: pointer;
   align-self: flex-start;
 }
+
 .User-microPhone:hover {
   background-color: #c82333;
+}
+
+.TrainingPage-mainContainer-Introsection {
+  padding: 2rem;
+  background-color: #fafafa;
+  text-align: center;
+}
+
+.intro-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #1B1B1B;
+}
+
+.intro-subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #333;
+  line-height: 1.5;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.intro-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-general-telecalling {
+  background-color: #e05b22;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.btn-general-telecalling:hover {
+  background-color: #c84f1e;
+}
+
+.btn-product-telecalling {
+  background-color: #fff;
+  color: #e05b22;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e05b22;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-product-telecalling:hover {
+  background-color: #e05b22;
+  color: #fff;
+}
+
+.TrainingPage-containerFor-Features {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fcfcf9;
+  padding: 2rem 1rem;
+  display: flex;
+}
+
+.TrainingPage-FeaturesSection {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.TrainingPage-leftFeatureSection {
+  flex: 1 1 60%;
+  min-width: 300px;
+}
+
+.TrainingPage-leftFeatureSection h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 2rem 0 0.5rem;
+  color: #1B1B1B;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.TrainingPage-leftFeatureSection h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background-color: #000;
+}
+
+.TrainingPage-leftFeatureSection p {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  max-width: 600px;
+}
+
+.TrainingPage-rightFeatureImageSection {
+  flex: 1 1 40%;
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.TrainingPage-rightFeatureImageSection img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
