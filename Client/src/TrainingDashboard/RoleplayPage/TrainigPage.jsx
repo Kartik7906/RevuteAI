@@ -187,7 +187,8 @@ const TrainingPage = () => {
   return (
     <div className="TrainingPage-mainContainer">
       <div className="TrainingPage-mainContainer-Introsection">
-        <h1 className="intro-title">Welcome to Advanced Telecommunication Training</h1>
+      <div className="TrainingPage-mainContainer-IntroSection-CenterDiv">
+      <h1 className="intro-title">Welcome to Advanced Telecommunication Training</h1>
         <p className="intro-subtitle">
           Enhance your telecalling skills with our interactive role-playing modules.
           Practice real-life scenarios and improve your communication abilities.
@@ -196,6 +197,7 @@ const TrainingPage = () => {
           <button className="btn-general-telecalling">Start General Telecalling Module</button>
           <button className="btn-product-telecalling">Explore Product-Based Telecalling Module</button>
         </div>
+      </div>
       </div>
 
       <div className="TrainingPage-containerFor-Features">
