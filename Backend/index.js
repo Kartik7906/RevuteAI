@@ -36,6 +36,8 @@ app.use("/api/users", require("./Routes/UserRoute"));
 app.use("/api/report", require("./Routes/ReportRoute"));
 app.use("/api/module", require("./Routes/EducationRoute"));
 app.use("/api/rank", require("./Routes/LeaderboardRoute"));
+app.use("/api/trainingPage", require("./Routes/TrainingPage"))
+
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
