@@ -7,9 +7,7 @@
 .TrainingPage-mainContainer {
   width: 100vw;
   height: 100vh;
-  /* padding: 20px; */
   background-color: #f0f2f5;
-  background-color: red;
 }
 
 .selectionAreaof-TrainingPage {
@@ -206,7 +204,6 @@
 }
 
 .TrainingPage-mainContainer-Introsection {
-  /* padding: 2rem; */
   background-color: #fafafa;
   text-align: center;
   width: 100%;
@@ -215,7 +212,6 @@
   flex-direction: column;
   align-items: center;
   padding-top: 8rem;
-  background-color: pink;
 }
 
 .TrainingPage-mainContainer-IntroSection-CenterDiv{
@@ -278,32 +274,86 @@
   background-color: #e05b22;
   color: #fff;
 }
-
+/* Container: exactly 100vw x 100vh with no scroll */
 .TrainingPage-containerFor-Features {
   width: 100vw;
   height: 100vh;
-  background-color: #fcfcf9;
   padding: 2rem 1rem;
-  background-color: yellow;
+  overflow: auto;
+  background-color: #fcfcf9;
 }
 
 .TrainingPage-FeaturesSection {
   display: flex;
   max-width: 1200px;
+  height: 100%;
   margin: 0 auto;
   gap: 2rem;
 }
 
 .TrainingPage-leftFeatureSection {
-  flex: 1 1 60%;
+  flex: 1;
   min-width: 300px;
+  overflow: auto;
+  position: relative;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
 }
 
+.TrainingPage-leftFeatureSection::-webkit-scrollbar {
+  display: none; 
+}
+
+
+/* Each feature card with a stack animation */
+.TrainingPage-featuredCard {
+  background-color: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: stackAnimation 0.5s ease forwards;
+}
+
+/* Stagger the animations for a stack effect */
+.TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(4) {
+  animation-delay: 0.8s;
+}
+.TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(5) {
+  animation-delay: 1s;
+}
+.TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(6) {
+  animation-delay: 1.2s;
+}
+.TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(7) {
+  animation-delay: 1.4s;
+}
+
+/* Keyframes for the stack animation */
+@keyframes stackAnimation {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Headings inside each card with a left accent */
 .TrainingPage-leftFeatureSection h2 {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   margin: 2rem 0 0.5rem;
-  color: #1B1B1B;
+  color: #1b1b1b;
   position: relative;
   padding-left: 1.5rem;
 }
@@ -318,6 +368,7 @@
   background-color: #000;
 }
 
+/* Paragraph styling */
 .TrainingPage-leftFeatureSection p {
   color: #333;
   line-height: 1.6;
@@ -325,16 +376,89 @@
   max-width: 600px;
 }
 
+/* Right section: Contains the image */
 .TrainingPage-rightFeatureImageSection {
-  flex: 1 1 40%;
-  min-width: 250px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Make sure the image covers its container */
+.TrainingPage-rightFeatureImageSection img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.Encourage-wrapper {
+  width: 100vw; 
+  height: 100vh;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.TrainingPage-rightFeatureImageSection img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
+.Encourage-tiltLayer {
+  width: 80%;
+  height: 35%;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #FBA518;
+}
+
+.Encourage-contentContainer {
+  width: 98%;
+  height: 100%; /* Add 'px' for proper height */
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: space-between;
+  transform: rotate(-2deg); /* Rotates the div 10 degrees */
+}
+
+
+.Encourage-topRow {
+
+}
+
+.Encourage-topRow h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2f2f2f;
+}
+
+.Encourage-contentContainer p {
+  margin-top: 1rem;
+  color: #2f2f2f;
+  line-height: 1.5;
+}
+
+/* Button styling */
+.Encourage-contentContainer button {
+  background-color: #cc5e1f;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.Encourage-contentContainer button:hover {
+  background-color: #b3531b;
 }

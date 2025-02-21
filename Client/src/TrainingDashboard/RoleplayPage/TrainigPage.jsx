@@ -7,6 +7,7 @@ import product3_avatar from "../../images/avatar.svg";
 import product4_avatar from "../../images/avatar.svg";
 import product5_avatar from "../../images/avatar.svg";
 import defaultavatar from "../../images/avatar2.svg";
+import FeaturedCard from "../../images/FeaturedCard.jpg";
 import "./TrainingPage.css";
 
 const TrainingPage = () => {
@@ -88,7 +89,10 @@ const TrainingPage = () => {
       recognitionRef.current.maxAlternatives = 1;
       recognitionRef.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        setConversation((prev) => [...prev, { type: "user", text: transcript }]);
+        setConversation((prev) => [
+          ...prev,
+          { type: "user", text: transcript },
+        ]);
         handleBotReply(transcript);
       };
       recognitionRef.current.onerror = (event) => {
@@ -102,11 +106,14 @@ const TrainingPage = () => {
 
   const getBotReply = async (userText) => {
     try {
-      const response = await fetch("http://localhost:8000/api/trainingPage/chatbot", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText }),
-      });
+      const response = await fetch(
+        "http://localhost:8000/api/trainingPage/chatbot",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userText }),
+        }
+      );
       const data = await response.json();
       return data.reply;
     } catch (error) {
@@ -187,63 +194,99 @@ const TrainingPage = () => {
   return (
     <div className="TrainingPage-mainContainer">
       <div className="TrainingPage-mainContainer-Introsection">
-      <div className="TrainingPage-mainContainer-IntroSection-CenterDiv">
-      <h1 className="intro-title">Welcome to Advanced Telecommunication Training</h1>
-        <p className="intro-subtitle">
-          Enhance your telecalling skills with our interactive role-playing modules.
-          Practice real-life scenarios and improve your communication abilities.
-        </p>
-        <div className="intro-buttons">
-          <button className="btn-general-telecalling">Start General Telecalling Module</button>
-          <button className="btn-product-telecalling">Explore Product-Based Telecalling Module</button>
+        <div className="TrainingPage-mainContainer-IntroSection-CenterDiv">
+          <h1 className="intro-title">
+            Welcome to Advanced Telecommunication Training
+          </h1>
+          <p className="intro-subtitle">
+            Enhance your telecalling skills with our interactive role-playing
+            modules. Practice real-life scenarios and improve your communication
+            abilities.
+          </p>
+          <div className="intro-buttons">
+            <button className="btn-general-telecalling">
+              Start General Telecalling Module
+            </button>
+            <button className="btn-product-telecalling">
+              Explore Product-Based Telecalling Module
+            </button>
+          </div>
         </div>
-      </div>
       </div>
 
       <div className="TrainingPage-containerFor-Features">
         <div className="TrainingPage-FeaturesSection">
           <div className="TrainingPage-leftFeatureSection">
-            <h2>Interactive Training Modules</h2>
-            <p>
-              Practice telecalling with 26 realistic roleplay scenarios, including
-              different customer types like happy, angry, and sad customers.
-            </p>
-            <h2>Easy Module Selection</h2>
-            <p>
-              Simply click on a module to start training, with clear guidelines
-              provided before beginning.
-            </p>
-            <h2>Call Simulation Experience</h2>
-            <p>
-              The system mimics a real phone call with ringing sounds and a
-              customer avatar appearing on the screen.
-            </p>
-            <h2>Voice-Based Interaction</h2>
-            <p>
-              Speak directly, and the system converts your speech into text,
-              processes it, and provides a voice response.
-            </p>
-            <h2>Realistic Customer Responses</h2>
-            <p>
-              The customer’s voice tone changes dynamically based on their
-              emotions, creating a more immersive experience.
-            </p>
-            <h2>Engaging Visuals & Animations</h2>
-            <p>
-              Avatars and smooth animations make the training feel more real
-              and interactive.
-            </p>
-            <h2>Step-by-Step Guidance</h2>
-            <p>
-              Receive scenario descriptions and guidelines before starting to
-              ensure you know what to do.
-            </p>
+            <div className="TrainingPage-featuredCard">
+              <h2>Interactive Training Modules</h2>
+              <p>
+                Practice telecalling with 26 realistic roleplay scenarios,
+                including different customer types like happy, angry, and sad
+                customers.
+              </p>
+            </div>
+            <div className="TrainingPage-featuredCard">
+              <h2>Easy Module Selection</h2>
+              <p>
+                Simply click on a module to start training, with clear
+                guidelines provided before beginning.
+              </p>
+            </div>
+            <div className="TrainingPage-featuredCard">
+              <h2>Call Simulation Experience</h2>
+              <p>
+                The system mimics a real phone call with ringing sounds and a
+                customer avatar appearing on the screen.
+              </p>
+            </div>
+            <div className="TrainingPage-featuredCard">
+              <h2>Voice-Based Interaction</h2>
+              <p>
+                Speak directly, and the system converts your speech into text,
+                processes it, and provides a voice response.
+              </p>
+            </div>
+            <div className="TrainingPage-featuredCard">
+              <h2>Realistic Customer Responses</h2>
+              <p>
+                The customer’s voice tone changes dynamically based on their
+                emotions, creating a more immersive experience.
+              </p>
+            </div>
+            <div className="TrainingPage-featuredCard">
+              <h2>Engaging Visuals & Animations</h2>
+              <p>
+                Avatars and smooth animations make the training feel more real
+                and interactive.
+              </p>
+            </div>
+            <div className="TrainingPage-featuredCard">
+              <h2>Step-by-Step Guidance</h2>
+              <p>
+                Receive scenario descriptions and guidelines before starting to
+                ensure you know what to do.
+              </p>
+            </div>
           </div>
           <div className="TrainingPage-rightFeatureImageSection">
-            <img src={product1_avatar} alt="Training Feature Preview" />
+            <img src={FeaturedCard} alt="Training Feature Preview" />
           </div>
         </div>
       </div>
+
+      <div className="Encourage-wrapper">  
+      <div className="Encourage-tiltLayer">
+        <div className="Encourage-contentContainer">
+          <div className="Encourage-topRow">
+            <h2>Ready to enhance your telecommunication skills?</h2>
+            <p>
+            Join our interactive training module now to improve your telecalling abilities.
+          </p>
+          </div>
+          <button>Start Training</button>
+        </div>
+      </div>
+    </div>
 
       {showSelectionArea && (
         <div className="selectionAreaof-TrainingPage">
@@ -251,7 +294,10 @@ const TrainingPage = () => {
             <h2>General Telecalling Module</h2>
             <div className="scenario-descriptionForGeneral">
               <p className="General-TeleCommunication-titleTag">
-                Enhance your communication skills with a simulated customer call experience. This module offers diverse interactions without focusing on any specific product, ensuring well-rounded practice.
+                Enhance your communication skills with a simulated customer call
+                experience. This module offers diverse interactions without
+                focusing on any specific product, ensuring well-rounded
+                practice.
               </p>
             </div>
             <div className="guidelines-generalTeleCommunication">
@@ -269,15 +315,21 @@ const TrainingPage = () => {
                 <input
                   type="checkbox"
                   checked={generalReadGuidelines}
-                  onChange={() => setGeneralReadGuidelines(!generalReadGuidelines)}
-                /> I have read the guidelines.
+                  onChange={() =>
+                    setGeneralReadGuidelines(!generalReadGuidelines)
+                  }
+                />{" "}
+                I have read the guidelines.
               </label>
               <label>
                 <input
                   type="checkbox"
                   checked={generalReadyToProceed}
-                  onChange={() => setGeneralReadyToProceed(!generalReadyToProceed)}
-                /> I am ready to proceed.
+                  onChange={() =>
+                    setGeneralReadyToProceed(!generalReadyToProceed)
+                  }
+                />{" "}
+                I am ready to proceed.
               </label>
             </div>
             <button
@@ -292,7 +344,9 @@ const TrainingPage = () => {
             <h2>Specialized Role-Play Module</h2>
             <div className="scenario-descriptionForProductBased">
               <p>
-                Select a product and a matching customer persona for targeted role-play scenarios. Gain focused, product-specific communication practice.
+                Select a product and a matching customer persona for targeted
+                role-play scenarios. Gain focused, product-specific
+                communication practice.
               </p>
             </div>
             <div className="producatList-traningPage">
@@ -303,7 +357,9 @@ const TrainingPage = () => {
                   <button
                     key={index}
                     onClick={() => handleProductClick(product)}
-                    className={`product-button ${selectedProduct === product ? "active" : ""}`}
+                    className={`product-button ${
+                      selectedProduct === product ? "active" : ""
+                    }`}
                   >
                     {product}
                   </button>
@@ -312,7 +368,10 @@ const TrainingPage = () => {
               {selectedProduct && (
                 <div className="scenario-selection">
                   <h3>Select a Scenario for {selectedProduct}</h3>
-                  <select value={selectedScenario} onChange={handleScenarioChange}>
+                  <select
+                    value={selectedScenario}
+                    onChange={handleScenarioChange}
+                  >
                     <option value="">-- Select a Scenario --</option>
                     {scenarioOptions.map((scenario, idx) => (
                       <option key={idx} value={scenario}>
@@ -339,7 +398,9 @@ const TrainingPage = () => {
                 <li>Adapt your tone based on the customer's emotions.</li>
                 <li>Be ready with product-specific information.</li>
                 <li>Stay calm and professional.</li>
-                <li>Use these simulations to sharpen your product knowledge.</li>
+                <li>
+                  Use these simulations to sharpen your product knowledge.
+                </li>
               </ul>
             </div>
             <div className="acknowledgments-generalTeleCommunication">
@@ -347,15 +408,21 @@ const TrainingPage = () => {
                 <input
                   type="checkbox"
                   checked={productReadGuidelines}
-                  onChange={() => setProductReadGuidelines(!productReadGuidelines)}
-                /> I have read the guidelines.
+                  onChange={() =>
+                    setProductReadGuidelines(!productReadGuidelines)
+                  }
+                />{" "}
+                I have read the guidelines.
               </label>
               <label>
                 <input
                   type="checkbox"
                   checked={productReadyToProceed}
-                  onChange={() => setProductReadyToProceed(!productReadyToProceed)}
-                /> I am ready to proceed.
+                  onChange={() =>
+                    setProductReadyToProceed(!productReadyToProceed)
+                  }
+                />{" "}
+                I am ready to proceed.
               </label>
             </div>
           </div>
@@ -364,21 +431,36 @@ const TrainingPage = () => {
 
       {renderCall && (
         <div className="CallInitation-sectionForTraningpageArea">
-          <IoReturnUpBackOutline onClick={handleBackButton} size={30} className="back-button" />
+          <IoReturnUpBackOutline
+            onClick={handleBackButton}
+            size={30}
+            className="back-button"
+          />
           {callStatus === "inProgress" && (
             <div className="call-container">
               <div className="call-left">
-                <button className="call-icon-button" onClick={handleToggleListening}>
+                <button
+                  className="call-icon-button"
+                  onClick={handleToggleListening}
+                >
                   <IoCall size={30} />
                 </button>
                 <div className="containerFor-userandBotConverstation">
                   {conversation.map((msg, idx) => (
-                    <div key={idx} className={msg.type === "user" ? "userMessage" : "botReply"}>
+                    <div
+                      key={idx}
+                      className={
+                        msg.type === "user" ? "userMessage" : "botReply"
+                      }
+                    >
                       {msg.text}
                     </div>
                   ))}
                 </div>
-                <button className="User-microPhone" onClick={handleToggleListening}>
+                <button
+                  className="User-microPhone"
+                  onClick={handleToggleListening}
+                >
                   <FaMicrophone size={24} />
                 </button>
               </div>
