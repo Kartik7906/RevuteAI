@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -19,44 +19,70 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.General-TeleCommunication,
-.ProductBased-TeleCommunication {
-  flex: 1;
-  background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.telecommunication-module {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #fafafa;
   padding: 20px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.General-TeleCommunication h2,
-.ProductBased-TeleCommunication h2 {
-  color: #333;
-  margin-bottom: 10px;
+.telecommunication-module__back {
+  width: 100px;
+  height: 35px;
+  border-radius: 96px;
+  border: none;
+  background: #3f37c9;
+  color: #fafafa;
 }
 
-.scenario-descriptionForGeneral,
-.scenario-descriptionForProductBased {
+.telecommunication-module__title {
+  font-weight: 700;
+  font-size: 50px;
+  color: #1E2330;
+  margin: 20px 0;
+}
+
+.telecommunication-module__description {
   margin-bottom: 15px;
+  max-width: 500px;
 }
 
-.guidelines-generalTeleCommunication ul {
-  list-style-type: disc;
-  margin-left: 20px;
+.telecommunication-module__description-text {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  color: #1E2330;
 }
 
-.acknowledgments-generalTeleCommunication {
+.telecommunication-module__content {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 0;
+}
+
+.telecommunication-module__left {
+  flex: 1;
+}
+
+.telecommunication-module__acknowledgements {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 }
 
-.acknowledgments-generalTeleCommunication label {
-  margin-right: 15px;
-  font-size: 14px;
+.telecommunication-module__acknowledgements label {
   margin-bottom: 5px;
+  font-size: 14px;
 }
 
-#start-practice {
+.telecommunication-module__guidelines ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+#start-practice,
+#start-practice-product {
   background-color: rgb(25, 167, 214);
   color: #fff;
   border: none;
@@ -68,22 +94,28 @@
   margin-top: 10px;
 }
 
-#start-practice:hover {
+#start-practice:hover,
+#start-practice-product:hover {
   background-color: #004494;
 }
 
-#start-practice:disabled {
+#start-practice:disabled,
+#start-practice-product:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-.product-list {
+.telecommunication-module__product-list {
+  margin: 20px 0;
+}
+
+.telecommunication-module__products {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
 
-.product-button {
+.telecommunication-module__product {
   background-color: #e0e7ff;
   color: #333;
   border: 1px solid #cbd5e1;
@@ -93,12 +125,12 @@
   transition: background-color 0.3s ease;
 }
 
-.product-button.active,
-.product-button:hover {
+.telecommunication-module__product:hover,
+.telecommunication-module__product.active {
   background-color: #c7d2fe;
 }
 
-.scenario-selection select {
+.telecommunication-module__scenario select {
   padding: 8px;
   border: 1px solid #cbd5e1;
   border-radius: 4px;
@@ -106,101 +138,187 @@
   font-size: 16px;
 }
 
-.CallInitation-sectionForTraningpageArea {
-  background-color: #fff;
+.call-view {
+  position: relative;
   width: 100vw;
   height: 100vh;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fefefe;
 }
 
-.back-button {
+.call-view__header {
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+.call-view__back-button {
   cursor: pointer;
   color: #333;
 }
 
-.call-container {
+.call-view__main {
+  margin-top: 60px;
   display: flex;
-  gap: 20px;
-  height: 100%;
-  align-items: center;
+  width: 100%;
+  height: calc(100% - 60px);
 }
 
-.call-left {
+.call-view__left-section {
+  width: 35%;
+  max-width: 400px;
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.call-view__avatar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.call-view__avatar {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.call-view__extra-controls {
+  margin-top: auto;
+}
+
+.call-view__call-button {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.call-view__right-section {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 80%;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.call-right {
-  flex: 1;
+.call-view__chat-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+.call-view__transcript {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow-y: auto;
+}
+
+.call-view__user-message,
+.call-view__bot-message {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  max-width: 70%;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.call-view__user-message {
+  align-self: flex-end;
+  background-color: #daf5d5;
+  color: #2f5132;
+}
+
+.call-view__bot-message {
+  align-self: flex-start;
+  background-color: #ebecf0;
+  color: #23272b;
+}
+
+.call-view__input-bar {
+  display: flex;
   align-items: center;
 }
 
-.call-icon-button {
-  background-color: #28a745;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  color: #fff;
-  align-self: flex-start;
-}
-
-.avatar-img {
-  width: 500px;
-  height: 500px;
-  object-fit: cover;
+.call-view__text-input {
+  flex: 1;
   border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  font-size: 14px;
+  outline: none;
+  margin-right: 10px;
 }
 
-.containerFor-userandBotConverstation {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  min-height: 200px;
-  overflow-y: auto;
-  margin-top: 20px;
-}
-
-.userMessage,
-.botReply {
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-}
-
-.userMessage {
-  background-color: #e9f7ef;
-  color: #155724;
-}
-
-.botReply {
-  background-color: #e2e3e5;
-  color: #383d41;
-}
-
-.User-microPhone {
-  background-color: #dc3545;
+.call-view__mic-button {
+  position: relative;
   border: none;
-  padding: 15px;
-  font-size: 18px;
-  border-radius: 4px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  background-color: #dc3545;
+  color: #fff;
   cursor: pointer;
-  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.User-microPhone:hover {
-  background-color: #c82333;
+.call-view__mic-animation {
+  position: absolute;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255,255,255,0.3);
+  opacity: 0;
+  animation: mic-wave 1.5s infinite ease-out;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+
+.call-view__mic-button.is-listening .call-view__mic-animation {
+  opacity: 1;
+}
+
+@keyframes mic-wave {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.trainingPageinfo-container {
+  background-color: #fafafa;
 }
 
 .TrainingPage-mainContainer-Introsection {
@@ -212,9 +330,10 @@
   flex-direction: column;
   align-items: center;
   padding-top: 8rem;
+  margin-bottom: 80px;
 }
 
-.TrainingPage-mainContainer-IntroSection-CenterDiv{
+.TrainingPage-mainContainer-IntroSection-CenterDiv {
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -274,7 +393,7 @@
   background-color: #e05b22;
   color: #fff;
 }
-/* Container: exactly 100vw x 100vh with no scroll */
+
 .TrainingPage-containerFor-Features {
   width: 100vw;
   height: 100vh;
@@ -296,16 +415,14 @@
   min-width: 300px;
   overflow: auto;
   position: relative;
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .TrainingPage-leftFeatureSection::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
-
-/* Each feature card with a stack animation */
 .TrainingPage-featuredCard {
   background-color: #fff;
   padding: 1rem;
@@ -317,7 +434,6 @@
   animation: stackAnimation 0.5s ease forwards;
 }
 
-/* Stagger the animations for a stack effect */
 .TrainingPage-leftFeatureSection .TrainingPage-featuredCard:nth-child(1) {
   animation-delay: 0.2s;
 }
@@ -340,7 +456,6 @@
   animation-delay: 1.4s;
 }
 
-/* Keyframes for the stack animation */
 @keyframes stackAnimation {
   to {
     opacity: 1;
@@ -348,7 +463,6 @@
   }
 }
 
-/* Headings inside each card with a left accent */
 .TrainingPage-leftFeatureSection h2 {
   font-size: 1rem;
   font-weight: bold;
@@ -368,7 +482,6 @@
   background-color: #000;
 }
 
-/* Paragraph styling */
 .TrainingPage-leftFeatureSection p {
   color: #333;
   line-height: 1.6;
@@ -376,7 +489,6 @@
   max-width: 600px;
 }
 
-/* Right section: Contains the image */
 .TrainingPage-rightFeatureImageSection {
   flex: 1;
   display: flex;
@@ -386,7 +498,6 @@
   position: relative;
 }
 
-/* Make sure the image covers its container */
 .TrainingPage-rightFeatureImageSection img {
   width: 100%;
   height: 100%;
@@ -395,7 +506,7 @@
 }
 
 .Encourage-wrapper {
-  width: 100vw; 
+  width: 100vw;
   height: 100vh;
   background-color: white;
   display: flex;
@@ -418,7 +529,7 @@
 
 .Encourage-contentContainer {
   width: 98%;
-  height: 100%; /* Add 'px' for proper height */
+  height: 100%;
   background: #fff;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   padding: 2rem;
@@ -426,12 +537,7 @@
   align-items: center;
   overflow: hidden;
   justify-content: space-between;
-  transform: rotate(-2deg); /* Rotates the div 10 degrees */
-}
-
-
-.Encourage-topRow {
-
+  transform: rotate(-2deg);
 }
 
 .Encourage-topRow h2 {
@@ -447,7 +553,6 @@
   line-height: 1.5;
 }
 
-/* Button styling */
 .Encourage-contentContainer button {
   background-color: #cc5e1f;
   color: #fff;
