@@ -3,6 +3,7 @@ import "./Elearning.css";
 import companyLogo from "../../images/company_logo.jpeg";
 import { useNavigate } from "react-router-dom";
 import enrollImg from "../../images/enroll.jpg";
+import { FaUser } from "react-icons/fa";
 
 const Elearning = () => {
   const navigate = useNavigate();
@@ -202,7 +203,7 @@ const Elearning = () => {
           <div
             className="learningPageNavbar-circulardiv"
             onClick={() => navigate("/profile")}
-          />
+          ><FaUser size={20}/></div>
         </div>
       </nav>
 

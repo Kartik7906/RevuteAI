@@ -8,6 +8,7 @@ import Task1 from "../Task1/Task1";
 import Task2 from "../Task2/Task2";
 import './LandingPage.css'
 import ListedReport from "../ListedReports/ListedReport";
+import Module from "../ModulesPage/Module";
 
 const LandingPage = () => {
   const [section, setSection] = useState("dashboard");
@@ -18,7 +19,7 @@ const LandingPage = () => {
         return <Dashboard />;
       case "announcements":
         return <Announcement />;
-      case `education`:
+      case `Courses`:
         return <Module />;
       case "task1":
         return <Task1 />;

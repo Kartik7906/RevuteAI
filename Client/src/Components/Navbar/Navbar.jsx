@@ -3,6 +3,7 @@ import { FaBell } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import companyLogo from '../../images/company_logo.jpeg';
 import './Navbar.css';
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Navbar = () => {
           Logout
         </button>
         <div className='profileContainer' onClick={handleProfile}>
-          
+        <FaUser size={20}/>
         </div>
       </div>
     </nav>

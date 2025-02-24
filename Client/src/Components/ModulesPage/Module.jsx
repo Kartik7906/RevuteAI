@@ -8,6 +8,7 @@ import axios from "axios";
 import "./Module.css";
 import companyLogo from "../../images/company_logo.jpeg";
 import modulesData from "../modulesData";
+import { FaUser } from "react-icons/fa";
 
 const Module = () => {
   const navigate = useNavigate();
@@ -255,7 +256,7 @@ const Module = () => {
           </div>
           <div className="Navbar-rightSection">
             <button className="Logout-btn" onClick={handleLogout}>Logout</button>
-            <div className="UserAvatar" onClick={() => navigate("/profile")} />
+            <div className="UserAvatar" onClick={() => navigate("/profile")}><FaUser size={20}/></div>
           </div>
         </nav>
         <div className="ModulePage-middleSection">
@@ -412,7 +413,7 @@ const Module = () => {
         </div>
       </div>
       <div className="ChatbotToggle" onClick={toggleChatbot}>
-        <TbMessageChatbot size={40} />
+        <TbMessageChatbot size={30} />
       </div>
       {isChatbotActive && (
         <div className="ChatbotContainer">

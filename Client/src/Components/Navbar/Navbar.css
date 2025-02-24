@@ -47,7 +47,10 @@
   height: 40px;
   width: 40px;
   border-radius: 50%;
-  background-color: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(226, 225, 225);
 }
 
 @media (max-width: 768px) {

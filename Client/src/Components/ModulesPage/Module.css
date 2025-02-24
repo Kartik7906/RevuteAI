@@ -36,15 +36,14 @@
 }
 
 .Logout-btn {
-  background-color: #7b5fa6;
+  background-color: #007bff;
   color: #fff;
   border: none;
-  padding: 8px 12px;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  margin-right: 20px;
-  border-radius: 4px;
-  font-size: 14px;
   transition: background-color 0.3s ease;
+  margin-right: 10px;
 }
 
 .Logout-btn:hover {
@@ -52,10 +51,13 @@
 }
 
 .UserAvatar {
-  width: 40px;
   height: 40px;
-  background-color: #7b5fa6;
+  width: 40px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(226, 225, 225);
   cursor: pointer;
 }
 
@@ -114,7 +116,7 @@
 
 .ProgressCompleted {
   height: 100%;
-  background-color: #7b5fa6;
+  background-color: #007bff;
   width: 0%;
   transition: width 0.5s ease;
 }
@@ -179,7 +181,7 @@
 }
 
 .ModuleCompletionIndicator.completed {
-  background: #7b5fa6;
+  background-color: green;
 }
 
 .ModuleSubItems {
@@ -349,7 +351,7 @@
   right: 20px;
   width: 56px;
   height: 56px;
-  background-color: #7b5fa6;
+  background-color: #007bff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -402,7 +404,7 @@
 }
 
 .ChatbotUserMessage .ChatbotMessageText {
-  background-color: #7b5fa6;
+  background-color: #007bff;
   color: #fff;
 }
 
@@ -428,7 +430,7 @@
   padding: 8px;
   margin-left: 6px;
   font-size: 0.9rem;
-  background-color: #7b5fa6;
+  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -437,7 +439,7 @@
 }
 
 .ChatbotSendBtn:hover {
-  background-color: #6a4b95;
+  background-color: #205791;
 }
 
 /* Rotate Animation for Icons */
