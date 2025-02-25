@@ -1,161 +1,160 @@
-const express = require("express")
-const router = express.Router()
-const mongoose = require("mongoose")
-const UserProgress = require("../Model/EducationSchema")
-const modulesData = require("../Model/modulesData")
+// module.js (Express Router)
+const express = require("express");
+const router = express.Router();
+const mongoose = require("mongoose");
+const UserProgress = require("../Model/EducationSchema");
+const modulesData = require("../Model/modulesData");
 
 function recalcProgress(userProgress) {
-  let totalUnits = 0
-  let completedUnits = 0
+  let totalUnits = 0;
+  let completedUnits = 0;
   modulesData.forEach((mod) => {
-    if (mod.subItems && mod.subItems.length > 0) {
+    if (!mod.subItems || mod.subItems.length === 0) {
+      totalUnits += 1;
+      const mp = userProgress.modules.find((m) => m.moduleId === mod.id.toString());
+      if (mp && mp.completed) completedUnits++;
+    } else {
       mod.subItems.forEach((sub) => {
         if (sub.topics && sub.topics.length > 0) {
-          totalUnits += sub.topics.length
-          const mp = userProgress.modules.find((m) => m.moduleId === mod.id.toString())
+          totalUnits += sub.topics.length;
+          const mp = userProgress.modules.find((m) => m.moduleId === mod.id.toString());
           if (mp) {
-            const sp = mp.subItems.find((s) => s.subItemName === sub.name)
-            if (sp) {
+            const sp = mp.subItems.find((s) => s.subItemName === sub.name);
+            if (sp && sp.topics) {
               sub.topics.forEach((t) => {
-                const tp = sp.topics.find((x) => x.topicName === t.name)
-                if (tp && tp.completed) completedUnits++
-              })
+                const tp = sp.topics.find((x) => x.topicName === t.name);
+                if (tp && tp.completed) completedUnits++;
+              });
             }
           }
         } else {
-          totalUnits += 1
-          const mp = userProgress.modules.find((m) => m.moduleId === mod.id.toString())
+          totalUnits += 1;
+          const mp = userProgress.modules.find((m) => m.moduleId === mod.id.toString());
           if (mp) {
-            const sp = mp.subItems.find((s) => s.subItemName === sub.name)
-            if (sp && sp.completed) completedUnits++
+            const sp = mp.subItems.find((s) => s.subItemName === sub.name);
+            if (sp && sp.completed) completedUnits++;
           }
         }
-      })
-    } else {
-      totalUnits += 1
-      const mp = userProgress.modules.find((m) => m.moduleId === mod.id.toString())
-      if (mp && mp.completed) completedUnits++
+      });
     }
-  })
-  if (totalUnits === 0) return 0
-  return Math.floor((completedUnits / totalUnits) * 100)
+  });
+  return totalUnits > 0 ? Math.floor((completedUnits / totalUnits) * 100) : 0;
 }
 
 router.get("/:userId", async (req, res) => {
   try {
-    const { userId } = req.params
-    const _id = new mongoose.Types.ObjectId(userId)
-    const progressData = await UserProgress.findOne({ userId: _id })
-    if (!progressData) return res.json({ modules: [], progress: 0, overallScore: 0 })
-    res.json(progressData)
+    const { userId } = req.params;
+    const _id = new mongoose.Types.ObjectId(userId);
+    const progressData = await UserProgress.findOne({ userId: _id });
+    if (!progressData) return res.json({ modules: [], progress: 0, overallScore: 0 });
+    res.json(progressData);
   } catch (err) {
-    res.status(500).json({ error: "Server error fetching progress." })
+    res.status(500).json({ error: "Server error fetching progress." });
   }
-})
+});
 
 router.post("/:userId/completeTopic", async (req, res) => {
   try {
-    const { userId } = req.params
-    const { moduleId, subItemName, topicName, username } = req.body
-    const _id = new mongoose.Types.ObjectId(userId)
-    let userProgress = await UserProgress.findOne({ userId: _id })
-    if (!userProgress) userProgress = new UserProgress({ userId: _id, username, modules: [] })
-    let mp = userProgress.modules.find((m) => m.moduleId === moduleId)
-    if (!mp) {
-      mp = { moduleId, completed: false, subItems: [] }
-      userProgress.modules.push(mp)
+    const { userId } = req.params;
+    const { moduleId, subItemName, topicName, username } = req.body;
+    const _id = new mongoose.Types.ObjectId(userId);
+    let userProgress = await UserProgress.findOne({ userId: _id });
+    if (!userProgress) userProgress = new UserProgress({ userId: _id, username, modules: [] });
+    let moduleProgress = userProgress.modules.find((m) => m.moduleId === moduleId);
+    if (!moduleProgress) {
+      moduleProgress = { moduleId, completed: false, subItems: [] };
+      userProgress.modules.push(moduleProgress);
     }
-    let sp = mp.subItems.find((s) => s.subItemName === subItemName)
-    if (!sp) {
-      sp = { subItemName, completed: false, attempts: 0, lastAttemptDate: null, score: null, topics: [] }
-      mp.subItems.push(sp)
+    let subItemProgress = moduleProgress.subItems.find((s) => s.subItemName === subItemName);
+    if (!subItemProgress) {
+      subItemProgress = { subItemName, completed: false, attempts: 0, lastAttemptDate: null, score: null, topics: [] };
+      moduleProgress.subItems.push(subItemProgress);
     }
-    let tp = sp.topics.find((t) => t.topicName === topicName)
-    if (!tp) {
-      tp = { topicName, completed: false }
-      sp.topics.push(tp)
+    let topicProgress = subItemProgress.topics.find((t) => t.topicName === topicName);
+    if (!topicProgress) {
+      topicProgress = { topicName, completed: false };
+      subItemProgress.topics.push(topicProgress);
     }
-    tp.completed = true
-    if (sp.topics.every((t) => t.completed)) sp.completed = true
-    userProgress.progress = recalcProgress(userProgress)
-    await userProgress.save()
-    res.json({ message: "Topic marked as completed", userProgress })
+    topicProgress.completed = true;
+    if (subItemProgress.topics.every((t) => t.completed)) subItemProgress.completed = true;
+    userProgress.progress = recalcProgress(userProgress);
+    await userProgress.save();
+    res.json({ message: "Topic marked as completed", userProgress });
   } catch (err) {
-    res.status(500).json({ error: "Server error updating topic completion." })
+    res.status(500).json({ error: "Server error updating topic completion." });
   }
-})
+});
 
 router.post("/:userId/submitScore", async (req, res) => {
   try {
-    const { userId } = req.params
-    const { moduleId, subItemName, userAnswers, username } = req.body
-    if (!Array.isArray(userAnswers)) return res.status(400).json({ error: "Invalid answers format" })
-    const defModule = modulesData.find((m) => m.id.toString() === moduleId.toString())
-    if (!defModule) return res.status(400).json({ error: "Module not found" })
-    const defSubItem = defModule.subItems.find((s) => s.name === subItemName)
-    if (!defSubItem || !defSubItem.content?.quiz) return res.status(400).json({ error: "Sub-item not found or no quiz available" })
-    let computedScore = 0
-    const questions = defSubItem.content.quiz
-    const totalQuestions = questions.length
-    const isSpecial = subItemName.toLowerCase().includes("grammar test") || subItemName.toLowerCase().includes("communication test")
-    if (isSpecial) {
-      computedScore = totalQuestions
-    } else {
-      questions.forEach((q, index) => {
-        const ua = (userAnswers[index] || "").toString().trim().toLowerCase()
-        if (q.type === "mcq") {
-          const ca = q.answer?.toString().toLowerCase()
-          if (ua === ca) computedScore++
-        } else if (q.type === "qna") {
-          if (ua) computedScore++
-        }
-      })
+    const { userId } = req.params;
+    const { moduleId, subItemName, score, username } = req.body;
+    const PASS_THRESHOLD = 8;
+    const _id = new mongoose.Types.ObjectId(userId);
+    let userProgress = await UserProgress.findOne({ userId: _id });
+    if (!userProgress) userProgress = new UserProgress({ userId: _id, username, modules: [] });
+    let moduleProgress = userProgress.modules.find((m) => m.moduleId === moduleId);
+    if (!moduleProgress) {
+      moduleProgress = { moduleId, completed: false, subItems: [] };
+      userProgress.modules.push(moduleProgress);
     }
-    let passed = false
-    if (isSpecial) {
-      passed = true
-    } else {
-      if (questions[0]?.type === "mcq") {
-        const passThreshold = Math.ceil(totalQuestions * 0.8)
-        passed = computedScore >= passThreshold
+    let subItemProgress = moduleProgress.subItems.find((s) => s.subItemName === subItemName);
+    if (!subItemProgress) {
+      subItemProgress = { subItemName, completed: false, attempts: 0, lastAttemptDate: null, score: null, topics: [] };
+      moduleProgress.subItems.push(subItemProgress);
+    }
+    if (subItemProgress.completed) return res.status(400).json({ error: "This test is already completed." });
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const lastAttemptStr = subItemProgress.lastAttemptDate ? new Date(subItemProgress.lastAttemptDate).toISOString().slice(0, 10) : null;
+    if (lastAttemptStr !== todayStr) subItemProgress.attempts = 0;
+    if (subItemProgress.attempts >= 3) {
+      return res.status(400).json({ error: "You have reached maximum attempts for today.", attempts: subItemProgress.attempts });
+    }
+    subItemProgress.attempts += 1;
+    subItemProgress.lastAttemptDate = new Date();
+    if (score >= PASS_THRESHOLD) {
+      subItemProgress.completed = true;
+      subItemProgress.score = score;
+      subItemProgress.attempts = 0;
+      const defModule = modulesData.find((m) => m.id.toString() === moduleId);
+      if (defModule && defModule.subItems) {
+        const allSubItemsDone = defModule.subItems.every((x) => {
+          const sp = moduleProgress.subItems.find((z) => z.subItemName === x.name);
+          return sp && sp.completed;
+        });
+        moduleProgress.completed = allSubItemsDone;
       } else {
-        passed = computedScore === totalQuestions
+        moduleProgress.completed = true;
+      }
+      const allScoredSubItems = userProgress.modules.flatMap((m) => m.subItems.filter((s) => s.score !== null));
+      if (allScoredSubItems.length > 0) {
+        const total = allScoredSubItems.reduce((acc, s) => acc + s.score, 0);
+        userProgress.overallScore = total; // Use the sum instead of average
+      } else {
+        userProgress.overallScore = 0;
+      }
+      
+      
+      userProgress.progress = recalcProgress(userProgress);
+      await userProgress.save();
+      return res.json({ message: "Test passed", userProgress, attempts: subItemProgress.attempts });
+    } else {
+      await userProgress.save();
+      if (subItemProgress.attempts < 3) {
+        return res.status(400).json({
+          error: `Test failed. You have ${3 - subItemProgress.attempts} attempt(s) remaining today.`,
+          attempts: subItemProgress.attempts
+        });
+      } else {
+        return res.status(400).json({
+          error: "Test failed. You have reached maximum attempts for today.",
+          attempts: subItemProgress.attempts
+        });
       }
     }
-    const _id = new mongoose.Types.ObjectId(userId)
-    let userProgress = await UserProgress.findOne({ userId: _id })
-    if (!userProgress) userProgress = new UserProgress({ userId: _id, username, modules: [] })
-    let mp = userProgress.modules.find((m) => m.moduleId === moduleId)
-    if (!mp) {
-      mp = { moduleId, completed: false, subItems: [] }
-      userProgress.modules.push(mp)
-    }
-    let sp = mp.subItems.find((s) => s.subItemName === subItemName)
-    if (!sp) {
-      sp = { subItemName, completed: false, attempts: 0, lastAttemptDate: null, score: null, topics: [] }
-      mp.subItems.push(sp)
-    }
-    const today = new Date().toISOString().slice(0, 10)
-    const lastAttempt = sp.lastAttemptDate ? sp.lastAttemptDate.toISOString().slice(0, 10) : null
-    if (lastAttempt !== today) sp.attempts = 0
-    if (sp.attempts >= 3 && !passed) {
-      return res.status(400).json({ error: "Test locked for today. Please try again tomorrow.", passed: false, attempts: sp.attempts })
-    }
-    sp.attempts++
-    sp.lastAttemptDate = new Date()
-    sp.score = computedScore
-    if (passed) sp.completed = true
-    userProgress.progress = recalcProgress(userProgress)
-    await userProgress.save()
-    if (passed) {
-      return res.json({ message: "Test passed", score: computedScore, passed: true, attempts: sp.attempts, userProgress })
-    } else {
-      const attemptsRemaining = 3 - sp.attempts
-      return res.status(400).json({ error: `Test failed. ${attemptsRemaining} attempt(s) remaining today.`, passed: false, attempts: sp.attempts })
-    }
   } catch (err) {
-    return res.status(500).json({ error: "Server error submitting test score." })
+    res.status(500).json({ error: "Server error submitting test score." });
   }
-})
+});
 
-module.exports = router
+module.exports = router;
