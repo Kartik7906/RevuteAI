@@ -1,143 +1,123 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login, register } from "../../Services/apiConnection";
-import { FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
-import "./Credentials.css";
+// Updated Credentials Component (React)
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { login, register } from "../../Services/apiConnection"
+import { FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa"
+import "./Credentials.css"
 
 const Credentials = () => {
-  const [isActive, setIsActive] = useState(false);
-  const navigate = useNavigate();
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [loginErrors, setLoginErrors] = useState({});
-  const [loginIsSubmitting, setLoginIsSubmitting] = useState(false);
+  const [isActive, setIsActive] = useState(false)
+  const navigate = useNavigate()
+  const [loginData, setLoginData] = useState({ email: "", password: "" })
+  const [loginErrors, setLoginErrors] = useState({})
+  const [loginIsSubmitting, setLoginIsSubmitting] = useState(false)
   const [registerData, setRegisterData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: ""
-  });
-  const [registerErrors, setRegisterErrors] = useState({});
-  const [registerIsSubmitting, setRegisterIsSubmitting] = useState(false);
-  const [loginShowPassword, setLoginShowPassword] = useState(false);
-  const [registerShowPassword, setRegisterShowPassword] = useState(false);
-  const [registerShowConfirmPassword, setRegisterShowConfirmPassword] = useState(false);
-  const adminCredentials = { email: "kartik@revute.ai", password: "revute@790" };
-  const superAdminCredentials = { email: "nayanshree@revute.ai", password: "revute@790" };
+  })
+  const [registerErrors, setRegisterErrors] = useState({})
+  const [registerIsSubmitting, setRegisterIsSubmitting] = useState(false)
+  const [loginShowPassword, setLoginShowPassword] = useState(false)
+  const [registerShowPassword, setRegisterShowPassword] = useState(false)
+  const [registerShowConfirmPassword, setRegisterShowConfirmPassword] = useState(false)
+
   const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
   const validateLogin = () => {
-    const errors = {};
-    if (!loginData.email) {
-      errors.email = "Enter email";
-    } else if (!validateEmail(loginData.email)) {
-      errors.email = "Invalid email address";
-    }
-    if (!loginData.password) {
-      errors.password = "Enter password";
-    } else if (loginData.password.length < 6) {
-      errors.password = "Password must be at least 6 characters";
-    }
-    setLoginErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+    const errors = {}
+    if (!loginData.email) errors.email = "Enter email"
+    else if (!validateEmail(loginData.email)) errors.email = "Invalid email address"
+    if (!loginData.password) errors.password = "Enter password"
+    else if (loginData.password.length < 6) errors.password = "Password must be at least 6 characters"
+    setLoginErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
   const validateRegister = () => {
-    const errors = {};
-    if (!registerData.email) {
-      errors.email = "Enter email";
-    } else if (!validateEmail(registerData.email)) {
-      errors.email = "Invalid email address";
-    }
-    if (!registerData.username) {
-      errors.username = "Enter username";
-    } else if (registerData.username.length < 3) {
-      errors.username = "Username must be at least 3 characters";
-    }
-    if (!registerData.password) {
-      errors.password = "Enter password";
-    } else if (registerData.password.length < 6) {
-      errors.password = "Password must be at least 6 characters";
-    }
-    if (!registerData.confirmPassword) {
-      errors.confirmPassword = "Confirm your password";
-    } else if (registerData.password !== registerData.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
-    }
-    setRegisterErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+    const errors = {}
+    if (!registerData.email) errors.email = "Enter email"
+    else if (!validateEmail(registerData.email)) errors.email = "Invalid email address"
+    if (!registerData.username) errors.username = "Enter username"
+    else if (registerData.username.length < 3) errors.username = "Username must be at least 3 characters"
+    if (!registerData.password) errors.password = "Enter password"
+    else if (registerData.password.length < 6) errors.password = "Password must be at least 6 characters"
+    if (!registerData.confirmPassword) errors.confirmPassword = "Confirm your password"
+    else if (registerData.password !== registerData.confirmPassword) errors.confirmPassword = "Passwords do not match"
+    setRegisterErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
   const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData((prev) => ({ ...prev, [name]: value }));
-    setLoginErrors((prev) => ({ ...prev, [name]: "" }));
-  };
+    const { name, value } = e.target
+    setLoginData(prev => ({ ...prev, [name]: value }))
+    setLoginErrors(prev => ({ ...prev, [name]: "" }))
+  }
+
   const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateLogin()) return;
-    if (
-      loginData.email === adminCredentials.email &&
-      loginData.password === adminCredentials.password
-    ) {
-      navigate("/adminPannel");
-      return;
-    }
-    if (
-      loginData.email === superAdminCredentials.email &&
-      loginData.password === superAdminCredentials.password
-    ) {
-      navigate("/superadminPannel");
-      return;
-    }
-    setLoginIsSubmitting(true);
+    e.preventDefault()
+    if (!validateLogin()) return
+    setLoginIsSubmitting(true)
     try {
-      const response = await login({ email: loginData.email, password: loginData.password });
-      const data = await response.json();
+      const response = await login({ email: loginData.email, password: loginData.password })
+      const data = await response.json()
       if (!response.ok) {
-        setLoginErrors({ apiError: data.message || "Please register first" });
+        setLoginErrors({ apiError: data.message || "Please register first" })
       } else {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("userId", data.userId);
-        navigate("/landingpage");
+        localStorage.setItem("token", data.token)
+        localStorage.setItem("username", data.username)
+        localStorage.setItem("userId", data.userId)
+        if (data.role === "admin") {
+          navigate("/adminPannel")
+        } else if (data.role === "superadmin") {
+          navigate("/superadminPannel")
+        } else {
+          navigate("/landingpage")
+        }
       }
     } catch (error) {
-      setLoginErrors({ apiError: "Something went wrong. Please try again later." });
+      setLoginErrors({ apiError: "Something went wrong. Please try again later." })
     } finally {
-      setLoginIsSubmitting(false);
+      setLoginIsSubmitting(false)
     }
-  };
+  }
+
   const handleRegisterChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterData((prev) => ({ ...prev, [name]: value }));
-    setRegisterErrors((prev) => ({ ...prev, [name]: "" }));
-  };
+    const { name, value } = e.target
+    setRegisterData(prev => ({ ...prev, [name]: value }))
+    setRegisterErrors(prev => ({ ...prev, [name]: "" }))
+  }
+
   const handleRegisterSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateRegister()) return;
-    setRegisterIsSubmitting(true);
+    e.preventDefault()
+    if (!validateRegister()) return
+    setRegisterIsSubmitting(true)
     try {
       const response = await register({
         email: registerData.email,
         username: registerData.username,
         password: registerData.password,
-        confirmPassword: registerData.confirmPassword,
-        role: "user"
-      });
-      const data = await response.json();
+        confirmPassword: registerData.confirmPassword
+      })
+      const data = await response.json()
       if (!response.ok) {
-        setRegisterErrors({ apiError: data.message || "Registration failed." });
+        setRegisterErrors({ apiError: data.message || "Registration failed." })
       } else {
-        alert("User registered successfully!");
-        setRegisterData({ username: "", email: "", password: "", confirmPassword: "" });
-        setIsActive(false);
+        alert("Registered successfully!")
+        setRegisterData({ username: "", email: "", password: "", confirmPassword: "" })
+        setIsActive(false)
       }
     } catch (err) {
-      setRegisterErrors({ apiError: "Registration failed, please try again." });
+      setRegisterErrors({ apiError: "Registration failed, please try again." })
     } finally {
-      setRegisterIsSubmitting(false);
+      setRegisterIsSubmitting(false)
     }
-  };
+  }
+
   return (
     <div className="crediantials-credentials-container">
       <div className={`crediantials-container ${isActive ? "crediantials-active" : ""}`}>
@@ -169,23 +149,14 @@ const Credentials = () => {
                 value={loginData.password}
                 onChange={handleLoginChange}
               />
-              <span
-                onClick={() => setLoginShowPassword(!loginShowPassword)}
-                className="crediantials-iconstyle"
-                style={{ cursor: "pointer" }}
-              >
+              <span onClick={() => setLoginShowPassword(!loginShowPassword)} className="crediantials-iconstyle" style={{ cursor: "pointer" }}>
                 {loginShowPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               {loginErrors.password && <span className="error-tooltip">{loginErrors.password}</span>}
             </div>
             {loginErrors.apiError && <div className="api-error">{loginErrors.apiError}</div>}
             <div className="crediantials-forgot-link">
-              <span
-                className="crediantials-forgot-link-span"
-                role="button"
-                tabIndex="0"
-                onClick={() => navigate("/forgot-password")}
-              >
+              <span className="crediantials-forgot-link-span" role="button" tabIndex="0" onClick={() => navigate("/forgot-password")}>
                 Forgot Password?
               </span>
             </div>
@@ -236,11 +207,7 @@ const Credentials = () => {
                 value={registerData.password}
                 onChange={handleRegisterChange}
               />
-              <span
-                onClick={() => setRegisterShowPassword(!registerShowPassword)}
-                className="crediantials-iconstyle"
-                style={{ cursor: "pointer" }}
-              >
+              <span onClick={() => setRegisterShowPassword(!registerShowPassword)} className="crediantials-iconstyle" style={{ cursor: "pointer" }}>
                 {registerShowPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               {registerErrors.password && <span className="error-tooltip">{registerErrors.password}</span>}
@@ -256,11 +223,7 @@ const Credentials = () => {
                 value={registerData.confirmPassword}
                 onChange={handleRegisterChange}
               />
-              <span
-                onClick={() => setRegisterShowConfirmPassword(!registerShowConfirmPassword)}
-                className="crediantials-iconstyle"
-                style={{ cursor: "pointer" }}
-              >
+              <span onClick={() => setRegisterShowConfirmPassword(!registerShowConfirmPassword)} className="crediantials-iconstyle" style={{ cursor: "pointer" }}>
                 {registerShowConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
               {registerErrors.confirmPassword && <span className="error-tooltip">{registerErrors.confirmPassword}</span>}
@@ -289,7 +252,7 @@ const Credentials = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Credentials;
+export default Credentials

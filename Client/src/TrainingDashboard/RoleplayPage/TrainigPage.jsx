@@ -426,6 +426,7 @@ const TrainingPage = () => {
       setMessages([{ sender: "System", text: "Ringing..." }]);
       setTimeout(() => {
         ringSound.pause();
+        ringSound.currentTime = 0;
         const pickupSound = new Audio("../../images/phone-pickup.mp3");
         pickupSound.play();
         const dummyResponse = {
@@ -458,6 +459,7 @@ const TrainingPage = () => {
         }, 500);
       }, 3000);
     };
+    
 
     const handleSendMessage = async () => {
       if (inputMessage.trim() !== "") {
@@ -550,24 +552,33 @@ const TrainingPage = () => {
 
     if (!inCall) {
       return (
-        <div className="telecalling-view__not-in-call">
-          <div className="telecalling-view__not-in-call-box">
-            <h2 className="telecalling-view__not-in-call-title">Call Center Training</h2>
-            <div className="telecalling-view__call-info">
-              <h3 className="telecalling-view__call-info-title">Available Calls</h3>
-              <p className="telecalling-view__call-count">{remainingCalls} / {totalScenarios} calls remaining</p>
-              <p className="telecalling-view__next-type">Next customer type: {remainingCalls > 3 ? "Polite" : "Rude"}</p>
-            </div>
-            <button className="telecalling-view__make-call-button" onClick={handleMakeCall} disabled={remainingCalls === 0}>
-              {remainingCalls > 0 ? "Make Call" : "No More Calls Available"}
-            </button>
-            {usedScenarios.length > 0 && (
-              <button className="telecalling-view__reset-button" onClick={handleReset}>
-                Reset All
+        <>
+        <div className="telecalling-afterCallView">
+          <button className="back" onClick={resetTraining}>Back</button>
+          <div className="telecalling-view__not-in-call">
+            <div className="telecalling-view__not-in-call-box">
+              <h2 className="telecalling-view__not-in-call-title">Welcome to Call Center Training!</h2>
+              <p className="telecalling-view__welcome-text">
+                You are just one step away from making a call. Click "Make Call" below to start your training session.
+              </p>
+              <div className="telecalling-view__call-info">
+                <h3 className="telecalling-view__call-info-title">Available Calls</h3>
+                <p className="telecalling-view__call-count">{remainingCalls} / {totalScenarios} calls remaining</p>
+                <p className="telecalling-view__next-type">Next customer type: {remainingCalls > 3 ? "Polite" : "Rude"}</p>
+              </div>
+              <button className="telecalling-view__make-call-button" onClick={handleMakeCall} disabled={remainingCalls === 0}>
+                {remainingCalls > 0 ? "Make Call" : "No More Calls Available"}
               </button>
-            )}
+              {usedScenarios.length > 0 && (
+                <button className="telecalling-view__reset-button" onClick={handleReset}>
+                  Reset All
+                </button>
+              )}
+              <p className="telecalling-view__footer-text">You have a total of 5 calls. Happy Learning!</p>
+            </div>
           </div>
         </div>
+        </>
       );
     }
     return (
