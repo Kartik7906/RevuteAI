@@ -15,7 +15,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // Add this field to store user/admin/superadmin role
   role: {
     type: String,
     enum: ['user', 'admin', 'superadmin'],

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const UserProgress = require("../Model/EducationSchema"); // Adjust the path
+const UserProgress = require("../Model/EducationSchema"); 
 
 router.get("/leaderboard", async (req, res) => {
   try {
     const users = await UserProgress.find()
-      .sort({ overallScore: -1 }) // Sort by highest score first
-      .select("username overallScore userId"); // Fetch only necessary fields
+      .sort({ overallScore: -1 }) 
+      .select("username overallScore userId");
 
     res.json(users);
   } catch (error) {

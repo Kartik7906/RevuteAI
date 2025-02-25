@@ -17,6 +17,8 @@ import Module from "./Components/ModulesPage/Module";
 import Leaderboard from "./Components/LeaderBoard/Leaderboard";
 import Elearning from "./Components/ElearningPage/Elearning";
 import TrainigPage from "./TrainingDashboard/RoleplayPage/TrainigPage";
+import AdminPannel from "./Pannels/AdminPannel/AdminPannel";
+import SuperAdminPannel from "./Pannels/superAdminPannel/SuperAdminPannel";
 
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
           <Route path="/leaderboard" element={<Leaderboard/>} />
           <Route path="/elearning" element={<Elearning/>} />
           <Route path="/userTraining" element={<TrainigPage/>} />
+          <Route path="/adminPannel" element={<AdminPannel/>} />
+          <Route path="/superadminPannel" element={<SuperAdminPannel />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -37,6 +37,7 @@ app.use("/api/report", require("./Routes/ReportRoute"));
 app.use("/api/module", require("./Routes/EducationRoute"));
 app.use("/api/rank", require("./Routes/LeaderboardRoute"));
 app.use("/api/trainingPage", require("./Routes/TrainingPage"))
+app.use("/api/admin", require("./Routes/AdminRoutes"));
 
 
 app.get('/', (req, res) => {

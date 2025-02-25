@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body, .learningpage-mainContainer {
+  overflow-x: hidden;
+}
+
 .learningpage-mainContainer {
   width: 100vw;
   min-height: 100vh;
@@ -62,7 +66,7 @@
 }
 
 .learningPage-Uppercontent {
-  background-color: #7b5fa6;
+  background: linear-gradient(135deg, #141e30, #243b55);
   color: #ffffff;
   padding: 20px;
   height: 40%;
@@ -71,13 +75,14 @@
   justify-content: space-around;
 }
 
-.learnngPage-Lowercontent {
+.learningPage-Lowercontent {
   height: 60%;
   padding: 20px;
   display: flex;
   justify-content: flex-end;
   align-items: end;
   background-color: #d4d2d2;
+  overflow-x: hidden;
 }
 
 .learningPage-overFlowcontainer {
@@ -87,6 +92,7 @@
   gap: 20px;
   width: 100%;
   padding: 20px 40px;
+  overflow-x: hidden;
 }
 
 .learningPage-enrollCourseDiv {
@@ -102,7 +108,7 @@
 
 .imagediv-enrollsection {
   width: 100%;
-  height: 200px;
+  height: 200px; /* Default height for larger screens */
   background-color: #eee;
   display: flex;
   justify-content: center;
@@ -113,7 +119,7 @@
 .imagediv-enrollsection img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Ensures the image covers the container without distortion */
 }
 
 .enrolment-details {
@@ -124,7 +130,7 @@
 }
 
 .joinCourse-btn {
-  background-color: #7b5fa6;
+  background: linear-gradient(135deg, #141e30, #243b55);
   color: #ffffff;
   border: none;
   padding: 8px 12px;
@@ -145,7 +151,7 @@
 }
 
 .share-link {
-  color: #7b5fa6;
+  color: #141e30; /* Changed color */
   cursor: pointer;
   font-weight: 500;
   margin-top: 10px;
@@ -159,7 +165,8 @@
 }
 
 .learningPage-content-uppersection {
-  background-color: #7b5fa6;
+  background: linear-gradient(135deg, #141e30, #243b55);
+
   color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -203,6 +210,7 @@
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
+  overflow-y: hidden;
 }
 
 .lessons-info {
@@ -314,11 +322,10 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #7b5fa6;
+  color: #141e30; /* Changed color */
 }
 
 .modal-body {
-  
 }
 
 .modal-subitem {
@@ -332,7 +339,7 @@
 .modal-subitem h3 {
   margin-bottom: 10px;
   font-size: 1.2rem;
-  color: #7b5fa6;
+  color: #141e30; /* Changed color */
 }
 
 .modal-subitem ul {
@@ -343,4 +350,159 @@
 .modal-subitem ul li {
   margin-bottom: 5px;
   color: #555;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .learningPage-Navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .learningPageNavbar-rightsection {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .Logout-btn-design {
+    width: 100%;
+    text-align: center;
+  }
+
+  .learningpage-contentArea {
+    height: auto;
+    padding: 10px;
+  }
+
+  .learningPage-Uppercontent, .learningPage-Lowercontent {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .learningPage-overFlowcontainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .learningPage-enrollCourseDiv {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .learningPage-contentSection {
+    width: 100%;
+  }
+
+  .banner-info {
+    align-items: center;
+  }
+
+  .banner-title {
+    font-size: 1.5rem;
+  }
+
+  .banner-tabs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lesson-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lesson-preview-btn {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .lesson-xp {
+    margin-top: 10px;
+  }
+
+  .learningPage-togglelist {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .modal-subitem {
+    padding: 10px;
+  }
+
+  .modal-subitem h3 {
+    font-size: 1rem;
+  }
+
+  .imagediv-enrollsection {
+    height: 150px; /* Adjusted height for tablets and smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .learningPage-Navbar {
+    padding: 5px;
+  }
+
+  .learningPageNavbar-rightsection {
+    gap: 5px;
+  }
+
+  .Logout-btn-design {
+    padding: 0.3rem 0.6rem;
+  }
+
+  .learningPage-overFlowcontainer {
+    padding: 5px;
+  }
+
+  .learningPage-enrollCourseDiv {
+    min-height: auto;
+  }
+
+  .imagediv-enrollsection {
+    height: 120px; /* Further reduced height for mobile screens */
+  }
+
+  .imagediv-enrollsection img {
+    object-fit: contain; /* Ensures the entire image is visible on small screens */
+  }
+
+  .enrolment-details {
+    padding: 5px;
+  }
+
+  .learningPage-content-uppersection, .learningPage-content-lowersection {
+    padding: 5px;
+  }
+
+  .banner-title {
+    font-size: 1.2rem;
+  }
+
+  .lesson-title {
+    font-size: 14px;
+  }
+
+  .lesson-preview-btn {
+    font-size: 12px;
+  }
+
+  .lesson-xp {
+    font-size: 12px;
+  }
 }

@@ -13,10 +13,10 @@ import { MdLeaderboard } from "react-icons/md";
 const Sidebar = ({ setSection }) => {
   const navigate = useNavigate();
 
-  // const handleIntroNavigation = () => {
-  //   setSection('task1');
-  //   navigate('/task1');
-  // };
+  const handleRolePlayNavigation = () => {
+    // setSection('task1');
+    navigate('/userTraining');
+  };
 
   const isMobile = window.innerWidth <= 992;
   const handleNavigationformobile = (section, route) => {
@@ -63,7 +63,7 @@ const Sidebar = ({ setSection }) => {
         <li onClick={handleEducationNavigation}><MdCastForEducation size={20}/> Courses</li>
         <li onClick={handleLeaderboardNavigation}><MdLeaderboard size={20}/> Leaderboard</li>
         {/* <li ><TbVocabulary size={20}/> Self Intro Pitch</li> */}
-        {/* <li ><LuBot size={20}/> Bot Mock Pitch</li> */}
+        <li onClick={handleRolePlayNavigation}><LuBot size={20}/> RolePlay</li>
         <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
       </ul>
     </nav>

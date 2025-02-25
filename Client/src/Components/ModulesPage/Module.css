@@ -475,3 +475,64 @@
     height: 220px;
   }
 }
+
+
+/* Add these styles to your Module.css */
+.PlayButton {
+  margin-left: 10px;
+  padding: 2px 8px;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.RecordButton {
+  margin: 10px 0;
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.RecordButton.recording {
+  background-color: #28a745;
+}
+
+.SpeechSection {
+  position: relative;
+  width: 100%;
+}
+
+.AnswerTextarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  margin-top: 8px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+}
+
+.BrowserWarning {
+  color: #dc3545;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.AnswerInput {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.TranscriptDisplay {
+  margin-top: 5px;
+  font-style: italic;
+  color: #555;
+}

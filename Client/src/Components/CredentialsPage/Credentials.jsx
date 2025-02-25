@@ -79,14 +79,14 @@ const Credentials = () => {
       loginData.email === adminCredentials.email &&
       loginData.password === adminCredentials.password
     ) {
-      navigate("/admin");
+      navigate("/adminPannel");
       return;
     }
     if (
       loginData.email === superAdminCredentials.email &&
       loginData.password === superAdminCredentials.password
     ) {
-      navigate("/superadmin");
+      navigate("/superadminPannel");
       return;
     }
     setLoginIsSubmitting(true);
