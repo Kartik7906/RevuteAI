@@ -20,6 +20,10 @@ const Sidebar = ({ setSection }) => {
 
   const isMobile = window.innerWidth <= 992;
   const handleNavigationformobile = (section, route) => {
+    if((section === 'reportlist') && isMobile){
+      handleReportListNavigation();
+      return;
+    }
     setSection(section);
     if (isMobile) {
       navigate(route);
@@ -41,7 +45,7 @@ const Sidebar = ({ setSection }) => {
     if(userId){
       setSection('education');
       navigate('/elearning');
-      // navigate(`/modules/${userId}`);
+      navigate(`/modules/${userId}`);
     }
     else{
       alert("Please Login First");
@@ -52,9 +56,6 @@ const Sidebar = ({ setSection }) => {
     navigate("/leaderboard")
   }
 
-  // onClick={handleIntroNavigation}
-  // onClick={() => setSection('task2')}
-
   return (
     <nav className="sidebar">
       <ul>
@@ -62,9 +63,8 @@ const Sidebar = ({ setSection }) => {
         <li onClick={() => handleNavigationformobile('announcements', '/announcement')}><GrAnnounce size={20}/> Announcements</li>
         <li onClick={handleEducationNavigation}><MdCastForEducation size={20}/> Courses</li>
         <li onClick={handleLeaderboardNavigation}><MdLeaderboard size={20}/> Leaderboard</li>
-        {/* <li ><TbVocabulary size={20}/> Self Intro Pitch</li> */}
         <li onClick={handleRolePlayNavigation}><LuBot size={20}/> RolePlay</li>
-        <li onClick={handleReportListNavigation}><TbReportSearch size={20}/> Report</li>
+        <li onClick={() => handleNavigationformobile("reportlist", "/reportlist")}><TbReportSearch size={20}/> Report</li>
       </ul>
     </nav>
   );

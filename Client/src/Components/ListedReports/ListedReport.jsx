@@ -45,8 +45,6 @@ const ListedReport = () => {
     }
   };
   
-  
-  
 
   return (
     <div className="listedreportpage">
@@ -58,7 +56,7 @@ const ListedReport = () => {
           onClick={() => setShowIntroductionReports(!showIntroductionReports)} 
         >
           <span className="icon">📄</span>
-          <h2 className="section-title">Introduction Reports</h2>
+          <h2 className="section-title">Education Reports</h2>
           <span className="toggle-icon">{showIntroductionReports ? "▲" : "▼"}</span>
         </div>
         {showIntroductionReports && (
@@ -85,7 +83,7 @@ const ListedReport = () => {
       <div className="section">
         <div className="header">
           <span className="icon">🤖</span>
-          <h2 className="section-title">Bot Reports</h2>
+          <h2 className="section-title">RolePlay Reports</h2>
           <span className="toggle-icon">▼</span>
         </div>
         <div className="content">
