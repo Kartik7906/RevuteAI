@@ -554,13 +554,14 @@ const TrainingPage = () => {
       return (
         <>
         <div className="telecalling-afterCallView">
-          <button className="back" onClick={resetTraining}>Back</button>
           <div className="telecalling-view__not-in-call">
+          <IoReturnUpBackOutline onClick={resetTraining} size={30} className="call-view__back-button" />
             <div className="telecalling-view__not-in-call-box">
               <h2 className="telecalling-view__not-in-call-title">Welcome to Call Center Training!</h2>
               <p className="telecalling-view__welcome-text">
                 You are just one step away from making a call. Click "Make Call" below to start your training session.
               </p>
+              <div className="telecalling-reset_call_btn">
               <div className="telecalling-view__call-info">
                 <h3 className="telecalling-view__call-info-title">Available Calls</h3>
                 <p className="telecalling-view__call-count">{remainingCalls} / {totalScenarios} calls remaining</p>
@@ -575,6 +576,7 @@ const TrainingPage = () => {
                 </button>
               )}
               <p className="telecalling-view__footer-text">You have a total of 5 calls. Happy Learning!</p>
+              </div>
             </div>
           </div>
         </div>
