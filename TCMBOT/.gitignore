@@ -1,0 +1,46 @@
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual environment
+venv/
+.env
+*.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs and database files
+*.log
+*.sqlite3
+*.db
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# Python dependency files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook checkpoints (if used)
+.ipynb_checkpoints/
+
+# Uvicorn and FastAPI cache files
+*.pid
+*.pyc
+*.pyo
+
+# CSV or data files (if you don't want to track them)
+prompts.csv
+
+# Ignore node_modules if using JavaScript in frontend
+node_modules/
+
+# Ignore compiled code
+dist/
+build/

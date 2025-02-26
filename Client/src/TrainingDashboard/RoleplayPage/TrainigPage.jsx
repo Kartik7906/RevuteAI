@@ -7,8 +7,8 @@ import product3_avatar from "../../images/product3_avatar.svg";
 import product4_avatar from "../../images/product4_avatar.svg";
 import product5_avatar from "../../images/product5_avatar.svg";
 import FeaturedCard from "../../images/FeaturedCard.jpg";
-import "./TrainingPage.css";
 import businessImg from "../../images/defaultavatar.svg";
+import "./TrainingPage.css";
 
 const TrainingPage = () => {
   const [currentView, setCurrentView] = useState("info");
@@ -21,8 +21,17 @@ const TrainingPage = () => {
   const [generalReadyToProceed, setGeneralReadyToProceed] = useState(false);
   const [productReadGuidelines, setProductReadGuidelines] = useState(false);
   const [productReadyToProceed, setProductReadyToProceed] = useState(false);
-  const [listening, setListening] = useState(false);
+
+  const [inCall, setInCall] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState("");
+  const [micOn, setMicOn] = useState(false);
+  const [context, setContext] = useState("");
+  const [chatHistory, setChatHistory] = useState("");
+  const [behaviorType, setBehaviorType] = useState("Polite");
+
   const recognitionRef = useRef(null);
+  const synthRef = useRef(window.speechSynthesis);
 
   const productList = ["Product 1", "Product 2", "Product 3", "Product 4", "Product 5"];
   const scenarioOptions = ["Prospect Lead", "Non-Prospect Lead", "Angry Customer", "Happy Customer", "Sad Customer"];
@@ -43,79 +52,132 @@ const TrainingPage = () => {
       recognitionRef.current.maxAlternatives = 1;
       recognitionRef.current.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        setConversation((prev) => [...prev, { type: "user", text: transcript }]);
-        handleBotReply(transcript);
+        setMessages((prev) => [...prev, { sender: "Agent", text: transcript }]);
+        handleSendMessage(transcript);
       };
       recognitionRef.current.onerror = (event) => {
         console.error("Speech recognition error", event.error);
       };
       recognitionRef.current.onend = () => {
-        setListening(false);
+        setMicOn(false);
       };
     }
   }, []);
 
-  const getBotReply = async (userText) => {
+  const startCall = async (scenario) => {
     try {
-      const response = await fetch("http://localhost:8000/api/trainingPage/chatbot", {
+      const response = await fetch("http://localhost:5000/api/start_call", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText })
+        body: JSON.stringify({ scenario }),
       });
+      if (!response.ok) {
+        throw new Error("Failed to start call");
+      }
       const data = await response.json();
-      return data.reply;
+      return data;
     } catch (error) {
-      console.error("Error fetching bot reply", error);
-      return "I'm sorry, I couldn't process that.";
+      console.error("Error starting call:", error);
+      return null;
     }
   };
 
-  const handleBotReply = async (userText) => {
-    const botText = await getBotReply(userText);
-    setConversation((prev) => [...prev, { type: "bot", text: botText }]);
-    speakText(botText);
+  const sendMessageAPI = async (message, context, chatHistory) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/send_message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, context, chatHistory }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error sending message:", error);
+      return null;
+    }
   };
 
   const speakText = (text) => {
-    if (window.speechSynthesis) {
+    if (synthRef.current) {
+      synthRef.current.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
-  const handleToggleListening = () => {
-    if (recognitionRef.current) {
-      if (!listening) {
-        recognitionRef.current.start();
-        setListening(true);
-      } else {
-        recognitionRef.current.stop();
-        setListening(false);
+      const voices = synthRef.current.getVoices();
+      if (voices.length > 0) {
+        utterance.voice = voices.find((voice) =>
+          behaviorType.includes("Polite") ? voice.name.includes("Female") : voice.name.includes("Male")
+        ) || voices[0];
       }
+      synthRef.current.speak(utterance);
     }
   };
 
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);
-    setSelectedScenario("");
+  const toggleMic = () => {
+    if (!recognitionRef.current) {
+      alert("Speech recognition is not supported in your browser.");
+      return;
+    }
+    if (micOn) {
+      recognitionRef.current.stop();
+    } else {
+      recognitionRef.current.start();
+      setInputMessage("");
+    }
+    setMicOn((prev) => !prev);
   };
 
-  const handleScenarioChange = (e) => {
-    setSelectedScenario(e.target.value);
+  const handleSendMessage = async (userText) => {
+    const messageToSend = userText || inputMessage;
+    if (messageToSend.trim() === "") return;
+    setMessages((prev) => [...prev, { sender: "Agent", text: messageToSend }]);
+    const updatedChatHistory = chatHistory + `Agent: ${messageToSend}\n`;
+    setChatHistory(updatedChatHistory);
+
+    try {
+      const responseData = await sendMessageAPI(messageToSend, context, updatedChatHistory);
+      if (responseData) {
+        const botReply = responseData.response;
+        setMessages((prev) => [...prev, { sender: "Customer", text: botReply }]);
+        const newChatHistory = updatedChatHistory + `Customer: ${botReply}\n`;
+        setChatHistory(newChatHistory);
+        speakText(botReply);
+      }
+    } catch (error) {
+      console.error("Error in handleSendMessage:", error);
+    }
+    setInputMessage("");
   };
 
-  const handleStartGeneralPractice = () => {
-    setCallStatus("inProgress");
-    setConversation([]);
-    setCurrentView("Telecalling-call");
+  const handleEndCall = () => {
+    if (synthRef.current) {
+      synthRef.current.cancel();
+    }
+    if (recognitionRef.current && micOn) {
+      recognitionRef.current.stop();
+      setMicOn(false);
+    }
+    alert("Call has been ended.");
+    setInCall(false);
+    setMessages([]);
+    setInputMessage("");
+    setContext("");
+    setChatHistory("");
   };
 
-  const handleStartProductPractice = () => {
-    const avatarSrc = avatarMapping[selectedProduct]?.[selectedScenario] || "";
-    setCallStatus("inProgress");
-    setAvatar(avatarSrc);
-    setConversation([]);
-    setCurrentView("call");
+  const handleMakeCall = async () => {
+    const scenario = selectedScenario || "Prompt 1: Silent"; 
+    const startCallData = await startCall(scenario);
+    if (startCallData) {
+      setContext(startCallData.context);
+      setMessages([{ sender: "Customer", text: startCallData.customerGreeting }]);
+      setChatHistory(`Customer: ${startCallData.customerGreeting}\n`);
+      setInCall(true);
+      speakText(startCallData.customerGreeting);
+    } else {
+      alert("Failed to start call: No matching prompt found. Please check your CSV data.");
+    }
   };
 
   const resetTraining = () => {
@@ -128,9 +190,15 @@ const TrainingPage = () => {
     setGeneralReadyToProceed(false);
     setProductReadGuidelines(false);
     setProductReadyToProceed(false);
-    setListening(false);
+    setInCall(false);
+    setMessages([]);
+    setInputMessage("");
+    setContext("");
+    setChatHistory("");
+    setBehaviorType("Polite");
     setCurrentView("info");
   };
+
 
   const InfoView = () => (
     <div className="trainingPageinfo-container">
@@ -236,7 +304,11 @@ const TrainingPage = () => {
               <input type="checkbox" checked={generalReadyToProceed} onChange={() => setGeneralReadyToProceed(!generalReadyToProceed)} /> I am ready to proceed.
             </label>
           </div>
-          <button id="start-practice" onClick={handleStartGeneralPractice} disabled={!(generalReadGuidelines && generalReadyToProceed)}>
+          <button id="start-practice" onClick={() => {
+              setCallStatus("inProgress");
+              setConversation([]);
+              setCurrentView("Telecalling-call"); // Switch to integrated telecalling view
+            }} disabled={!(generalReadGuidelines && generalReadyToProceed)}>
             Start Practice
           </button>
         </div>
@@ -268,7 +340,14 @@ const TrainingPage = () => {
         <p>Select which product you want:</p>
         <div className="telecommunication-module__products">
           {productList.map((product, index) => (
-            <button key={index} onClick={() => handleProductClick(product)} className={`telecommunication-module__product ${selectedProduct === product ? "active" : ""}`}>
+            <button
+              key={index}
+              onClick={() => {
+                setSelectedProduct(product);
+                setSelectedScenario("");
+              }}
+              className={`telecommunication-module__product ${selectedProduct === product ? "active" : ""}`}
+            >
               {product}
             </button>
           ))}
@@ -276,7 +355,7 @@ const TrainingPage = () => {
         {selectedProduct && (
           <div className="telecommunication-module__scenario">
             <h3>Select a Scenario for {selectedProduct}</h3>
-            <select value={selectedScenario} onChange={handleScenarioChange}>
+            <select value={selectedScenario} onChange={(e) => setSelectedScenario(e.target.value)}>
               <option value="">-- Select a Scenario --</option>
               {scenarioOptions.map((scenario, idx) => (
                 <option key={idx} value={scenario}>
@@ -287,7 +366,13 @@ const TrainingPage = () => {
           </div>
         )}
         {selectedProduct && selectedScenario && (
-          <button id="start-practice-product" onClick={handleStartProductPractice} disabled={!(productReadGuidelines && productReadyToProceed)}>
+          <button id="start-practice-product" onClick={() => {
+              const avatarSrc = avatarMapping[selectedProduct]?.[selectedScenario] || "";
+              setCallStatus("inProgress");
+              setAvatar(avatarSrc);
+              setConversation([]);
+              setCurrentView("call");
+            }} disabled={!(productReadGuidelines && productReadyToProceed)}>
             Start Practice
           </button>
         )}
@@ -325,7 +410,7 @@ const TrainingPage = () => {
               {avatar && <img src={avatar} alt="Avatar" className="call-view__avatar" />}
             </div>
             <div className="call-view__extra-controls">
-              <button className="call-view__call-button" onClick={handleToggleListening}>
+              <button className="call-view__call-button" onClick={toggleMic}>
                 <IoCall size={30} />
               </button>
             </div>
@@ -341,7 +426,7 @@ const TrainingPage = () => {
               </div>
               <div className="call-view__input-bar">
                 <input type="text" className="call-view__text-input" placeholder="Type your message..." />
-                <button className={`call-view__mic-button ${listening ? "is-listening" : ""}`} onClick={handleToggleListening}>
+                <button className={`call-view__mic-button ${micOn ? "is-listening" : ""}`} onClick={toggleMic}>
                   <FaMicrophone size={20} />
                   <div className="call-view__mic-animation" />
                 </button>
@@ -354,235 +439,25 @@ const TrainingPage = () => {
   );
 
   const IntegratedTelecallingView = () => {
-    const [inCall, setInCall] = useState(false);
-    const [messages, setMessages] = useState([]);
-    const [inputMessage, setInputMessage] = useState("");
-    const [micOn, setMicOn] = useState(false);
-    const [context, setContext] = useState("");
-    const [chatHistory, setChatHistory] = useState("");
-    const [usedScenarios, setUsedScenarios] = useState([]);
-    const [totalScenarios] = useState(5);
-    const [remainingCalls, setRemainingCalls] = useState(5);
-    const [currentBehavior, setCurrentBehavior] = useState("");
-    const [behaviorType, setBehaviorType] = useState("");
-    const [allConversations, setAllConversations] = useState({});
-    const [currentCallNumber, setCurrentCallNumber] = useState(0);
-    const recognitionRef = useRef(null);
-    const synthRef = useRef(window.speechSynthesis);
-
-    useEffect(() => {
-      if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognitionRef.current = new SpeechRecognition();
-        recognitionRef.current.continuous = true;
-        recognitionRef.current.interimResults = true;
-        recognitionRef.current.onresult = (event) => {
-          const transcript = Array.from(event.results).map((result) => result[0]).map((result) => result.transcript).join("");
-          setInputMessage(transcript);
-        };
-        recognitionRef.current.onerror = (event) => {
-          console.error("Speech recognition error:", event.error);
-          setMicOn(false);
-        };
-      }
-      return () => {
-        if (recognitionRef.current) {
-          recognitionRef.current.stop();
-        }
-      };
-    }, []);
-
-    const speakText = (text) => {
-      if (synthRef.current) {
-        synthRef.current.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        const voices = synthRef.current.getVoices();
-        if (voices.length > 0) {
-          utterance.voice =
-            voices.find((voice) =>
-              behaviorType.includes("Polite") ? voice.name.includes("Female") : voice.name.includes("Male")
-            ) || voices[0];
-          if (behaviorType.includes("Rude")) {
-            utterance.pitch = 0.8;
-            utterance.rate = 1.2;
-          } else {
-            utterance.pitch = 1.2;
-            utterance.rate = 1.0;
-          }
-        }
-        synthRef.current.speak(utterance);
-      }
-    };
-
-    const handleMakeCall = async () => {
-      if (remainingCalls === 0) {
-        alert("No more calls available. All scenarios completed!");
-        return;
-      }
-      const callNumber = totalScenarios - remainingCalls;
-      setCurrentCallNumber(callNumber);
-      const ringSound = new Audio("../../images/ringing.mp3");
-      ringSound.play();
-      setMessages([{ sender: "System", text: "Ringing..." }]);
-      setTimeout(() => {
-        ringSound.pause();
-        ringSound.currentTime = 0;
-        const pickupSound = new Audio("../../images/phone-pickup.mp3");
-        pickupSound.play();
-        const dummyResponse = {
-          customerGreeting: "Hello, I'm your customer. How may I help you?",
-          context: "Dummy context",
-          behavior: "Polite",
-          behaviorType: "Polite",
-          selectedScenario: "Scenario 1"
-        };
-        const initialMessage = { sender: "Customer", text: dummyResponse.customerGreeting };
-        setContext(dummyResponse.context);
-        setCurrentBehavior(dummyResponse.behavior);
-        setBehaviorType(dummyResponse.behaviorType);
-        setMessages([initialMessage]);
-        setChatHistory(`Customer: ${dummyResponse.customerGreeting}\n`);
-        setUsedScenarios((prev) => [...prev, dummyResponse.selectedScenario]);
-        setRemainingCalls((prev) => prev - 1);
-        setInCall(true);
-        setAllConversations((prev) => ({
-          ...prev,
-          [callNumber]: {
-            scenario: dummyResponse.selectedScenario,
-            behaviorType: dummyResponse.behaviorType,
-            messages: [initialMessage],
-            timestamp: new Date().toISOString()
-          }
-        }));
-        setTimeout(() => {
-          speakText(dummyResponse.customerGreeting);
-        }, 500);
-      }, 3000);
-    };
-    
-
-    const handleSendMessage = async () => {
-      if (inputMessage.trim() !== "") {
-        const agentMsg = { sender: "Agent", text: inputMessage };
-        setMessages((prev) => [...prev, agentMsg]);
-        setChatHistory((prev) => prev + `Agent: ${inputMessage}\n`);
-        setInputMessage("");
-        setAllConversations((prev) => ({
-          ...prev,
-          [currentCallNumber]: {
-            ...prev[currentCallNumber],
-            messages: [...prev[currentCallNumber].messages, agentMsg]
-          }
-        }));
-        setTimeout(() => {
-          const customerMsg = { sender: "Customer", text: "I received your message: " + agentMsg.text };
-          setMessages((prev) => [...prev, customerMsg]);
-          setChatHistory((prev) => prev + `Customer: ${customerMsg.text}\n`);
-          setAllConversations((prev) => ({
-            ...prev,
-            [currentCallNumber]: {
-              ...prev[currentCallNumber],
-              messages: [...prev[currentCallNumber].messages, customerMsg]
-            }
-          }));
-          speakText(customerMsg.text);
-        }, 1000);
-      }
-    };
-
-    const toggleMic = () => {
-      if (!recognitionRef.current) {
-        alert("Speech recognition is not supported in your browser.");
-        return;
-      }
-      if (micOn) {
-        recognitionRef.current.stop();
-      } else {
-        recognitionRef.current.start();
-        setInputMessage("");
-      }
-      setMicOn(!micOn);
-    };
-
-    const handleEndCall = () => {
-      if (synthRef.current) {
-        synthRef.current.cancel();
-      }
-      if (recognitionRef.current && micOn) {
-        recognitionRef.current.stop();
-        setMicOn(false);
-      }
-      const conversationData = allConversations[currentCallNumber];
-      console.log("Conversation Data:", conversationData);
-      alert("Call has been ended. Conversation logged in console!");
-      setInCall(false);
-      setMessages([]);
-      setInputMessage("");
-      setContext("");
-      setChatHistory("");
-      setCurrentBehavior("");
-      setBehaviorType("");
-    };
-
-    const handleReset = () => {
-      if (window.confirm("Reset all scenarios and start over?")) {
-        setUsedScenarios([]);
-        setRemainingCalls(totalScenarios);
-        setCurrentBehavior("");
-        setBehaviorType("");
-        setAllConversations({});
-      }
-    };
-
-    useEffect(() => {
-      const handleKeyPress = (event) => {
-        if (inCall) {
-          if (event.key === "m" && event.ctrlKey) {
-            event.preventDefault();
-            toggleMic();
-          } else if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
-            handleSendMessage();
-          }
-        }
-      };
-      window.addEventListener("keydown", handleKeyPress);
-      return () => window.removeEventListener("keydown", handleKeyPress);
-    }, [inCall, inputMessage, micOn]);
-
     if (!inCall) {
       return (
-        <>
         <div className="telecalling-afterCallView">
           <div className="telecalling-view__not-in-call">
-          <IoReturnUpBackOutline onClick={resetTraining} size={30} className="call-view__back-button" />
+            <IoReturnUpBackOutline onClick={resetTraining} size={30} className="call-view__back-button" />
             <div className="telecalling-view__not-in-call-box">
               <h2 className="telecalling-view__not-in-call-title">Welcome to Call Center Training!</h2>
               <p className="telecalling-view__welcome-text">
                 You are just one step away from making a call. Click "Make Call" below to start your training session.
               </p>
-              <div className="telecalling-reset_call_btn">
-              <div className="telecalling-view__call-info">
-                <h3 className="telecalling-view__call-info-title">Available Calls</h3>
-                <p className="telecalling-view__call-count">{remainingCalls} / {totalScenarios} calls remaining</p>
-                <p className="telecalling-view__next-type">Next customer type: {remainingCalls > 3 ? "Polite" : "Rude"}</p>
-              </div>
-              <button className="telecalling-view__make-call-button" onClick={handleMakeCall} disabled={remainingCalls === 0}>
-                {remainingCalls > 0 ? "Make Call" : "No More Calls Available"}
+              <button className="telecalling-view__make-call-button" onClick={handleMakeCall}>
+                Make Call
               </button>
-              {usedScenarios.length > 0 && (
-                <button className="telecalling-view__reset-button" onClick={handleReset}>
-                  Reset All
-                </button>
-              )}
-              <p className="telecalling-view__footer-text">You have a total of 5 calls. Happy Learning!</p>
-              </div>
             </div>
           </div>
         </div>
-        </>
       );
     }
+
     return (
       <div className="container-telecalling">
         <div className="leftPanel-telecalling">
@@ -611,7 +486,7 @@ const TrainingPage = () => {
               onChange={(e) => setInputMessage(e.target.value)}
               className="telecalling-view__chat-input"
             />
-            <button onClick={handleSendMessage} className="sendButton">Send</button>
+            <button onClick={() => handleSendMessage()} className="sendButton">Send</button>
             <button className={`micButton ${micOn ? "micOn" : "micOff"}`} onClick={toggleMic}>
               {micOn ? "Mic On" : "Mic Off"}
             </button>
