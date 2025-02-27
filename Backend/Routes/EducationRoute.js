@@ -1,4 +1,3 @@
-// module.js (Express Router)
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -129,7 +128,7 @@ router.post("/:userId/submitScore", async (req, res) => {
       const allScoredSubItems = userProgress.modules.flatMap((m) => m.subItems.filter((s) => s.score !== null));
       if (allScoredSubItems.length > 0) {
         const total = allScoredSubItems.reduce((acc, s) => acc + s.score, 0);
-        userProgress.overallScore = total; // Use the sum instead of average
+        userProgress.overallScore = total;
       } else {
         userProgress.overallScore = 0;
       }

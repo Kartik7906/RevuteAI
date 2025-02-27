@@ -113,3 +113,143 @@
     margin-top: 10px;
   }
   
+
+  /* Container */
+.leaderboard {
+  padding: 20px;
+}
+
+/* Table styling */
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  color: black;
+}
+
+.leaderboard-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Button styling */
+.view-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-btn:hover {
+  background-color: #45a049;
+}
+
+
+.daily-report-section {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.filter-container {
+  margin-bottom: 15px;
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.filter-controls label {
+  font-weight: bold;
+}
+
+.filter-controls input[type="date"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.filter-btn {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: #45a049;
+}
+
+.daily-report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.daily-report-table th,
+.daily-report-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.daily-report-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+
+.module-report-section {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.module-report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.module-report-table th,
+.module-report-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.module-report-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.view-btn {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-btn:hover {
+  background-color: #45a049;
+}

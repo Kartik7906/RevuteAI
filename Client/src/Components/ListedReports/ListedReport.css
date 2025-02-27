@@ -1,85 +1,54 @@
 .listedreportpage {
-    padding: 16px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 16px;
-  }
-  
-  .section {
-    margin-bottom: 16px;
-  }
-  
-  .header {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    background-color: #f0f0f0;
-    padding: 8px;
-    border-radius: 4px;
-  }
-  
-  .icon {
-    margin-right: 8px;
-    font-size: 18px;
-  }
-  
-  .section-title {
-    font-size: 18px;
-    font-weight: bold;
-    flex-grow: 1;
-  }
-  
-  .toggle-icon {
-    font-size: 16px;
-  }
-  
-  .content {
-    background-color: #ffffff;
-    padding: 16px;
-    border-radius: 4px;
-    margin-top: 8px;
-    max-height: 240px;
-    overflow-y: auto;
-  }
-  
-  .content::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .content {
-    -ms-overflow-style: none; 
-    scrollbar-width: none;
-  }
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
 
+.title {
+  margin-bottom: 20px;
+}
 
-  /* report css here that are fetched from backend: */
-  .report-item {
-    background-color: #e6f7ff; /* Light background color */
-    border: 1px solid #b3e5fc; /* Soft border */
-    padding: 12px;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: all 0.3s ease;
+.report-menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.report-menu-item {
+  padding: 15px 25px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.report-menu-item:hover {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .report-menu {
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .report-item:hover {
-    background-color: #cceeff; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .report-item p {
-    margin: 0;
-    font-size: 16px;
-    color: #333;
-    font-weight: 500;
-    word-break: break-word;
-  }
-  
+}
+
+.ProgressBar {
+  width: 100%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin: 10px 0 5px;
+  overflow: hidden;
+}
+
+.ProgressCompleted {
+  height: 100%;
+  background-color: #007bff;
+  width: 0%;
+  transition: width 0.5s ease;
+}

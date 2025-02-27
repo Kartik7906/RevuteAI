@@ -22,16 +22,23 @@ const TrainingPage = () => {
   const [productReadGuidelines, setProductReadGuidelines] = useState(false);
   const [productReadyToProceed, setProductReadyToProceed] = useState(false);
 
+  // Call-related state
   const [inCall, setInCall] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const [micOn, setMicOn] = useState(false);
   const [context, setContext] = useState("");
   const [chatHistory, setChatHistory] = useState("");
-  const [behaviorType, setBehaviorType] = useState("Polite");
+  const [behaviorType, setBehaviorType] = useState("Polite Customer");
+  const [behavior, setBehavior] = useState("");
+  
+  // Scenario tracking
+  const [usedScenarios, setUsedScenarios] = useState([]);
+  const [totalScenarios, setTotalScenarios] = useState(10);
+  const [remainingScenarios, setRemainingScenarios] = useState(10);
 
   const recognitionRef = useRef(null);
-  const synthRef = useRef(window.speechSynthesis);
+  const messageEndRef = useRef(null);
 
   const productList = ["Product 1", "Product 2", "Product 3", "Product 4", "Product 5"];
   const scenarioOptions = ["Prospect Lead", "Non-Prospect Lead", "Angry Customer", "Happy Customer", "Sad Customer"];
@@ -43,55 +50,171 @@ const TrainingPage = () => {
     "Product 5": { "Prospect Lead": product5_avatar, "Non-Prospect Lead": product5_avatar, "Angry Customer": product5_avatar, "Happy Customer": product5_avatar, "Sad Customer": product5_avatar }
   };
 
+  // Get total scenario count on component mount
+  useEffect(() => {
+    fetchTotalScenarios();
+  }, []);
+
+  // Scroll to bottom of messages
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
+  // Initialize speech recognition
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SpeechRecognition) {
       recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.lang = "en-US";
+      recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
-      recognitionRef.current.maxAlternatives = 1;
+      recognitionRef.current.lang = "en-US";
       recognitionRef.current.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setMessages((prev) => [...prev, { sender: "Agent", text: transcript }]);
-        handleSendMessage(transcript);
+        const transcript = Array.from(event.results)
+          .map(result => result[0].transcript)
+          .join('');
+        setInputMessage(transcript);
       };
       recognitionRef.current.onerror = (event) => {
-        console.error("Speech recognition error", event.error);
+        console.error("Speech recognition error:", event);
+        setMicOn(false);
       };
       recognitionRef.current.onend = () => {
         setMicOn(false);
       };
+    } else {
+      console.warn("Speech Recognition not supported in this browser");
     }
   }, []);
 
-  const startCall = async (scenario) => {
+  // Keyboard shortcut for microphone toggle
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Ctrl+M to toggle microphone
+      if (e.ctrlKey && e.key === 'm') {
+        e.preventDefault();
+        toggleMic();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [micOn]);
+
+  // Fetch total number of scenarios from the backend
+  const fetchTotalScenarios = async () => {
     try {
+      const response = await fetch("http://localhost:5000/api/get_total_scenarios");
+      if (response.ok) {
+        const data = await response.json();
+        setTotalScenarios(data.total);
+        setRemainingScenarios(data.total - usedScenarios.length);
+        console.log("Fetched total scenarios:", data);
+      } else {
+        console.error("Failed to fetch scenarios:", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching scenarios:", error);
+    }
+  };
+
+  // Function to speak text using SpeechSynthesis
+  const speakText = (text) => {
+    if ('speechSynthesis' in window) {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      
+      // Set voice based on behavior type
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        // Try to pick a voice appropriate for the behavior type
+        utterance.voice = voices.find((voice) =>
+          behaviorType.includes("Polite") ? voice.name.includes("Female") : voice.name.includes("Male")
+        ) || voices[0];
+      }
+      
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.warn("Text to Speech not supported in this browser");
+    }
+  };
+
+  // Start a call with the backend
+  const startCall = async () => {
+    try {
+      // Play ringing sound
+      const ringAudio = new Audio("/phone-pick-up.mp3");
+      await ringAudio.load();
+      ringAudio.play();
+      
+      // Call the backend API
       const response = await fetch("http://localhost:5000/api/start_call", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ scenario }),
+        body: JSON.stringify({ usedScenarios: usedScenarios })
       });
+      
       if (!response.ok) {
         throw new Error("Failed to start call");
       }
+      
       const data = await response.json();
+      
+      // Update state with API response data
+      setTimeout(() => {
+        ringAudio.pause();
+        ringAudio.currentTime = 0;
+        
+        setContext(data.context);
+        setBehavior(data.behavior || "");
+        setBehaviorType(data.behaviorType || "Polite Customer");
+        
+        // Add first customer message
+        setMessages([{ sender: "Customer", text: data.customerGreeting }]);
+        setChatHistory(`Customer: ${data.customerGreeting}\n`);
+        
+        // Add this scenario to used scenarios
+        if (data.selectedScenario) {
+          const newUsedScenarios = [...usedScenarios, data.selectedScenario];
+          setUsedScenarios(newUsedScenarios);
+          setRemainingScenarios(totalScenarios - newUsedScenarios.length);
+        }
+        
+        // Start the call
+        setInCall(true);
+        
+        // Speak the greeting
+        speakText(data.customerGreeting);
+      }, 3000); // 3 second delay to simulate ringing
+      
       return data;
     } catch (error) {
       console.error("Error starting call:", error);
+      alert(`Error starting call: ${error.message}`);
       return null;
     }
   };
 
-  const sendMessageAPI = async (message, context, chatHistory) => {
+  // Send a message to the backend
+  const sendMessageAPI = async (message) => {
     try {
       const response = await fetch("http://localhost:5000/api/send_message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, context, chatHistory }),
+        body: JSON.stringify({
+          message: message,
+          context: context,
+          chatHistory: chatHistory,
+          behavior: behavior
+        })
       });
+      
       if (!response.ok) {
         throw new Error("Failed to send message");
       }
+      
       const data = await response.json();
       return data;
     } catch (error) {
@@ -100,87 +223,104 @@ const TrainingPage = () => {
     }
   };
 
-  const speakText = (text) => {
-    if (synthRef.current) {
-      synthRef.current.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      const voices = synthRef.current.getVoices();
-      if (voices.length > 0) {
-        utterance.voice = voices.find((voice) =>
-          behaviorType.includes("Polite") ? voice.name.includes("Female") : voice.name.includes("Male")
-        ) || voices[0];
-      }
-      synthRef.current.speak(utterance);
-    }
-  };
-
+  // Toggle microphone on/off
   const toggleMic = () => {
     if (!recognitionRef.current) {
       alert("Speech recognition is not supported in your browser.");
       return;
     }
+    
     if (micOn) {
       recognitionRef.current.stop();
     } else {
-      recognitionRef.current.start();
-      setInputMessage("");
+      try {
+        recognitionRef.current.start();
+        setMicOn(true);
+      } catch (error) {
+        console.error("Error starting speech recognition:", error);
+      }
     }
-    setMicOn((prev) => !prev);
   };
 
+  // Handle sending a message (text or voice)
   const handleSendMessage = async (userText) => {
     const messageToSend = userText || inputMessage;
     if (messageToSend.trim() === "") return;
-    setMessages((prev) => [...prev, { sender: "Agent", text: messageToSend }]);
+    
+    // Add agent message to UI
+    setMessages(prev => [...prev, { sender: "Agent", text: messageToSend }]);
+    
+    // Update chat history
     const updatedChatHistory = chatHistory + `Agent: ${messageToSend}\n`;
     setChatHistory(updatedChatHistory);
-
+    
+    // Clear input field
+    setInputMessage("");
+    
     try {
-      const responseData = await sendMessageAPI(messageToSend, context, updatedChatHistory);
+      // Call API to get customer response
+      const responseData = await sendMessageAPI(messageToSend);
+      
       if (responseData) {
         const botReply = responseData.response;
-        setMessages((prev) => [...prev, { sender: "Customer", text: botReply }]);
+        
+        // Add customer response to UI
+        setMessages(prev => [...prev, { sender: "Customer", text: botReply }]);
+        
+        // Update chat history
         const newChatHistory = updatedChatHistory + `Customer: ${botReply}\n`;
         setChatHistory(newChatHistory);
+        
+        // Speak the customer's response
         speakText(botReply);
       }
     } catch (error) {
       console.error("Error in handleSendMessage:", error);
     }
-    setInputMessage("");
   };
 
+  // Handle ending the call
   const handleEndCall = () => {
-    if (synthRef.current) {
-      synthRef.current.cancel();
+    // Stop any ongoing speech
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
     }
+    
+    // Stop any ongoing speech recognition
     if (recognitionRef.current && micOn) {
       recognitionRef.current.stop();
       setMicOn(false);
     }
+    
     alert("Call has been ended.");
+    
+    // Reset call state
     setInCall(false);
     setMessages([]);
     setInputMessage("");
     setContext("");
     setChatHistory("");
-  };
-
-  const handleMakeCall = async () => {
-    const scenario = selectedScenario || "Prompt 1: Silent"; 
-    const startCallData = await startCall(scenario);
-    if (startCallData) {
-      setContext(startCallData.context);
-      setMessages([{ sender: "Customer", text: startCallData.customerGreeting }]);
-      setChatHistory(`Customer: ${startCallData.customerGreeting}\n`);
-      setInCall(true);
-      speakText(startCallData.customerGreeting);
-    } else {
-      alert("Failed to start call: No matching prompt found. Please check your CSV data.");
+    setBehavior("");
+    
+    // Check if all scenarios are completed
+    if (usedScenarios.length >= totalScenarios) {
+      alert("Congratulations! You have completed all available scenarios. The scenarios will now reset.");
+      setUsedScenarios([]);
+      setRemainingScenarios(totalScenarios);
     }
   };
 
+  // Handle making a call
+  const handleMakeCall = async () => {
+    const startCallData = await startCall();
+    if (!startCallData) {
+      alert("Failed to start call. Please try again.");
+    }
+  };
+
+  // Reset the entire training session
   const resetTraining = () => {
+    // Reset product/scenario selection
     setSelectedProduct("");
     setSelectedScenario("");
     setCallStatus("");
@@ -190,16 +330,21 @@ const TrainingPage = () => {
     setGeneralReadyToProceed(false);
     setProductReadGuidelines(false);
     setProductReadyToProceed(false);
+    
+    // Reset call state
     setInCall(false);
     setMessages([]);
     setInputMessage("");
     setContext("");
     setChatHistory("");
-    setBehaviorType("Polite");
+    setBehaviorType("Polite Customer");
+    setBehavior("");
+    
+    // Return to info view
     setCurrentView("info");
   };
 
-
+  // Info View Component
   const InfoView = () => (
     <div className="trainingPageinfo-container">
       <div className="TrainingPage-mainContainer-Introsection">
@@ -248,7 +393,7 @@ const TrainingPage = () => {
             <div className="TrainingPage-featuredCard">
               <h2>Realistic Customer Responses</h2>
               <p>
-                The customer’s voice tone changes dynamically based on their emotions, creating a more immersive experience.
+                The customer's voice tone changes dynamically based on their emotions, creating a more immersive experience.
               </p>
             </div>
             <div className="TrainingPage-featuredCard">
@@ -285,6 +430,7 @@ const TrainingPage = () => {
     </div>
   );
 
+  // General Module Component
   const GeneralModule = () => (
     <div className="telecommunication-module general">
       <button className="telecommunication-module__back" onClick={resetTraining}>Back</button>
@@ -326,6 +472,7 @@ const TrainingPage = () => {
     </div>
   );
 
+  // Product Module Component
   const ProductModule = () => (
     <div className="telecommunication-module product">
       <button className="telecommunication-module__back" onClick={resetTraining}>Back</button>
@@ -398,6 +545,7 @@ const TrainingPage = () => {
     </div>
   );
 
+  // Call View Component
   const CallView = () => (
     <div className="call-view">
       <header className="call-view__header">
@@ -438,6 +586,7 @@ const TrainingPage = () => {
     </div>
   );
 
+  // Integrated Telecalling View Component
   const IntegratedTelecallingView = () => {
     if (!inCall) {
       return (
@@ -449,6 +598,9 @@ const TrainingPage = () => {
               <p className="telecalling-view__welcome-text">
                 You are just one step away from making a call. Click "Make Call" below to start your training session.
               </p>
+              <div className="telecalling-view__scenario-counter">
+                Remaining scenarios: {remainingScenarios}/{totalScenarios}
+              </div>
               <button className="telecalling-view__make-call-button" onClick={handleMakeCall}>
                 Make Call
               </button>
@@ -468,15 +620,19 @@ const TrainingPage = () => {
               {behaviorType}
             </div>
             <div className="telecalling-view__instruction-text">Press Ctrl+M to toggle mic</div>
+            <div className="telecalling-view__scenario-counter">
+              Scenarios: {remainingScenarios}/{totalScenarios}
+            </div>
           </div>
         </div>
         <div className="conversation">
           <div className="chatScreen">
             {messages.map((msg, index) => (
-              <div key={index} className="telecalling-view__chat-message">
+              <div key={index} className={`telecalling-view__chat-message ${msg.sender === "Customer" ? "customer" : "agent"}`}>
                 <strong>{msg.sender}:</strong> {msg.text}
               </div>
             ))}
+            <div ref={messageEndRef} />
           </div>
           <div className="telecalling-view__chat-controls">
             <input
@@ -484,6 +640,11 @@ const TrainingPage = () => {
               placeholder={micOn ? "Listening..." : "Type your message..."}
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSendMessage();
+                }
+              }}
               className="telecalling-view__chat-input"
             />
             <button onClick={() => handleSendMessage()} className="sendButton">Send</button>
@@ -497,6 +658,7 @@ const TrainingPage = () => {
     );
   };
 
+  // Main Component Rendering
   return (
     <div className="TrainingPage-mainContainer">
       {currentView === "info" && <InfoView />}

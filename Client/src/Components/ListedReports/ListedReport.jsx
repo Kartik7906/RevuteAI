@@ -1,93 +1,79 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom"; 
+import axios from "axios";
 import "./ListedReport.css";
 
 const ListedReport = () => {
-  const { userId } = useParams(); 
-  const [showIntroductionReports, setShowIntroductionReports] = useState(false); 
-  const [reports, setReports] = useState([]); 
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
 
-  useEffect(() => {
-    const fetchReports = async () => {
-      if (!userId) return; 
+  const [backendProgress, setBackendProgress] = useState(0);
+  const [overallScore, setOverallScore] = useState(0);
 
-      try {
-        const response = await fetch(`http://localhost:8000/api/report/${userId}`); 
-        if (!response.ok) {
-          throw new Error("Failed to fetch reports");
-        }
-        const data = await response.json();
-        setReports(data.reports); 
-      } catch (error) {
-        console.error("Error fetching reports:", error);
-      }
-    };
-
-    fetchReports();
-  }, [userId]); 
-
-  const HandleReportNavigation = (reportId) => async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/report/${userId}/${reportId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch report");
-      }
-      // Convert the response to a Blob
-      const blob = await response.blob();
-      // Create a local URL from that blob
-      const imageURL = URL.createObjectURL(blob);
-  
-      // Open the raw image in a new tab/window
-      window.open(imageURL, "_blank");
-    } catch (error) {
-      console.error("Error fetching report:", error);
+  const navigateToReport = (reportType) => {
+    switch (reportType) {
+      case "education":
+        navigate(`/education/${userId}`);
+        break;
+      case "roleplay":
+        navigate(`/roleplay/${userId}`);
+        break;
+      case "tcm-bot":
+        navigate(`/tcm-bot/${userId}`);
+        break;
+      default:
+        break;
     }
   };
-  
+
+  useEffect(() => {
+    if (!userId) {
+      navigate("/");
+      return;
+    }
+    fetchUserProgress();
+  }, [userId, navigate]);
+
+  const fetchUserProgress = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/module/${userId}`);
+      if (!response.data || !response.data.modules) return;
+      setBackendProgress(response.data.progress || 0);
+      setOverallScore(response.data.overallScore || 0);
+    } catch (error) {
+      console.error("Error fetching user progress:", error);
+    }
+  };
 
   return (
     <div className="listedreportpage">
       <h1 className="title">Listed Reports</h1>
-
-      <div className="section">
-        <div
-          className="header"
-          onClick={() => setShowIntroductionReports(!showIntroductionReports)} 
+      <div className="report-menu">
+        <div 
+          className="report-menu-item"
+          onClick={() => navigateToReport("education")}
         >
-          <span className="icon">📄</span>
-          <h2 className="section-title">Education Reports</h2>
-          <span className="toggle-icon">{showIntroductionReports ? "▲" : "▼"}</span>
-        </div>
-        {showIntroductionReports && (
-          <div className="content">
-            {reports.length > 0 ? (
-              reports.map((report, index) => (
-                <div
-                  key={report._id || index}
-                  className="report-item"
-                  onClick={HandleReportNavigation(report._id)} 
-                >
-                  <p>Report {index + 1}: {report.reportData.title || "Untitled Report"}</p>
-                  {}
-                </div>
-              ))
-            ) : (
-              <p>No reports found.</p>
-            )}
+          Education Report
+          <div className="ProgressBar">
+            <div
+              className="ProgressCompleted"
+              style={{ width: `${backendProgress}%` }}
+            />
           </div>
-        )}
-      </div>
-
-      {/* Other Sections */}
-      <div className="section">
-        <div className="header">
-          <span className="icon">🤖</span>
-          <h2 className="section-title">RolePlay Reports</h2>
-          <span className="toggle-icon">▼</span>
+          <p className="ProgressText">{backendProgress}% complete</p>
+          <p className="OverallScoreText">Overall Score: {overallScore}</p>
         </div>
-        <div className="content">
-          <p>Sample Bot Report Content...</p>
+        <div 
+          className="report-menu-item"
+          onClick={() => navigateToReport("roleplay")}
+        >
+          RolePlay Report
+        </div>
+        <div 
+          className="report-menu-item"
+          onClick={() => navigateToReport("tcm-bot")}
+        >
+          TCM BotReport
         </div>
       </div>
     </div>

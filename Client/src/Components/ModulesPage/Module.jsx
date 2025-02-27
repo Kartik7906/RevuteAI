@@ -208,7 +208,6 @@ const Module = () => {
     if (!content?.quiz) return;
     let score = 0;
 
-    // Normalization helper for text answers
     const normalizeAnswer = (text) => (text || "").trim().toLowerCase();
 
     content.quiz.forEach((item, i) => {
