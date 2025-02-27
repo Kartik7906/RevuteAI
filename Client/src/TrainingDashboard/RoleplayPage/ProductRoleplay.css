@@ -1,0 +1,389 @@
+/* ProductRolePlay.css */
+
+/* Customer Selection Screen */
+.banking-customer-screen {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Header Section */
+  .banking-header {
+    text-align: center;
+    margin: 30px 0;
+    padding: 0 20px;
+    position: relative;
+  }
+  
+  .banking-header h1 {
+    color: #343a40;
+    margin-bottom: 15px;
+    font-size: 32px;
+  }
+  
+  .banking-header p {
+    color: #6c757d;
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto 25px;
+  }
+  
+  .banking-back-button {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+  }
+  
+  .banking-back-button:hover {
+    background-color: #e9ecef;
+  }
+  
+  /* Reset Button */
+  .banking-reset-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .banking-reset-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Customer Cards Container */
+  .banking-customer-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 20px;
+  }
+  
+  /* Loading State */
+  .banking-loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #6c757d;
+  }
+  
+  /* Customer Card */
+  .banking-customer-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 340px;
+    min-height: 200px;
+    padding: 20px;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
+  .banking-customer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .banking-customer-card.completed {
+    border: 2px solid #28a745;
+  }
+  
+  .banking-card-content {
+    flex: 1;
+  }
+  
+  .banking-customer-card h3 {
+    color: #343a40;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+  
+  .banking-customer-card p {
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  
+  .banking-completed-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .banking-completed-badge span {
+    font-size: 14px;
+    margin-right: 2px;
+  }
+  
+  /* Start Call Button */
+  .banking-start-call-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+  }
+  
+  .banking-start-call-button:hover {
+    background-color: #0069d9;
+  }
+  
+  .banking-start-call-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  /* Progress Section */
+  .banking-progress-section {
+    text-align: center;
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+  }
+  
+  .banking-progress-section h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  
+  .banking-progress-bar {
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .banking-progress-fill {
+    height: 100%;
+    background-color: #28a745;
+    transition: width 0.3s ease;
+  }
+  
+  .banking-progress-section p {
+    color: #6c757d;
+    font-size: 16px;
+  }
+  
+  /* Call Screen */
+  .banking-call-container {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Left Panel */
+  .banking-left-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 90vh;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+  }
+  
+  /* User Image */
+  .banking-user-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  /* Customer Type */
+  .banking-customer-type {
+    width: 100%;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .banking-behavior-type {
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .banking-behavior-type.polite {
+    color: #28a745;
+  }
+  
+  .banking-behavior-type.rude {
+    color: #dc3545;
+  }
+  
+  .banking-customer-info {
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  
+  .banking-shortcut-info {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 10px;
+  }
+  
+  /* Exit Button */
+  .banking-exit-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: auto;
+    width: 100%;
+  }
+  
+  .banking-exit-button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Conversation Panel */
+  .banking-conversation {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 90vh;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Chat Screen */
+  .banking-chat-screen {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    border-radius: 5px;
+    background: #f8f9fa;
+    margin-bottom: 15px;
+  }
+  
+  /* Chat Messages */
+  .banking-chat-message {
+    margin-bottom: 12px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    max-width: 80%;
+  }
+  
+  .banking-chat-message.agent {
+    background-color: #e3f2fd;
+    align-self: flex-end;
+    margin-left: auto;
+  }
+  
+  .banking-chat-message.customer {
+    background-color: #f1f1f1;
+  }
+  
+  .banking-chat-message.system {
+    background-color: #fff3cd;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 60%;
+    font-style: italic;
+  }
+  
+  /* Chat Controls */
+  .banking-chat-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .banking-chat-input {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+  }
+  
+  .banking-send-button {
+    padding: 0 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .banking-mic-button {
+    padding: 0 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .banking-mic-button.mic-off {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .banking-mic-button.mic-on {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  /* End Call Button */
+  .banking-end-call {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
