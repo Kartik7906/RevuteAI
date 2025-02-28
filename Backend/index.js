@@ -20,7 +20,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ["Content-Type"],
   })
 );
@@ -38,6 +38,7 @@ app.use("/api/module", require("./Routes/EducationRoute"));
 app.use("/api/rank", require("./Routes/LeaderboardRoute"));
 app.use("/api/trainingPage", require("./Routes/TrainingPage"));
 app.use("/api/admin", require("./Routes/AdminRoutes"));
+app.use("/api/profile", require("./Routes/ProfileRoute"));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));

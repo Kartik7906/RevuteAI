@@ -8,6 +8,7 @@ import product4_avatar from "../../images/product4_avatar.svg";
 import product5_avatar from "../../images/product5_avatar.svg";
 import FeaturedCard from "../../images/FeaturedCard.jpg";
 import businessImg from "../../images/defaultavatar.svg";
+import ProductRolePlay from "./ProductRolePlay"; // Import the new component
 import "./TrainingPage.css";
 
 const TrainingPage = () => {
@@ -357,8 +358,8 @@ const TrainingPage = () => {
             <button className="btn-general-telecalling" onClick={() => setCurrentView("general")}>
               Telecalling RolePlay
             </button>
-            <button className="btn-product-telecalling" onClick={() => setCurrentView("product")}>
-              Explore Product-Based Telecalling Module
+            <button className="btn-product-telecalling" onClick={() => setCurrentView("banking")}>
+              Banking RolePlay
             </button>
           </div>
         </div>
@@ -666,6 +667,7 @@ const TrainingPage = () => {
       {currentView === "product" && <ProductModule />}
       {currentView === "call" && <CallView />}
       {currentView === "Telecalling-call" && <IntegratedTelecallingView />}
+      {currentView === "banking" && <ProductRolePlay onBack={resetTraining} />}
     </div>
   );
 };

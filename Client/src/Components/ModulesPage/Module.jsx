@@ -313,7 +313,6 @@ const Module = () => {
       return;
     }
 
-    // If the current question is already recording, stop it.
     if (recordingIndex === qIndex && recognitionInstance) {
       recognitionInstance.stop();
       setRecordingIndex(null);
@@ -321,7 +320,6 @@ const Module = () => {
       return;
     }
 
-    // If another question is recording, stop it first.
     if (recognitionInstance) {
       recognitionInstance.stop();
     }
@@ -340,7 +338,6 @@ const Module = () => {
       console.error("Speech recognition error:", event.error);
     };
 
-    // Clear the recording state when recognition ends naturally.
     recognition.onend = () => {
       setRecordingIndex(null);
       setRecognitionInstance(null);
@@ -362,7 +359,7 @@ const Module = () => {
             <button className="Logout-btn" onClick={handleLogout}>
               Logout
             </button>
-            <div className="UserAvatar" onClick={() => navigate("/profile")}>
+            <div className="UserAvatar" onClick={() => navigate(`/profile/${userId}`)}>
               <FaUser size={20} />
             </div>
           </div>

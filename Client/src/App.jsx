@@ -38,7 +38,7 @@ function App() {
           <Route path="/superadmin" element={<SuperAdmin/>} />
           <Route path="/learnmore" element={<LearnMore/>} />
           <Route path="/requestdemo" element={<RequestDemo/>} />
-          <Route path="/profile" element={<ProfilePage/>} />
+          <Route path="/profile/:userId" element={<ProfilePage/>} />
           <Route path="/creditianls" element={<Credentials/>} />
           <Route path="/modules/:userId" element={<Module/>}/>
           <Route path="/leaderboard" element={<Leaderboard/>} />
