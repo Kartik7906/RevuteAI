@@ -24,10 +24,10 @@ app.use(
     allowedHeaders: ["Content-Type"],
   })
 );
+
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
-
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,14 +36,12 @@ app.use("/api/users", require("./Routes/UserRoute"));
 app.use("/api/report", require("./Routes/ReportRoute"));
 app.use("/api/module", require("./Routes/EducationRoute"));
 app.use("/api/rank", require("./Routes/LeaderboardRoute"));
-app.use("/api/trainingPage", require("./Routes/TrainingPage"))
+app.use("/api/trainingPage", require("./Routes/TrainingPage"));
 app.use("/api/admin", require("./Routes/AdminRoutes"));
 
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
-
 
 const apiKey = process.env.GEMINI_API_KEY;
 const modelName = process.env.GEMINI_MODEL;
@@ -104,7 +102,7 @@ function analyzeEmotions(emotionData) {
 app.post("/api/gemini", async (req, res) => {
   try {
     const { transcript } = req.body;
-    
+
     const prompt = `
     Analyze this self-introduction transcript: "${transcript}"
     
@@ -134,9 +132,10 @@ app.post("/api/gemini", async (req, res) => {
     const text = response.text();
 
     // Parse Gemini's response into array
-    const suggestions = text.split(/\n+/)
-      .filter(line => /^\d+\.\s+".+"/.test(line))
-      .map(line => line.replace(/^\d+\.\s+"/, '').replace(/"$/, ''))
+    const suggestions = text
+      .split(/\n+/)
+      .filter((line) => /^\d+\.\s+".+"/.test(line))
+      .map((line) => line.replace(/^\d+\.\s+"/, "").replace(/"$/, ""))
       .slice(0, 5);
 
     while (suggestions.length < 3) {
@@ -144,27 +143,33 @@ app.post("/api/gemini", async (req, res) => {
     }
 
     res.json({ suggestions });
-    
   } catch (error) {
     console.error("Gemini error:", error);
-    res.status(500).json({ suggestions: ["Couldn't generate suggestions. Please check your input."] });
+    res
+      .status(500)
+      .json({
+        suggestions: [
+          "Couldn't generate suggestions. Please check your input.",
+        ],
+      });
   }
 });
 
-
 app.post("/api/chat", async (req, res) => {
   try {
-      const { userMessage } = req.body;
+    const { userMessage } = req.body;
 
-      const response = await axios.post(GEMINI_URL, {
-          contents: [{ parts: [{ text: userMessage }] }]
-      });
+    const response = await axios.post(GEMINI_URL, {
+      contents: [{ parts: [{ text: userMessage }] }],
+    });
 
-      const botReply = response.data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process that.";
-      res.json({ botReply });
+    const botReply =
+      response.data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Sorry, I couldn't process that.";
+    res.json({ botReply });
   } catch (error) {
-      console.error("Error calling Gemini API:", error);
-      res.status(500).json({ error: "Something went wrong." });
+    console.error("Error calling Gemini API:", error);
+    res.status(500).json({ error: "Something went wrong." });
   }
 });
 // Endpoint to handle uploads
